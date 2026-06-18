@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" font-family="'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#140f2e"/>
+      <stop offset="0.55" stop-color="#1b1448"/>
+      <stop offset="1" stop-color="#0c0a1d"/>
+    </linearGradient>
+    <linearGradient id="acc5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a855f7"/>
+      <stop offset="0.5" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="glass5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.03"/>
+    </linearGradient>
+    <radialGradient id="glow5" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7c3aed" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg5)"/>
+  <circle cx="640" cy="120" r="230" fill="url(#glow5)"/>
+  <circle cx="120" cy="420" r="180" fill="url(#glow5)" opacity="0.7"/>
+
+  <!-- connectors -->
+  <g stroke="url(#acc5)" stroke-width="2.5" opacity="0.55" fill="none">
+    <path d="M400 250 L250 150"/><path d="M400 250 L560 150"/>
+    <path d="M400 250 L250 360"/><path d="M400 250 L560 360"/>
+  </g>
+
+  <!-- title card -->
+  <g transform="translate(54 60)">
+    <rect width="430" height="150" rx="22" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/>
+    <text x="30" y="50" font-size="13" letter-spacing="3" fill="#22d3ee" font-weight="700">ARCHITECTURE MICROSERVICES</text>
+    <text x="30" y="96" font-size="36" font-weight="800" fill="#f1eefb">E-Commerce Platform</text>
+    <text x="30" y="130" font-size="16" fill="#cfc8ea">Spring Boot · Angular · Keycloak · RabbitMQ · Azure</text>
+  </g>
+
+  <!-- central gateway node -->
+  <g transform="translate(400 250)">
+    <circle r="46" fill="url(#acc5)"/>
+    <circle r="46" fill="#0c0a1d" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">API GW</text>
+  </g>
+
+  <!-- service nodes -->
+  <g font-size="13" font-weight="600" fill="#ECEAF6" text-anchor="middle">
+    <g transform="translate(250 150)"><rect x="-58" y="-26" width="116" height="52" rx="12" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/><text y="5">Auth</text></g>
+    <g transform="translate(560 150)"><rect x="-62" y="-26" width="124" height="52" rx="12" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/><text y="5">Produits</text></g>
+    <g transform="translate(250 360)"><rect x="-66" y="-26" width="132" height="52" rx="12" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/><text y="5">Commandes</text></g>
+    <g transform="translate(560 360)"><rect x="-70" y="-26" width="140" height="52" rx="12" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/><text y="5">Notifications</text></g>
+  </g>
+
+  <!-- rabbitmq tag -->
+  <g transform="translate(620 250)">
+    <rect x="-54" y="-18" width="108" height="36" rx="18" fill="url(#glass5)" stroke="#ffffff" stroke-opacity="0.18"/>
+    <text x="0" y="5" text-anchor="middle" font-size="12" font-weight="700" fill="#22d3ee">RabbitMQ</text>
+  </g>
+</svg>

@@ -185,6 +185,17 @@
         .contact-card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
         .contact-card p { color: var(--muted); font-size: 0.9rem; word-break: break-word; }
 
+        /* Certifications */
+        .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+        .cert-card { padding: 1.6rem; display: flex; align-items: center; gap: 1.1rem; text-decoration: none; color: inherit; position: relative; }
+        .cert-card:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+        .cert-card.featured { border-color: color-mix(in srgb, var(--violet) 45%, var(--border)); }
+        .cert-ic { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; color: #fff; background: var(--grad); }
+        .cert-card h3 { font-size: 1.02rem; line-height: 1.35; margin-bottom: 0.25rem; }
+        .cert-card .org { color: var(--muted); font-size: 0.85rem; }
+        .cert-verify { position: absolute; top: 1rem; right: 1.1rem; font-family: 'JetBrains Mono'; font-size: 0.72rem; color: var(--cyan); opacity: 0; transform: translateX(-4px); transition: all 0.25s; }
+        .cert-card:hover .cert-verify { opacity: 1; transform: none; }
+
         footer { border-top: 1px solid var(--border); padding: 2.2rem 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
 
         /* Scroll reveal */
@@ -225,6 +236,7 @@
                     <li><a href="#skills" onclick="closeMenu()" data-i18n="navSkills">Compétences</a></li>
                     <li><a href="#education" onclick="closeMenu()" data-i18n="navEdu">Parcours</a></li>
                     <li><a href="#projects" onclick="closeMenu()" data-i18n="navProjects">Projets</a></li>
+                    <li><a href="#certs" onclick="closeMenu()" data-i18n="navCerts">Certifs</a></li>
                     <li><a href="#contact" onclick="closeMenu()" data-i18n="navContact">Contact</a></li>
                 </ul>
             </nav>
@@ -248,8 +260,8 @@
             <div class="hero-text">
                 <span class="badge"><span class="dot"></span> <span data-i18n="heroBadge">Disponible pour opportunités · 2026</span></span>
                 <h1>Osama Jammi<br><span class="grad-text" data-i18n="heroRole">Développeur Full Stack</span></h1>
-                <div class="subtitle" data-i18n="heroSub">& Spécialiste ERP <span class="mono">// Spring Boot · Angular · React Native</span></div>
-                <p class="lead" data-i18n="heroLead">Élève ingénieur en Management & Gouvernance des SI. Je conçois des applications web et mobiles complètes, des API REST sécurisées et des intégrations ERP qui font tourner les opérations métier.</p>
+                <div class="subtitle" data-i18n="heroSub">& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span></div>
+                <p class="lead" data-i18n="heroLead">Élève ingénieur en Gouvernance & Management des SI. Je conçois des applications web et mobiles, des architectures microservices et des API REST sécurisées, déployées sur Docker & Microsoft Azure.</p>
                 <div class="cta-row">
                     <a href="#projects" class="btn btn-grad"><i class="fas fa-layer-group"></i> <span data-i18n="heroCtaProjects">Voir mes projets</span></a>
                     <a href="cv.pdf" download class="btn btn-ghost"><i class="fas fa-download"></i> <span data-i18n="heroCtaCv">Télécharger CV</span></a>
@@ -265,7 +277,7 @@
                 <div class="ring"></div>
                 <img src="profile.png" alt="Osama Jammi">
                 <div class="float-chip one"><i class="fas fa-code"></i> <span data-i18n="chipFullstack">Full Stack</span></div>
-                <div class="float-chip two"><i class="fas fa-shield-halved"></i> Keycloak · OAuth2</div>
+                <div class="float-chip two"><i class="fas fa-certificate"></i> SAP Certified · ABAP Cloud</div>
             </div>
         </div>
     </section>
@@ -279,14 +291,14 @@
             </div>
             <div class="about-grid">
                 <div class="glass about-card reveal">
-                    <p data-i18n="aboutP1">Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'ENSIASD (Taroudant), spécialisé en Management, Audit et Gouvernance des SI.</p>
-                    <p data-i18n="aboutP2">Lors de mon stage chez Riche Bois (Casablanca), j'ai développé un système complet de gestion de stock et de transport — backend Spring Boot, web Angular et application mobile React Native — tout en migrant la sécurité de Auth0 vers Keycloak pour 3 systèmes critiques.</p>
-                    <p data-i18n="aboutP3">J'aime transformer des besoins métier complexes en solutions techniques propres, sécurisées et durables.</p>
+                    <p data-i18n="aboutP1">Je suis Osama Jammi, élève ingénieur en Gouvernance & Management des SI à l'ENSIASD (Taroudant), passionné par le développement logiciel et les architectures web modernes.</p>
+                    <p data-i18n="aboutP2">J'ai développé des applications métier full-stack (Spring Boot, Angular, React, React Native), des plateformes microservices et des API REST sécurisées, déployées avec Docker sur Microsoft Azure — chez Riche Bois, Dial Technologies et en freelance.</p>
+                    <p data-i18n="aboutP3">Récemment certifié <strong>SAP Back-End Developer — ABAP Cloud</strong>, je suis à la recherche d'un stage en développement Full Stack, Backend Java ou Cloud Engineering.</p>
                 </div>
                 <div class="stats">
-                    <div class="glass stat reveal"><div class="num">3+</div><div class="lbl" data-i18n="statSystems">Systèmes critiques sécurisés</div></div>
-                    <div class="glass stat reveal"><div class="num">4</div><div class="lbl" data-i18n="statProjects">Projets majeurs livrés</div></div>
-                    <div class="glass stat reveal"><div class="num">3</div><div class="lbl" data-i18n="statStacks">Stacks (web · mobile · ERP)</div></div>
+                    <div class="glass stat reveal"><div class="num">3</div><div class="lbl" data-i18n="statExp">Expériences (stages & freelance)</div></div>
+                    <div class="glass stat reveal"><div class="num">5</div><div class="lbl" data-i18n="statProjects">Projets majeurs livrés</div></div>
+                    <div class="glass stat reveal"><div class="num">SAP</div><div class="lbl" data-i18n="statCert">Certifié ABAP Cloud</div></div>
                     <div class="glass stat reveal"><div class="num">2027</div><div class="lbl" data-i18n="statGrad">Diplôme d'ingénieur</div></div>
                 </div>
             </div>
@@ -305,7 +317,7 @@
                 <div class="glass skill-cat reveal">
                     <div class="ic"><i class="fas fa-code"></i></div>
                     <h3 data-i18n="skLangFw">Langages & Frameworks</h3>
-                    <div class="chips"><span class="chip">Java</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">React / RN</span></div>
+                    <div class="chips"><span class="chip">Java</span><span class="chip">ABAP Cloud</span><span class="chip">Python</span><span class="chip">Spring Boot</span><span class="chip">JPA · Hibernate</span><span class="chip">Angular</span><span class="chip">React</span><span class="chip">React Native</span></div>
                 </div>
                 <div class="glass skill-cat reveal">
                     <div class="ic"><i class="fas fa-database"></i></div>
@@ -318,14 +330,14 @@
                     <div class="chips"><span class="chip">Keycloak</span><span class="chip">OAuth2 / JWT</span><span class="chip">Apache Kafka</span><span class="chip">RabbitMQ</span></div>
                 </div>
                 <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-gears"></i></div>
-                    <h3 data-i18n="skDevops">DevOps & Outils</h3>
-                    <div class="chips"><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">Linux</span><span class="chip">Postman</span><span class="chip">JUnit 5</span><span class="chip">Mockito</span></div>
+                    <div class="ic"><i class="fas fa-cloud"></i></div>
+                    <h3 data-i18n="skDevops">Cloud & DevOps</h3>
+                    <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Azure</span><span class="chip">CI/CD</span><span class="chip">Microservices</span><span class="chip">Git · Linux</span></div>
                 </div>
                 <div class="glass skill-cat reveal">
                     <div class="ic"><i class="fas fa-cubes"></i></div>
-                    <h3 data-i18n="skErp">ERP & BI</h3>
-                    <div class="chips"><span class="chip">Odoo</span><span class="chip">Devalto</span><span class="chip">Power BI</span><span class="chip">Excel</span></div>
+                    <h3 data-i18n="skErp">ERP & Tests</h3>
+                    <div class="chips"><span class="chip">SAP BTP</span><span class="chip">Odoo</span><span class="chip">Devalto</span><span class="chip">JUnit 5</span><span class="chip">Mockito</span><span class="chip">Postman</span></div>
                 </div>
                 <div class="glass skill-cat reveal">
                     <div class="ic"><i class="fas fa-sitemap"></i></div>
@@ -346,15 +358,27 @@
             <div class="timeline">
                 <div class="tl-item reveal">
                     <span class="tl-date">2025 — 2027</span>
-                    <h4 data-i18n="edu1">Cycle d'Ingénieur — Management & Gouvernance des SI</h4>
+                    <h4 data-i18n="edu1">Cycle d'Ingénieur — Gouvernance & Management des SI</h4>
                     <p class="org" data-i18n="edu1org">ENSIASD, Taroudant</p>
                     <p class="desc" data-i18n="edu1desc">Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.</p>
                 </div>
                 <div class="tl-item reveal">
+                    <span class="tl-date" data-i18n="exp0Date">Fév. 2026 — Mai 2026</span>
+                    <h4 data-i18n="exp0">Développeur ERP & Mobile — Freelance</h4>
+                    <p class="org" data-i18n="exp0org">Taroudant</p>
+                    <p class="desc" data-i18n="exp0desc">ERP sur mesure pour un espace de coworking + application mobile React Native (24 écrans). API REST sécurisées (Spring Boot, JWT), temps réel via SSE, PostgreSQL, déploiement Docker sur Azure.</p>
+                </div>
+                <div class="tl-item reveal">
                     <span class="tl-date" data-i18n="expDate">Juil. 2025 — Sept. 2025</span>
-                    <h4 data-i18n="exp1">Stage Développeur Full Stack — Riche Bois</h4>
+                    <h4 data-i18n="exp1">Stagiaire Full Stack — Riche Bois</h4>
                     <p class="org" data-i18n="exp1org">Casablanca</p>
-                    <p class="desc" data-i18n="exp1desc">Système de gestion de stock & transport (Spring Boot, Angular, React Native), API REST sécurisées, intégration ERP Devalto, migration Auth0 → Keycloak avec double authentification.</p>
+                    <p class="desc" data-i18n="exp1desc">Applications métier (Spring Boot, Angular), intégration ERP, sécurisation des accès via Keycloak — OAuth2, MFA et gestion des rôles.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <span class="tl-date" data-i18n="exp2Date">Juil. 2024 — Sept. 2024</span>
+                    <h4 data-i18n="exp2">Stagiaire Full Stack — Dial Technologies</h4>
+                    <p class="org" data-i18n="exp2org">Casablanca</p>
+                    <p class="desc" data-i18n="exp2desc">Applications web (Spring Boot, React), projets d'intégration ERP & CRM, conception et consommation d'API REST en environnement Agile.</p>
                 </div>
                 <div class="tl-item reveal">
                     <span class="tl-date">2023 — 2024</span>
@@ -374,9 +398,18 @@
                 <p data-i18n="projSub">Quelques réalisations full-stack, mobiles et ERP.</p>
             </div>
             <div class="proj-grid">
-                <!-- Transport & Livraison (NEW) -->
+                <!-- E-Commerce Microservices (NEW) -->
                 <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagFeatured">★ Récent · Full Stack + Mobile</span><img src="project4.svg" alt="Transport & Livraison Riche Bois"></div>
+                    <div class="proj-media"><span class="proj-tag" data-i18n="tagMicro">★ 2026 · Microservices</span><img src="project5.svg" alt="Plateforme E-Commerce Microservices"></div>
+                    <div class="proj-body">
+                        <h3 data-i18n="proj5Title">Plateforme E-Commerce Microservices</h3>
+                        <p class="pdesc" data-i18n="proj5Desc">Architecture microservices (Authentification, Produits, Commandes, Notifications) sécurisée via Keycloak, OAuth2 et JWT, communication asynchrone par RabbitMQ, interface Angular moderne et déploiement continu (CI/CD) sur Microsoft Azure.</p>
+                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">Angular</span><span class="chip">RabbitMQ</span><span class="chip">Keycloak</span><span class="chip">Azure · CI/CD</span></div>
+                    </div>
+                </div>
+                <!-- Transport & Livraison -->
+                <div class="glass proj-card reveal">
+                    <div class="proj-media"><span class="proj-tag" data-i18n="tagFeatured">★ Full Stack + Mobile</span><img src="project4.svg" alt="Transport & Livraison Riche Bois"></div>
                     <div class="proj-body">
                         <h3 data-i18n="proj4Title">Transport & Livraison — Riche Bois</h3>
                         <p class="pdesc" data-i18n="proj4Desc">Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).</p>
@@ -414,11 +447,46 @@
         </div>
     </section>
 
+    <!-- Certifications -->
+    <section id="certs" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 05</span>
+                <h2 data-i18n="certsTitle">Certifications</h2>
+                <p data-i18n="certsSub">Compétences validées et badges vérifiables.</p>
+            </div>
+            <div class="certs-grid">
+                <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" rel="noopener" class="glass cert-card featured reveal">
+                    <div class="cert-ic"><i class="fas fa-certificate"></i></div>
+                    <div>
+                        <h3 data-i18n="cert1">SAP Certified — Back-End Developer · ABAP Cloud</h3>
+                        <p class="org">SAP · <span data-i18n="cert1org">Badge vérifié sur Credly</span></p>
+                    </div>
+                    <span class="cert-verify" data-i18n="certVerify">Vérifier ↗</span>
+                </a>
+                <div class="glass cert-card reveal">
+                    <div class="cert-ic"><i class="fas fa-graduation-cap"></i></div>
+                    <div>
+                        <h3 data-i18n="cert2">SAP Learning Journey — Developing with ABAP in SAP BTP</h3>
+                        <p class="org">SAP · Mars 2026 — Mai 2026</p>
+                    </div>
+                </div>
+                <div class="glass cert-card reveal">
+                    <div class="cert-ic"><i class="fas fa-leaf"></i></div>
+                    <div>
+                        <h3 data-i18n="cert3">Spring Boot & Microservices</h3>
+                        <p class="org">Janv. 2026 — Mars 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="block">
         <div class="container">
             <div class="sec-head reveal">
-                <span class="sec-kicker">// 05</span>
+                <span class="sec-kicker">// 06</span>
                 <h2 data-i18n="contactTitle">Travaillons ensemble</h2>
                 <p data-i18n="contactSub">Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.</p>
             </div>
@@ -442,25 +510,31 @@
     <script>
         const translations = {
             fr: {
-                navAbout:"À propos",navSkills:"Compétences",navEdu:"Parcours",navProjects:"Projets",navContact:"Contact",
+                navAbout:"À propos",navSkills:"Compétences",navEdu:"Parcours",navProjects:"Projets",navCerts:"Certifs",navContact:"Contact",
                 heroBadge:"Disponible pour opportunités · 2026",heroRole:"Développeur Full Stack",
-                heroSub:'& Spécialiste ERP <span class="mono">// Spring Boot · Angular · React Native</span>',
-                heroLead:"Élève ingénieur en Management & Gouvernance des SI. Je conçois des applications web et mobiles complètes, des API REST sécurisées et des intégrations ERP qui font tourner les opérations métier.",
+                heroSub:'& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span>',
+                heroLead:"Élève ingénieur en Gouvernance & Management des SI. Je conçois des applications web et mobiles, des architectures microservices et des API REST sécurisées, déployées sur Docker & Microsoft Azure.",
                 heroCtaProjects:"Voir mes projets",heroCtaCv:"Télécharger CV",chipFullstack:"Full Stack",
                 aboutTitle:"À propos de moi",
-                aboutP1:"Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'ENSIASD (Taroudant), spécialisé en Management, Audit et Gouvernance des SI.",
-                aboutP2:"Lors de mon stage chez Riche Bois (Casablanca), j'ai développé un système complet de gestion de stock et de transport — backend Spring Boot, web Angular et application mobile React Native — tout en migrant la sécurité de Auth0 vers Keycloak pour 3 systèmes critiques.",
-                aboutP3:"J'aime transformer des besoins métier complexes en solutions techniques propres, sécurisées et durables.",
-                statSystems:"Systèmes critiques sécurisés",statProjects:"Projets majeurs livrés",statStacks:"Stacks (web · mobile · ERP)",statGrad:"Diplôme d'ingénieur",
+                aboutP1:"Je suis Osama Jammi, élève ingénieur en Gouvernance & Management des SI à l'ENSIASD (Taroudant), passionné par le développement logiciel et les architectures web modernes.",
+                aboutP2:"J'ai développé des applications métier full-stack (Spring Boot, Angular, React, React Native), des plateformes microservices et des API REST sécurisées, déployées avec Docker sur Microsoft Azure — chez Riche Bois, Dial Technologies et en freelance.",
+                aboutP3:"Récemment certifié <strong>SAP Back-End Developer — ABAP Cloud</strong>, je suis à la recherche d'un stage en développement Full Stack, Backend Java ou Cloud Engineering.",
+                statExp:"Expériences (stages & freelance)",statProjects:"Projets majeurs livrés",statCert:"Certifié ABAP Cloud",statGrad:"Diplôme d'ingénieur",
                 skillsTitle:"Stack technique",skillsSub:"Les outils que j'utilise pour construire, sécuriser et déployer.",
-                skLangFw:"Langages & Frameworks",skData:"Bases de données",skSec:"Sécurité & Messagerie",skDevops:"DevOps & Outils",skErp:"ERP & BI",skGov:"Gouvernance & Méthodo",
+                skLangFw:"Langages & Frameworks",skData:"Bases de données",skSec:"Sécurité & Messagerie",skDevops:"Cloud & DevOps",skErp:"ERP & Tests",skGov:"Gouvernance & Méthodo",
                 eduTitle:"Parcours & expérience",
-                edu1:"Cycle d'Ingénieur — Management & Gouvernance des SI",edu1org:"ENSIASD, Taroudant",edu1desc:"Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.",
-                expDate:"Juil. 2025 — Sept. 2025",exp1:"Stage Développeur Full Stack — Riche Bois",exp1org:"Casablanca",
-                exp1desc:"Système de gestion de stock & transport (Spring Boot, Angular, React Native), API REST sécurisées, intégration ERP Devalto, migration Auth0 → Keycloak avec double authentification.",
+                edu1:"Cycle d'Ingénieur — Gouvernance & Management des SI",edu1org:"ENSIASD, Taroudant",edu1desc:"Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.",
+                exp0Date:"Fév. 2026 — Mai 2026",exp0:"Développeur ERP & Mobile — Freelance",exp0org:"Taroudant",
+                exp0desc:"ERP sur mesure pour un espace de coworking + application mobile React Native (24 écrans). API REST sécurisées (Spring Boot, JWT), temps réel via SSE, PostgreSQL, déploiement Docker sur Azure.",
+                expDate:"Juil. 2025 — Sept. 2025",exp1:"Stagiaire Full Stack — Riche Bois",exp1org:"Casablanca",
+                exp1desc:"Applications métier (Spring Boot, Angular), intégration ERP, sécurisation des accès via Keycloak — OAuth2, MFA et gestion des rôles.",
+                exp2Date:"Juil. 2024 — Sept. 2024",exp2:"Stagiaire Full Stack — Dial Technologies",exp2org:"Casablanca",
+                exp2desc:"Applications web (Spring Boot, React), projets d'intégration ERP & CRM, conception et consommation d'API REST en environnement Agile.",
                 edu2:"DEUP Génie Informatique",edu2org:"Université Ibn Zohr, Taroudant",
-                projTitle:"Projets sélectionnés",projSub:"Quelques réalisations full-stack, mobiles et ERP.",
-                tagFeatured:"★ Récent · Full Stack + Mobile",tagArchi:"Architecture distribuée",
+                projTitle:"Projets sélectionnés",projSub:"Quelques réalisations full-stack, mobiles et microservices.",
+                tagMicro:"★ 2026 · Microservices",tagFeatured:"★ Full Stack + Mobile",tagArchi:"Architecture distribuée",
+                proj5Title:"Plateforme E-Commerce Microservices",
+                proj5Desc:"Architecture microservices (Authentification, Produits, Commandes, Notifications) sécurisée via Keycloak, OAuth2 et JWT, communication asynchrone par RabbitMQ, interface Angular moderne et déploiement continu (CI/CD) sur Microsoft Azure.",
                 proj4Title:"Transport & Livraison — Riche Bois",
                 proj4Desc:"Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).",
                 proj1Title:"Système de Gestion de Stock",
@@ -469,29 +543,39 @@
                 proj2Desc:"Étude fonctionnelle et technique d'Odoo et développement de modules personnalisés (modèles, vues, contrôleurs, règles de sécurité).",
                 proj3Title:"Système de Messagerie Distribué",
                 proj3Desc:"Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.",
+                certsTitle:"Certifications",certsSub:"Compétences validées et badges vérifiables.",
+                cert1:"SAP Certified — Back-End Developer · ABAP Cloud",cert1org:"Badge vérifié sur Credly",
+                cert2:"SAP Learning Journey — Developing with ABAP in SAP BTP",
+                cert3:"Spring Boot & Microservices",certVerify:"Vérifier ↗",
                 contactTitle:"Travaillons ensemble",contactSub:"Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.",
                 phoneLabel:"Téléphone",footer:"Conçu & développé avec passion.",curLang:"FR"
             },
             en: {
-                navAbout:"About",navSkills:"Skills",navEdu:"Journey",navProjects:"Projects",navContact:"Contact",
+                navAbout:"About",navSkills:"Skills",navEdu:"Journey",navProjects:"Projects",navCerts:"Certs",navContact:"Contact",
                 heroBadge:"Open to opportunities · 2026",heroRole:"Full Stack Developer",
-                heroSub:'& ERP Specialist <span class="mono">// Spring Boot · Angular · React Native</span>',
-                heroLead:"Information Systems engineering student. I build complete web & mobile apps, secure REST APIs and ERP integrations that keep business operations running.",
+                heroSub:'& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span>',
+                heroLead:"IS Governance & Management engineering student. I build web & mobile apps, microservices architectures and secure REST APIs, deployed on Docker & Microsoft Azure.",
                 heroCtaProjects:"View my projects",heroCtaCv:"Download CV",chipFullstack:"Full Stack",
                 aboutTitle:"About me",
-                aboutP1:"I'm Osama Jammi, an Information Systems engineering student at ENSIASD (Taroudant), specialized in IS Management, Audit and Governance.",
-                aboutP2:"During my internship at Riche Bois (Casablanca), I built a complete stock & transport management system — Spring Boot backend, Angular web and a React Native mobile app — while migrating security from Auth0 to Keycloak across 3 critical systems.",
-                aboutP3:"I love turning complex business needs into clean, secure and maintainable technical solutions.",
-                statSystems:"Critical systems secured",statProjects:"Major projects delivered",statStacks:"Stacks (web · mobile · ERP)",statGrad:"Engineering degree",
+                aboutP1:"I'm Osama Jammi, an IS Governance & Management engineering student at ENSIASD (Taroudant), passionate about software development and modern web architectures.",
+                aboutP2:"I've built full-stack business apps (Spring Boot, Angular, React, React Native), microservices platforms and secure REST APIs, deployed with Docker on Microsoft Azure — at Riche Bois, Dial Technologies and as a freelancer.",
+                aboutP3:"Recently certified <strong>SAP Back-End Developer — ABAP Cloud</strong>, I'm looking for an internship in Full Stack development, Java Backend or Cloud Engineering.",
+                statExp:"Experiences (internships & freelance)",statProjects:"Major projects delivered",statCert:"ABAP Cloud certified",statGrad:"Engineering degree",
                 skillsTitle:"Tech stack",skillsSub:"The tools I use to build, secure and ship.",
-                skLangFw:"Languages & Frameworks",skData:"Databases",skSec:"Security & Messaging",skDevops:"DevOps & Tools",skErp:"ERP & BI",skGov:"Governance & Methods",
+                skLangFw:"Languages & Frameworks",skData:"Databases",skSec:"Security & Messaging",skDevops:"Cloud & DevOps",skErp:"ERP & Tests",skGov:"Governance & Methods",
                 eduTitle:"Journey & experience",
-                edu1:"Engineering Cycle — IS Management & Governance",edu1org:"ENSIASD, Taroudant",edu1desc:"Specialization in IS Governance, Audit and Management.",
-                expDate:"Jul. 2025 — Sep. 2025",exp1:"Full Stack Developer Intern — Riche Bois",exp1org:"Casablanca",
-                exp1desc:"Stock & transport management system (Spring Boot, Angular, React Native), secure REST APIs, Devalto ERP integration, Auth0 → Keycloak migration with two-factor auth.",
+                edu1:"Engineering Cycle — IS Governance & Management",edu1org:"ENSIASD, Taroudant",edu1desc:"Specialization in IS Governance, Audit and Management.",
+                exp0Date:"Feb. 2026 — May 2026",exp0:"ERP & Mobile Developer — Freelance",exp0org:"Taroudant",
+                exp0desc:"Custom ERP for a coworking space + a React Native mobile app (24 screens). Secure REST APIs (Spring Boot, JWT), real-time features via SSE, PostgreSQL, Docker deployment on Azure.",
+                expDate:"Jul. 2025 — Sep. 2025",exp1:"Full Stack Intern — Riche Bois",exp1org:"Casablanca",
+                exp1desc:"Business applications (Spring Boot, Angular), ERP integration, access security via Keycloak — OAuth2, MFA and role management.",
+                exp2Date:"Jul. 2024 — Sep. 2024",exp2:"Full Stack Intern — Dial Technologies",exp2org:"Casablanca",
+                exp2desc:"Web applications (Spring Boot, React), ERP & CRM integration projects, design and consumption of REST APIs in an Agile environment.",
                 edu2:"DEUP Computer Engineering",edu2org:"Ibn Zohr University, Taroudant",
-                projTitle:"Selected projects",projSub:"A few full-stack, mobile and ERP builds.",
-                tagFeatured:"★ Recent · Full Stack + Mobile",tagArchi:"Distributed architecture",
+                projTitle:"Selected projects",projSub:"A few full-stack, mobile and microservices builds.",
+                tagMicro:"★ 2026 · Microservices",tagFeatured:"★ Full Stack + Mobile",tagArchi:"Distributed architecture",
+                proj5Title:"E-Commerce Microservices Platform",
+                proj5Desc:"Microservices architecture (Authentication, Products, Orders, Notifications) secured with Keycloak, OAuth2 and JWT, asynchronous communication via RabbitMQ, modern Angular UI and continuous deployment (CI/CD) on Microsoft Azure.",
                 proj4Title:"Transport & Delivery — Riche Bois",
                 proj4Desc:"Complete transport & delivery management platform: Angular back-office, Spring Boot API and a React Native mobile app for drivers (QR scanning of delivery notes, GPS tracking, depot & trip management, supervisor/admin roles).",
                 proj1Title:"Stock Management System",
@@ -500,6 +584,10 @@
                 proj2Desc:"Functional and technical study of Odoo and development of custom modules (models, views, controllers, security rules).",
                 proj3Title:"Distributed Messaging System",
                 proj3Desc:"Design of event-driven architectures for distributed systems with Apache Kafka and RabbitMQ.",
+                certsTitle:"Certifications",certsSub:"Validated skills and verifiable badges.",
+                cert1:"SAP Certified — Back-End Developer · ABAP Cloud",cert1org:"Verified badge on Credly",
+                cert2:"SAP Learning Journey — Developing with ABAP in SAP BTP",
+                cert3:"Spring Boot & Microservices",certVerify:"Verify ↗",
                 contactTitle:"Let's work together",contactSub:"An opportunity, a project or just a hello — my inbox is open.",
                 phoneLabel:"Phone",footer:"Designed & built with passion.",curLang:"EN"
             }

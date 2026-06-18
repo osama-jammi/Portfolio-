@@ -65,10 +65,17 @@ Glissez-déposez le dossier sur [netlify.com](https://netlify.com)
 
 ## 💼 Projets présentés
 
+- **Plateforme E-Commerce Microservices** (Spring Boot · Angular · RabbitMQ · Keycloak · Azure)
 - **Transport & Livraison — Riche Bois** (Spring Boot · Angular · React Native · QR · GPS)
 - Système de Gestion de Stock (Spring Boot · Angular · Keycloak)
 - Implémentation ERP Odoo (Python · PostgreSQL)
 - Système de Messagerie Distribué (Apache Kafka · RabbitMQ)
+
+## 🏅 Certifications
+
+- **SAP Certified — Back-End Developer · ABAP Cloud** ([badge Credly](https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile))
+- SAP Learning Journey — Developing with ABAP in SAP BTP
+- Spring Boot & Microservices
 
 ## 📧 Contact
 
