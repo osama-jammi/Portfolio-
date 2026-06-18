@@ -57,10 +57,18 @@ Glissez-déposez le dossier sur [netlify.com](https://netlify.com)
 
 ## 🎨 Fonctionnalités
 
+- Design glassmorphism sombre moderne (accents violet/cyan)
 - Mode sombre/clair
 - Français/Anglais
 - Responsive (mobile, tablette, desktop)
-- Animations fluides
+- Animations au scroll (reveal) et fond animé (aurora)
+
+## 💼 Projets présentés
+
+- **Transport & Livraison — Riche Bois** (Spring Boot · Angular · React Native · QR · GPS)
+- Système de Gestion de Stock (Spring Boot · Angular · Keycloak)
+- Implémentation ERP Odoo (Python · PostgreSQL)
+- Système de Messagerie Distribué (Apache Kafka · RabbitMQ)
 
 ## 📧 Contact
 

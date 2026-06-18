@@ -1,1288 +1,550 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osama Jammi - Full Stack Developer & ERP Specialist</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Osama Jammi — Développeur Full Stack & Spécialiste ERP</title>
+    <meta name="description" content="Portfolio d'Osama Jammi, élève ingénieur en Systèmes d'Information. Développeur Full Stack : Spring Boot, Angular, React Native, ERP Odoo.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --primary-color: #00d4ff;
-            --secondary-color: #0a4d68;
-            --accent-color: #ff6b35;
-            --dark-bg: #0a192f;
-            --darker-bg: #020c1b;
-            --light-text: #e6f1ff;
-            --gray-text: #8892b0;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--dark-bg);
-            color: var(--light-text);
-            overflow-x: hidden;
-            line-height: 1.6;
+            --bg: #07060d;
+            --bg-2: #0c0a18;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-2: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.09);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --text: #ECEAF6;
+            --muted: #9a96b8;
+            --violet: #a855f7;
+            --cyan: #22d3ee;
+            --grad: linear-gradient(120deg, #a855f7 0%, #6366f1 45%, #22d3ee 100%);
+            --shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
         }
 
         body.light {
-            --dark-bg: #f8f9fa;
-            --darker-bg: #ffffff;
-            --light-text: #0a192f;
-            --gray-text: #495057;
-            --primary-color: #0066cc;
-            --accent-color: #dc3545;
+            --bg: #f4f4fb;
+            --bg-2: #eceaf6;
+            --surface: rgba(20, 16, 40, 0.04);
+            --surface-2: rgba(20, 16, 40, 0.06);
+            --border: rgba(20, 16, 40, 0.10);
+            --border-strong: rgba(20, 16, 40, 0.18);
+            --text: #1a1730;
+            --muted: #585479;
+            --shadow: 0 24px 60px -24px rgba(80, 60, 160, 0.30);
         }
 
-        /* Animated Background */
-        .bg-animated {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
-        .bg-animated::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
-            animation: drift 20s ease-in-out infinite alternate;
-        }
+        h1, h2, h3, h4, .font-display { font-family: 'Sora', sans-serif; }
+        code, .mono { font-family: 'JetBrains Mono', monospace; }
 
-        @keyframes drift {
-            from {
-                transform: translate(-10%, -10%) rotate(0deg);
-            }
-            to {
-                transform: translate(10%, 10%) rotate(10deg);
-            }
-        }
+        /* ---------- Animated background ---------- */
+        .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: radial-gradient(140% 100% at 50% 0%, var(--bg-2), var(--bg) 60%); }
+        .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float 22s ease-in-out infinite alternate; }
+        .blob.v { width: 520px; height: 520px; background: #7c3aed; top: -160px; left: -120px; }
+        .blob.c { width: 460px; height: 460px; background: #0891b2; top: 30%; right: -140px; animation-delay: -7s; }
+        .blob.p { width: 420px; height: 420px; background: #4f46e5; bottom: -180px; left: 30%; animation-delay: -13s; }
+        body.light .blob { opacity: 0.28; }
+        @keyframes float { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 60px) scale(1.12); } }
 
-        /* Header */
+        .grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ---------- Header ---------- */
         header {
-            backdrop-filter: blur(20px);
-            background: rgba(10, 25, 47, 0.8);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-            padding: 1.5rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 1.1rem 0; transition: all 0.35s ease;
         }
+        header.scrolled { padding: 0.7rem 0; backdrop-filter: blur(18px); background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid var(--border); }
+        .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-family: 'Sora'; font-weight: 800; font-size: 1.35rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 0.6rem; }
+        .logo .mark { width: 38px; height: 38px; border-radius: 11px; background: var(--grad); display: grid; place-items: center; color: #fff; font-size: 0.95rem; box-shadow: 0 8px 24px -8px var(--violet); }
+        nav ul { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        nav a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; position: relative; transition: color 0.25s; }
+        nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--grad); transition: width 0.3s; border-radius: 2px; }
+        nav a:hover { color: var(--text); } nav a:hover::after { width: 100%; }
 
-        body.light header {
-            background: rgba(248, 249, 250, 0.95);
-            border-bottom: 1px solid rgba(0, 102, 204, 0.1);
-        }
+        .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+        .pill-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 11px; cursor: pointer; font-size: 0.95rem; transition: all 0.25s; display: grid; place-items: center; }
+        .pill-btn:hover { border-color: var(--border-strong); background: var(--surface-2); transform: translateY(-2px); }
+        .lang-wrap { position: relative; }
+        .lang-menu { position: absolute; top: 120%; right: 0; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.4rem; min-width: 150px; display: none; box-shadow: var(--shadow); }
+        .lang-menu.show { display: block; }
+        .lang-menu button { width: 100%; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 0.8rem; background: transparent; border: none; color: var(--muted); border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+        .lang-menu button:hover { background: var(--surface-2); color: var(--text); }
 
-        header.scrolled {
-            padding: 1rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+        #menuBtn { display: none; }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        /* ---------- Hero ---------- */
+        #hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 0 4rem; }
+        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center; }
+        .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.95rem; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.6rem; }
+        .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 4px rgba(52,211,153,0.18); }
+        .hero-text h1 { font-size: clamp(2.6rem, 6vw, 4.3rem); font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 1rem; }
+        .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text .subtitle { font-size: clamp(1.1rem, 2.5vw, 1.45rem); color: var(--text); font-weight: 600; margin-bottom: 1.2rem; }
+        .hero-text .subtitle .mono { color: var(--cyan); font-weight: 500; }
+        .hero-text p.lead { font-size: 1.05rem; color: var(--muted); max-width: 540px; margin-bottom: 2rem; }
+        .cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
+        .btn { padding: 0.9rem 1.6rem; border-radius: 13px; font-weight: 600; text-decoration: none; font-size: 0.98rem; display: inline-flex; align-items: center; gap: 0.6rem; transition: all 0.28s; border: 1px solid transparent; cursor: pointer; }
+        .btn-grad { background: var(--grad); color: #fff; box-shadow: 0 16px 40px -16px var(--violet); }
+        .btn-grad:hover { transform: translateY(-3px); box-shadow: 0 22px 50px -16px var(--violet); }
+        .btn-ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
+        .btn-ghost:hover { transform: translateY(-3px); border-color: var(--border-strong); background: var(--surface-2); }
 
-        nav ul {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-            align-items: center;
-        }
+        .socials { display: flex; gap: 0.7rem; margin-top: 1.8rem; }
+        .socials a { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-size: 1.1rem; transition: all 0.28s; }
+        .socials a:hover { color: var(--text); transform: translateY(-3px); border-color: var(--border-strong); }
 
-        nav a {
-            color: var(--gray-text);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-            font-size: 1rem;
-        }
+        .hero-photo { position: relative; justify-self: center; }
+        .hero-photo .ring { position: absolute; inset: -14px; border-radius: 28px; background: var(--grad); filter: blur(22px); opacity: 0.55; z-index: -1; animation: pulse 5s ease-in-out infinite; }
+        @keyframes pulse { 50% { opacity: 0.8; } }
+        .hero-photo img { width: 100%; max-width: 340px; border-radius: 24px; border: 1px solid var(--border-strong); box-shadow: var(--shadow); display: block; }
+        .float-chip { position: absolute; background: color-mix(in srgb, var(--bg-2) 86%, transparent); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 14px; padding: 0.7rem 0.95rem; font-size: 0.82rem; display: flex; align-items: center; gap: 0.55rem; box-shadow: var(--shadow); animation: bob 4s ease-in-out infinite; }
+        .float-chip i { color: var(--cyan); }
+        .float-chip.one { top: 18%; left: -38px; }
+        .float-chip.two { bottom: 14%; right: -30px; animation-delay: -2s; }
+        .float-chip.two i { color: var(--violet); }
+        @keyframes bob { 50% { transform: translateY(-12px); } }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
+        /* ---------- Sections ---------- */
+        section.block { padding: 5.5rem 0; }
+        .sec-head { text-align: center; max-width: 620px; margin: 0 auto 3rem; }
+        .sec-kicker { font-family: 'JetBrains Mono'; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.8rem; display: block; }
+        .sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -1px; }
+        .sec-head p { color: var(--muted); margin-top: 0.8rem; }
 
-        nav a:hover {
-            color: var(--primary-color);
-        }
+        .glass { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; backdrop-filter: blur(8px); transition: all 0.3s ease; }
 
-        nav a:hover::after {
-            width: 100%;
-        }
+        /* About / stats */
+        .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; }
+        .about-card { padding: 2.2rem; }
+        .about-card p { color: var(--muted); }
+        .about-card p + p { margin-top: 1rem; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .stat { padding: 1.5rem; text-align: center; }
+        .stat .num { font-family: 'Sora'; font-size: 2rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat .lbl { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
 
-        /* Hero Section */
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.5rem;
-            color: var(--gray-text);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--gray-text);
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-image {
-            position: relative;
-            animation: fadeInRight 0.8s ease-out 0.6s both;
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-image img {
-            width: 100%;
-            max-width: 450px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
-            border: 3px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .hero-image img:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.4);
-        }
-
-        /* CTA Buttons */
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
-            animation: fadeInUp 0.8s ease-out 0.6s both;
-        }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
-            color: white;
-        }
-
-        .btn-secondary-custom {
-            background: transparent;
-            color: var(--primary-color);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            border: 2px solid var(--primary-color);
-            margin-left: 1rem;
-            animation: fadeInUp 0.8s ease-out 0.8s both;
-        }
-
-        .btn-secondary-custom:hover {
-            background: var(--primary-color);
-            color: var(--dark-bg);
-            transform: translateY(-5px);
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            animation: fadeInUp 0.8s ease-out 1s both;
-        }
-
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .social-links a:hover {
-            background: var(--primary-color);
-            color: var(--dark-bg);
-            transform: translateY(-5px) rotate(10deg);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-        }
-
-        /* Section Styles */
-        section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .skill-card {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            background: rgba(0, 212, 255, 0.1);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
-        }
-
-        .skill-card i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .skill-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--light-text);
-        }
+        /* Skills */
+        .skill-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.3rem; }
+        .skill-cat { padding: 1.8rem; }
+        .skill-cat:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+        .skill-cat .ic { width: 48px; height: 48px; border-radius: 13px; background: var(--surface-2); display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 1.1rem; color: var(--cyan); border: 1px solid var(--border); }
+        .skill-cat h3 { font-size: 1.1rem; margin-bottom: 0.9rem; }
+        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .chip { font-family: 'JetBrains Mono'; font-size: 0.78rem; padding: 0.35rem 0.75rem; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); }
 
         /* Timeline */
-        .timeline {
-            position: relative;
-            padding: 2rem 0;
-        }
+        .timeline { position: relative; max-width: 760px; margin: 0 auto; padding-left: 2rem; }
+        .timeline::before { content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--violet), var(--cyan)); border-radius: 2px; opacity: 0.5; }
+        .tl-item { position: relative; padding: 0 0 2rem 1.8rem; }
+        .tl-item::before { content: ''; position: absolute; left: -2rem; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--violet); box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 20%, transparent); }
+        .tl-date { font-family: 'JetBrains Mono'; font-size: 0.82rem; color: var(--cyan); }
+        .tl-item h4 { font-size: 1.18rem; margin: 0.3rem 0; }
+        .tl-item .org { color: var(--text); font-weight: 500; }
+        .tl-item .desc { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
-        }
+        /* Projects */
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.6rem; }
+        .proj-card { overflow: hidden; display: flex; flex-direction: column; }
+        .proj-card:hover { transform: translateY(-8px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+        .proj-media { position: relative; height: 210px; overflow: hidden; border-bottom: 1px solid var(--border); }
+        .proj-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .proj-card:hover .proj-media img { transform: scale(1.07); }
+        .proj-tag { position: absolute; top: 0.9rem; left: 0.9rem; font-family: 'JetBrains Mono'; font-size: 0.72rem; padding: 0.3rem 0.7rem; border-radius: 999px; background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--border-strong); color: var(--text); }
+        .proj-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+        .proj-body h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
+        .proj-body .pdesc { color: var(--muted); font-size: 0.93rem; flex: 1; }
+        .proj-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.1rem; }
 
-        .timeline-item {
-            display: flex;
-            margin-bottom: 3rem;
-            position: relative;
-        }
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+        .contact-card { padding: 2rem; text-align: center; text-decoration: none; color: inherit; display: block; }
+        .contact-card:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+        .contact-card .ic { width: 54px; height: 54px; border-radius: 14px; margin: 0 auto 1rem; display: grid; place-items: center; font-size: 1.4rem; color: #fff; background: var(--grad); }
+        .contact-card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+        .contact-card p { color: var(--muted); font-size: 0.9rem; word-break: break-word; }
 
-        .timeline-item:nth-child(odd) {
-            flex-direction: row-reverse;
-        }
+        footer { border-top: 1px solid var(--border); padding: 2.2rem 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
 
-        .timeline-content {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            width: 45%;
-            border: 2px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-        }
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.in { opacity: 1; transform: none; }
 
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
-        }
+        #toTop { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; border-radius: 14px; background: var(--grad); color: #fff; border: none; cursor: pointer; font-size: 1.1rem; z-index: 900; opacity: 0; pointer-events: none; transition: all 0.3s; box-shadow: 0 14px 34px -12px var(--violet); }
+        #toTop.show { opacity: 1; pointer-events: all; }
+        #toTop:hover { transform: translateY(-4px); }
 
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            border: 4px solid var(--dark-bg);
-            box-shadow: 0 0 20px var(--primary-color);
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: rgba(0, 212, 255, 0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.3);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .project-card:hover .project-image {
-            transform: scale(1.1);
-        }
-
-        .project-info {
-            padding: 2rem;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--light-text);
-        }
-
-        .project-description {
-            color: var(--gray-text);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tag {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary-color);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-link.primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-        }
-
-        .project-link.secondary {
-            background: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .project-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .contact-card {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            background: rgba(0, 212, 255, 0.1);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
-        }
-
-        .contact-card i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .contact-card h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--light-text);
-        }
-
-        .contact-card p {
-            color: var(--gray-text);
-        }
-
-        /* Theme Toggle */
-        #themeToggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        #themeToggle:hover {
-            transform: scale(1.1) rotate(20deg);
-        }
-
-        /* Scroll to Top */
-        #scrollTop {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(0, 212, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        #scrollTop.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #scrollTop:hover {
-            transform: translateY(-5px);
-            background: var(--primary-color);
-            color: var(--dark-bg);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(0, 212, 255, 0.1);
-            color: var(--gray-text);
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 3rem;
-            }
-
-            .hero-image img {
-                margin: 0 auto;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .timeline::before {
-                left: 0;
-            }
-
-            .timeline-item {
-                flex-direction: column !important;
-            }
-
-            .timeline-content {
-                width: 100%;
-                margin-left: 2rem;
-            }
-
-            .timeline-dot {
-                left: 0;
-                transform: translateX(0);
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .btn-secondary-custom {
-                margin-left: 0;
-                margin-top: 1rem;
-            }
-        }
-
-        /* Language Dropdown */
-        .language-dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--darker-bg);
-            border: 2px solid rgba(0, 212, 255, 0.2);
-            border-radius: 10px;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-            display: none;
-            min-width: 150px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-menu button {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            background: transparent;
-            border: none;
-            color: var(--gray-text);
-            text-align: left;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .dropdown-menu button:hover {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--primary-color);
-        }
-
-        /* Mobile Menu */
-        #menuBtn {
-            display: none;
-            position: fixed;
-            top: 1.5rem;
-            right: 2rem;
-            z-index: 1001;
-            background: rgba(0, 212, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 0.7rem 1rem;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            #menuBtn {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background: rgba(10, 25, 47, 0.98);
-                backdrop-filter: blur(20px);
-                transition: right 0.4s ease;
-                padding: 5rem 2rem;
-                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
-                border-left: 2px solid rgba(0, 212, 255, 0.2);
-            }
-
-            body.light nav {
-                background: rgba(248, 249, 250, 0.98);
-            }
-
-            nav.active {
-                right: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 2rem;
-                align-items: flex-start;
-            }
-
-            .language-dropdown {
-                width: 100%;
-            }
-
-            .dropdown-menu {
-                position: static;
-                width: 100%;
-                margin-top: 1rem;
-            }
-        }
-
-        /* Code Font for Technical Content */
-        code, .code-font {
-            font-family: 'JetBrains Mono', monospace;
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-text .badge, .cta-row, .socials { justify-content: center; }
+            .hero-text p.lead { margin-left: auto; margin-right: auto; }
+            .hero-photo { order: -1; margin-bottom: 1rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            #menuBtn { display: grid; }
+            nav { position: fixed; inset: 0 0 0 auto; width: min(80%, 320px); height: 100vh; background: var(--bg-2); border-left: 1px solid var(--border); padding: 5.5rem 2rem 2rem; transform: translateX(100%); transition: transform 0.4s ease; box-shadow: var(--shadow); }
+            nav.open { transform: none; }
+            nav ul { flex-direction: column; align-items: flex-start; gap: 1.6rem; }
+            .float-chip { display: none; }
         }
     </style>
 </head>
 
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animated"></div>
+    <div class="aurora"><span class="blob v"></span><span class="blob c"></span><span class="blob p"></span></div>
+    <div class="grain"></div>
 
     <!-- Header -->
     <header id="header">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="logo">OJ</div>
-
-            <button id="menuBtn" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <nav id="mobileMenu">
+        <div class="container nav-wrap">
+            <a href="#hero" class="logo"><span class="mark">OJ</span> Osama<span style="color:var(--muted);font-weight:500">.dev</span></a>
+            <nav id="nav">
                 <ul>
-                    <li><a href="#hero" onclick="closeMobileMenu()">Accueil</a></li>
-                    <li><a href="#about" onclick="closeMobileMenu()">À propos</a></li>
-                    <li><a href="#skills" onclick="closeMobileMenu()">Compétences</a></li>
-                    <li><a href="#education" onclick="closeMobileMenu()">Formation</a></li>
-                    <li><a href="#projects" onclick="closeMobileMenu()">Projets</a></li>
-                    <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
-                    
-                    <li class="language-dropdown">
-                        <button id="languageBtn" onclick="toggleLanguageDropdown()" style="background: transparent; border: none; color: var(--gray-text); cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 0.5rem;">
-                            <span id="currentLang">FR</span>
-                            <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
-                        </button>
-                        <div id="languageDropdown" class="dropdown-menu">
-                            <button onclick="setLanguage('fr')">
-                                <span>🇫🇷</span>
-                                <span>Français</span>
-                            </button>
-                            <button onclick="setLanguage('en')">
-                                <span>🇬🇧</span>
-                                <span>English</span>
-                            </button>
-                        </div>
-                    </li>
+                    <li><a href="#about" onclick="closeMenu()" data-i18n="navAbout">À propos</a></li>
+                    <li><a href="#skills" onclick="closeMenu()" data-i18n="navSkills">Compétences</a></li>
+                    <li><a href="#education" onclick="closeMenu()" data-i18n="navEdu">Parcours</a></li>
+                    <li><a href="#projects" onclick="closeMenu()" data-i18n="navProjects">Projets</a></li>
+                    <li><a href="#contact" onclick="closeMenu()" data-i18n="navContact">Contact</a></li>
                 </ul>
             </nav>
+            <div class="nav-actions">
+                <div class="lang-wrap">
+                    <button class="pill-btn" onclick="toggleLang(event)"><span id="curLang" class="mono" style="font-size:0.8rem">FR</span></button>
+                    <div id="langMenu" class="lang-menu">
+                        <button onclick="setLanguage('fr')"><span>🇫🇷</span> Français</button>
+                        <button onclick="setLanguage('en')"><span>🇬🇧</span> English</button>
+                    </div>
+                </div>
+                <button class="pill-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="pill-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="hero">
-        <div class="hero-content">
+        <div class="container hero-grid">
             <div class="hero-text">
-                <h1 id="heroTitle">Osama Jammi</h1>
-                <div class="subtitle" id="heroSubtitle">Développeur Full Stack & Spécialiste ERP</div>
-                <p id="heroDescription">
-                    Passionné par le développement web et les systèmes d'information. Spécialisé en développement Full Stack avec Spring Boot, Angular, et l'implémentation de solutions ERP comme Odoo.
-                </p>
-                <div>
-                    <a href="#contact" class="btn-primary-custom" id="contactBtn">Me Contacter</a>
-                    <a href="cv.pdf" download class="btn-secondary-custom" id="cvBtn">Télécharger CV</a>
+                <span class="badge"><span class="dot"></span> <span data-i18n="heroBadge">Disponible pour opportunités · 2026</span></span>
+                <h1>Osama Jammi<br><span class="grad-text" data-i18n="heroRole">Développeur Full Stack</span></h1>
+                <div class="subtitle" data-i18n="heroSub">& Spécialiste ERP <span class="mono">// Spring Boot · Angular · React Native</span></div>
+                <p class="lead" data-i18n="heroLead">Élève ingénieur en Management & Gouvernance des SI. Je conçois des applications web et mobiles complètes, des API REST sécurisées et des intégrations ERP qui font tourner les opérations métier.</p>
+                <div class="cta-row">
+                    <a href="#projects" class="btn btn-grad"><i class="fas fa-layer-group"></i> <span data-i18n="heroCtaProjects">Voir mes projets</span></a>
+                    <a href="cv.pdf" download class="btn btn-ghost"><i class="fas fa-download"></i> <span data-i18n="heroCtaCv">Télécharger CV</span></a>
                 </div>
-                <div class="social-links">
-                    <a href="https://github.com/osama-jammi" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:jammiosama@gmail.com" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                <div class="socials">
+                    <a href="https://github.com/osama-jammi" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:jammiosama@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+212646953526" aria-label="Phone"><i class="fas fa-phone"></i></a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="profile.png" alt="Osama Jammi - Full Stack Developer">
+            <div class="hero-photo">
+                <div class="ring"></div>
+                <img src="profile.png" alt="Osama Jammi">
+                <div class="float-chip one"><i class="fas fa-code"></i> <span data-i18n="chipFullstack">Full Stack</span></div>
+                <div class="float-chip two"><i class="fas fa-shield-halved"></i> Keycloak · OAuth2</div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title" id="aboutTitle">À Propos de Moi</h2>
-        <p id="aboutText" style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--gray-text); font-size: 1.1rem; line-height: 1.8;">
-            Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'École Nationale Supérieure de l'IA et Sciences des Données. Passionné par le développement web et les systèmes ERP, j'ai acquis une solide expérience en développement Full Stack lors de mon stage chez Rechbois, où j'ai travaillé sur des projets critiques utilisant Spring Boot, Angular, et Keycloak. Mon objectif est de créer des solutions technologiques innovantes et efficaces qui répondent aux besoins des entreprises modernes.
-        </p>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <h2 class="section-title" id="skillsTitle">Compétences Techniques</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="fab fa-java"></i>
-                <h3>Java</h3>
+    <!-- About -->
+    <section id="about" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 01</span>
+                <h2 data-i18n="aboutTitle">À propos de moi</h2>
             </div>
-            <div class="skill-card">
-                <i class="fab fa-html5"></i>
-                <h3>HTML5</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-css3-alt"></i>
-                <h3>CSS3</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-js"></i>
-                <h3>JavaScript</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-python"></i>
-                <h3>Python</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-php"></i>
-                <h3>PHP</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-wind"></i>
-                <h3>Tailwind CSS</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-bootstrap"></i>
-                <h3>Bootstrap</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-react"></i>
-                <h3>React</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-angular"></i>
-                <h3>Angular</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-leaf"></i>
-                <h3>Spring Boot</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-key"></i>
-                <h3>Keycloak</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-database"></i>
-                <h3>MySQL</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-server"></i>
-                <h3>SQL Server</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-database"></i>
-                <h3>Oracle DBA</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-docker"></i>
-                <h3>Docker</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-git-alt"></i>
-                <h3>Git</h3>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-linux"></i>
-                <h3>Linux</h3>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education">
-        <h2 class="section-title" id="educationTitle">Mon Parcours</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="code-font" style="color: var(--primary-color); font-size: 1.2rem; margin-bottom: 0.5rem;">2025 – 2027</h3>
-                    <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;" id="edu1Title">Cycle d'Ingénieur en Management et Gouvernance des SI</h4>
-                    <p style="color: var(--gray-text);" id="edu1School">École Nationale Supérieure de l'IA et Sciences des Données, Taroudant</p>
-                    <p style="color: var(--gray-text); margin-top: 1rem;" id="edu1Desc">Spécialisation en Management et Gouvernance des Systèmes d'Information</p>
+            <div class="about-grid">
+                <div class="glass about-card reveal">
+                    <p data-i18n="aboutP1">Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'ENSIASD (Taroudant), spécialisé en Management, Audit et Gouvernance des SI.</p>
+                    <p data-i18n="aboutP2">Lors de mon stage chez Riche Bois (Casablanca), j'ai développé un système complet de gestion de stock et de transport — backend Spring Boot, web Angular et application mobile React Native — tout en migrant la sécurité de Auth0 vers Keycloak pour 3 systèmes critiques.</p>
+                    <p data-i18n="aboutP3">J'aime transformer des besoins métier complexes en solutions techniques propres, sécurisées et durables.</p>
                 </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="code-font" style="color: var(--primary-color); font-size: 1.2rem; margin-bottom: 0.5rem;">2023 – 2024</h3>
-                    <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;" id="edu2Title">DEUP Génie Informatique</h4>
-                    <p style="color: var(--gray-text);" id="edu2School">Université Ibn Zohr, Taroudant</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="code-font" style="color: var(--primary-color); font-size: 1.2rem; margin-bottom: 0.5rem;">2022</h3>
-                    <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;" id="edu3Title">Baccalauréat Sciences Physiques</h4>
-                    <p style="color: var(--gray-text);" id="edu3School">Lycée</p>
+                <div class="stats">
+                    <div class="glass stat reveal"><div class="num">3+</div><div class="lbl" data-i18n="statSystems">Systèmes critiques sécurisés</div></div>
+                    <div class="glass stat reveal"><div class="num">4</div><div class="lbl" data-i18n="statProjects">Projets majeurs livrés</div></div>
+                    <div class="glass stat reveal"><div class="num">3</div><div class="lbl" data-i18n="statStacks">Stacks (web · mobile · ERP)</div></div>
+                    <div class="glass stat reveal"><div class="num">2027</div><div class="lbl" data-i18n="statGrad">Diplôme d'ingénieur</div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2 class="section-title" id="projectsTitle">Mes Projets</h2>
-        <div class="projects-grid">
-            <!-- Project 1: Stock Management System -->
-            <div class="project-card">
-                <img src="project1.png" alt="Système de Gestion de Stock" class="project-image">
-                <div class="project-info">
-                    <h3 class="project-title" id="project1Title">Système de Gestion de Stock</h3>
-                    <p class="project-description" id="project1Desc">
-                        Développement d'un système complet de gestion de stock pour chantiers avec intégration ERP Devalto et synchronisation en temps réel.
-                    </p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Spring Boot</span>
-                        <span class="tech-tag">Angular</span>
-                        <span class="tech-tag">Keycloak</span>
-                        <span class="tech-tag">SQL Server</span>
+    <!-- Skills -->
+    <section id="skills" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 02</span>
+                <h2 data-i18n="skillsTitle">Stack technique</h2>
+                <p data-i18n="skillsSub">Les outils que j'utilise pour construire, sécuriser et déployer.</p>
+            </div>
+            <div class="skill-cats">
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-code"></i></div>
+                    <h3 data-i18n="skLangFw">Langages & Frameworks</h3>
+                    <div class="chips"><span class="chip">Java</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">React / RN</span></div>
+                </div>
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-database"></i></div>
+                    <h3 data-i18n="skData">Bases de données</h3>
+                    <div class="chips"><span class="chip">Oracle</span><span class="chip">MySQL</span><span class="chip">SQL Server</span><span class="chip">PostgreSQL</span></div>
+                </div>
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-shield-halved"></i></div>
+                    <h3 data-i18n="skSec">Sécurité & Messagerie</h3>
+                    <div class="chips"><span class="chip">Keycloak</span><span class="chip">OAuth2 / JWT</span><span class="chip">Apache Kafka</span><span class="chip">RabbitMQ</span></div>
+                </div>
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-gears"></i></div>
+                    <h3 data-i18n="skDevops">DevOps & Outils</h3>
+                    <div class="chips"><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">Linux</span><span class="chip">Postman</span><span class="chip">JUnit 5</span><span class="chip">Mockito</span></div>
+                </div>
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-cubes"></i></div>
+                    <h3 data-i18n="skErp">ERP & BI</h3>
+                    <div class="chips"><span class="chip">Odoo</span><span class="chip">Devalto</span><span class="chip">Power BI</span><span class="chip">Excel</span></div>
+                </div>
+                <div class="glass skill-cat reveal">
+                    <div class="ic"><i class="fas fa-sitemap"></i></div>
+                    <h3 data-i18n="skGov">Gouvernance & Méthodo</h3>
+                    <div class="chips"><span class="chip">ITIL v4</span><span class="chip">COBIT</span><span class="chip">CMMI</span><span class="chip">Agile Scrum</span><span class="chip">Kanban</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 03</span>
+                <h2 data-i18n="eduTitle">Parcours & expérience</h2>
+            </div>
+            <div class="timeline">
+                <div class="tl-item reveal">
+                    <span class="tl-date">2025 — 2027</span>
+                    <h4 data-i18n="edu1">Cycle d'Ingénieur — Management & Gouvernance des SI</h4>
+                    <p class="org" data-i18n="edu1org">ENSIASD, Taroudant</p>
+                    <p class="desc" data-i18n="edu1desc">Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <span class="tl-date" data-i18n="expDate">Juil. 2025 — Sept. 2025</span>
+                    <h4 data-i18n="exp1">Stage Développeur Full Stack — Riche Bois</h4>
+                    <p class="org" data-i18n="exp1org">Casablanca</p>
+                    <p class="desc" data-i18n="exp1desc">Système de gestion de stock & transport (Spring Boot, Angular, React Native), API REST sécurisées, intégration ERP Devalto, migration Auth0 → Keycloak avec double authentification.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <span class="tl-date">2023 — 2024</span>
+                    <h4 data-i18n="edu2">DEUP Génie Informatique</h4>
+                    <p class="org" data-i18n="edu2org">Université Ibn Zohr, Taroudant</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 04</span>
+                <h2 data-i18n="projTitle">Projets sélectionnés</h2>
+                <p data-i18n="projSub">Quelques réalisations full-stack, mobiles et ERP.</p>
+            </div>
+            <div class="proj-grid">
+                <!-- Transport & Livraison (NEW) -->
+                <div class="glass proj-card reveal">
+                    <div class="proj-media"><span class="proj-tag" data-i18n="tagFeatured">★ Récent · Full Stack + Mobile</span><img src="project4.svg" alt="Transport & Livraison Riche Bois"></div>
+                    <div class="proj-body">
+                        <h3 data-i18n="proj4Title">Transport & Livraison — Riche Bois</h3>
+                        <p class="pdesc" data-i18n="proj4Desc">Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).</p>
+                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">React Native</span><span class="chip">Expo</span><span class="chip">SQL Server</span><span class="chip">QR · GPS</span></div>
                     </div>
-                    <!-- <div class="project-links">
-                        <a href="#" class="project-link primary">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span id="viewProject">Voir Projet</span>
-                        </a>
-                    </div> -->
                 </div>
-            </div>
-
-            <!-- Project 2: ERP Odoo -->
-            <div class="project-card">
-                <img src="project2.png" alt="Implémentation ERP Odoo" class="project-image">
-                <div class="project-info">
-                    <h3 class="project-title" id="project2Title">Implémentation ERP Odoo</h3>
-                    <p class="project-description" id="project2Desc">
-                        Étude approfondie et développement de modules personnalisés pour la gestion commerciale et logistique sur Odoo.
-                    </p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Odoo</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">XML</span>
+                <!-- Stock -->
+                <div class="glass proj-card reveal">
+                    <div class="proj-media"><span class="proj-tag">Full Stack · ERP</span><img src="project1.png" alt="Système de Gestion de Stock"></div>
+                    <div class="proj-body">
+                        <h3 data-i18n="proj1Title">Système de Gestion de Stock</h3>
+                        <p class="pdesc" data-i18n="proj1Desc">Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.</p>
+                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span></div>
                     </div>
-                    <!-- <div class="project-links">
-                        <a href="#" class="project-link primary">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span id="viewProject2">Voir Projet</span>
-                        </a>
-                    </div> -->
                 </div>
-            </div>
-
-            <!-- Project 3: Distributed Messaging -->
-            <div class="project-card">
-                <img src="project3.png" alt="Système de Messagerie Distribué" class="project-image">
-                <div class="project-info">
-                    <h3 class="project-title" id="project3Title">Système de Messagerie Distribué</h3>
-                    <p class="project-description" id="project3Desc">
-                        Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.
-                    </p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Apache Kafka</span>
-                        <span class="tech-tag">RabbitMQ</span>
-                        <span class="tech-tag">Java</span>
-                        <span class="tech-tag">Oracle DB</span>
+                <!-- Odoo -->
+                <div class="glass proj-card reveal">
+                    <div class="proj-media"><span class="proj-tag">ERP</span><img src="project2.png" alt="Implémentation ERP Odoo"></div>
+                    <div class="proj-body">
+                        <h3 data-i18n="proj2Title">Implémentation ERP Odoo</h3>
+                        <p class="pdesc" data-i18n="proj2Desc">Étude fonctionnelle et technique d'Odoo et développement de modules personnalisés (modèles, vues, contrôleurs, règles de sécurité).</p>
+                        <div class="proj-tech chips"><span class="chip">Odoo</span><span class="chip">Python</span><span class="chip">PostgreSQL</span><span class="chip">XML</span></div>
                     </div>
-                    <!-- <div class="project-links">
-                        <a href="#" class="project-link primary">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span id="viewProject3">Voir Projet</span>
-                        </a>
-                    </div> -->
+                </div>
+                <!-- Messaging -->
+                <div class="glass proj-card reveal">
+                    <div class="proj-media"><span class="proj-tag" data-i18n="tagArchi">Architecture distribuée</span><img src="project3.png" alt="Système de Messagerie Distribué"></div>
+                    <div class="proj-body">
+                        <h3 data-i18n="proj3Title">Système de Messagerie Distribué</h3>
+                        <p class="pdesc" data-i18n="proj3Desc">Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.</p>
+                        <div class="proj-tech chips"><span class="chip">Apache Kafka</span><span class="chip">RabbitMQ</span><span class="chip">Java</span><span class="chip">Oracle DB</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title" id="contactTitle">Me Contacter</h2>
-        <p id="contactText" style="text-align: center; max-width: 600px; margin: 0 auto 3rem; color: var(--gray-text); font-size: 1.1rem;">
-            N'hésitez pas à me contacter pour toute opportunité de collaboration ou pour discuter de projets passionnants.
-        </p>
-        <div class="contact-grid">
-            <a href="mailto:jammiosama@gmail.com" class="contact-card">
-                <i class="fas fa-envelope"></i>
-                <h3>Email</h3>
-                <p>jammiosama@gmail.com</p>
-            </a>
-            <a href="tel:+212469535426" class="contact-card">
-                <i class="fas fa-phone"></i>
-                <h3 id="phoneLabel">Téléphone</h3>
-                <p>+212 646 95 35 26</p>
-            </a>
-            <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" class="contact-card">
-                <i class="fab fa-linkedin"></i>
-                <h3>LinkedIn</h3>
-                <p>jammi-osama</p>
-            </a>
-            <a href="https://github.com/osama-jammi" target="_blank" class="contact-card">
-                <i class="fab fa-github"></i>
-                <h3>GitHub</h3>
-                <p>osama-jammi</p>
-            </a>
+    <!-- Contact -->
+    <section id="contact" class="block">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-kicker">// 05</span>
+                <h2 data-i18n="contactTitle">Travaillons ensemble</h2>
+                <p data-i18n="contactSub">Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.</p>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:jammiosama@gmail.com" class="glass contact-card reveal"><div class="ic"><i class="fas fa-envelope"></i></div><h3>Email</h3><p>jammiosama@gmail.com</p></a>
+                <a href="tel:+212646953526" class="glass contact-card reveal"><div class="ic"><i class="fas fa-phone"></i></div><h3 data-i18n="phoneLabel">Téléphone</h3><p>+212 646 95 35 26</p></a>
+                <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" class="glass contact-card reveal"><div class="ic"><i class="fab fa-linkedin-in"></i></div><h3>LinkedIn</h3><p>jammi-osama</p></a>
+                <a href="https://github.com/osama-jammi" target="_blank" class="glass contact-card reveal"><div class="ic"><i class="fab fa-github"></i></div><h3>GitHub</h3><p>osama-jammi</p></a>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; <span id="year"></span> Osama Jammi. <span id="footerText">Tous droits réservés.</span></p>
+        <div class="container">
+            <p>© <span id="year"></span> Osama Jammi · <span data-i18n="footer">Conçu & développé avec passion.</span></p>
+        </div>
     </footer>
 
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <i class="fas fa-moon" id="themeIcon"></i>
-    </button>
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollTop" onclick="scrollToTop()" aria-label="Scroll to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Top"><i class="fas fa-arrow-up"></i></button>
 
     <script>
-        // Language Data
         const translations = {
             fr: {
-                heroTitle: "Osama Jammi",
-                heroSubtitle: "Développeur Full Stack & Spécialiste ERP",
-                heroDescription: "Passionné par le développement web et les systèmes d'information. Spécialisé en développement Full Stack avec Spring Boot, Angular, et l'implémentation de solutions ERP comme Odoo.",
-                contactBtn: "Me Contacter",
-                cvBtn: "Télécharger CV",
-                aboutTitle: "À Propos de Moi",
-                aboutText: "Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'École Nationale Supérieure de l'IA et Sciences des Données. Passionné par le développement web et les systèmes ERP, j'ai acquis une solide expérience en développement Full Stack lors de mon stage chez Rechbois, où j'ai travaillé sur des projets critiques utilisant Spring Boot, Angular, et Keycloak. Mon objectif est de créer des solutions technologiques innovantes et efficaces qui répondent aux besoins des entreprises modernes.",
-                skillsTitle: "Compétences Techniques",
-                educationTitle: "Mon Parcours",
-                edu1Title: "Cycle d'Ingénieur en Management et Gouvernance des SI",
-                edu1School: "École Nationale Supérieure de l'IA et Sciences des Données, Taroudant",
-                edu1Desc: "Spécialisation en Management et Gouvernance des Systèmes d'Information",
-                edu2Title: "DEUP Génie Informatique",
-                edu2School: "Université Ibn Zohr, Taroudant",
-                edu3Title: "Baccalauréat Sciences Physiques",
-                edu3School: "Lycée",
-                projectsTitle: "Mes Projets",
-                project1Title: "Système de Gestion de Stock",
-                project1Desc: "Développement d'un système complet de gestion de stock pour chantiers avec intégration ERP Devalto et synchronisation en temps réel.",
-                project2Title: "Implémentation ERP Odoo",
-                project2Desc: "Étude approfondie et développement de modules personnalisés pour la gestion commerciale et logistique sur Odoo.",
-                project3Title: "Système de Messagerie Distribué",
-                project3Desc: "Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.",
-                viewProject: "Voir Projet",
-                viewProject2: "Voir Projet",
-                viewProject3: "Voir Projet",
-                contactTitle: "Me Contacter",
-                contactText: "N'hésitez pas à me contacter pour toute opportunité de collaboration ou pour discuter de projets passionnants.",
-                phoneLabel: "Téléphone",
-                footerText: "Tous droits réservés.",
-                currentLang: "FR"
+                navAbout:"À propos",navSkills:"Compétences",navEdu:"Parcours",navProjects:"Projets",navContact:"Contact",
+                heroBadge:"Disponible pour opportunités · 2026",heroRole:"Développeur Full Stack",
+                heroSub:'& Spécialiste ERP <span class="mono">// Spring Boot · Angular · React Native</span>',
+                heroLead:"Élève ingénieur en Management & Gouvernance des SI. Je conçois des applications web et mobiles complètes, des API REST sécurisées et des intégrations ERP qui font tourner les opérations métier.",
+                heroCtaProjects:"Voir mes projets",heroCtaCv:"Télécharger CV",chipFullstack:"Full Stack",
+                aboutTitle:"À propos de moi",
+                aboutP1:"Je suis Osama Jammi, élève ingénieur en Systèmes d'Information à l'ENSIASD (Taroudant), spécialisé en Management, Audit et Gouvernance des SI.",
+                aboutP2:"Lors de mon stage chez Riche Bois (Casablanca), j'ai développé un système complet de gestion de stock et de transport — backend Spring Boot, web Angular et application mobile React Native — tout en migrant la sécurité de Auth0 vers Keycloak pour 3 systèmes critiques.",
+                aboutP3:"J'aime transformer des besoins métier complexes en solutions techniques propres, sécurisées et durables.",
+                statSystems:"Systèmes critiques sécurisés",statProjects:"Projets majeurs livrés",statStacks:"Stacks (web · mobile · ERP)",statGrad:"Diplôme d'ingénieur",
+                skillsTitle:"Stack technique",skillsSub:"Les outils que j'utilise pour construire, sécuriser et déployer.",
+                skLangFw:"Langages & Frameworks",skData:"Bases de données",skSec:"Sécurité & Messagerie",skDevops:"DevOps & Outils",skErp:"ERP & BI",skGov:"Gouvernance & Méthodo",
+                eduTitle:"Parcours & expérience",
+                edu1:"Cycle d'Ingénieur — Management & Gouvernance des SI",edu1org:"ENSIASD, Taroudant",edu1desc:"Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.",
+                expDate:"Juil. 2025 — Sept. 2025",exp1:"Stage Développeur Full Stack — Riche Bois",exp1org:"Casablanca",
+                exp1desc:"Système de gestion de stock & transport (Spring Boot, Angular, React Native), API REST sécurisées, intégration ERP Devalto, migration Auth0 → Keycloak avec double authentification.",
+                edu2:"DEUP Génie Informatique",edu2org:"Université Ibn Zohr, Taroudant",
+                projTitle:"Projets sélectionnés",projSub:"Quelques réalisations full-stack, mobiles et ERP.",
+                tagFeatured:"★ Récent · Full Stack + Mobile",tagArchi:"Architecture distribuée",
+                proj4Title:"Transport & Livraison — Riche Bois",
+                proj4Desc:"Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).",
+                proj1Title:"Système de Gestion de Stock",
+                proj1Desc:"Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.",
+                proj2Title:"Implémentation ERP Odoo",
+                proj2Desc:"Étude fonctionnelle et technique d'Odoo et développement de modules personnalisés (modèles, vues, contrôleurs, règles de sécurité).",
+                proj3Title:"Système de Messagerie Distribué",
+                proj3Desc:"Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.",
+                contactTitle:"Travaillons ensemble",contactSub:"Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.",
+                phoneLabel:"Téléphone",footer:"Conçu & développé avec passion.",curLang:"FR"
             },
             en: {
-                heroTitle: "Osama Jammi",
-                heroSubtitle: "Full Stack Developer & ERP Specialist",
-                heroDescription: "Passionate about web development and information systems. Specialized in Full Stack development with Spring Boot, Angular, and ERP solutions implementation like Odoo.",
-                contactBtn: "Contact Me",
-                cvBtn: "Download CV",
-                aboutTitle: "About Me",
-                aboutText: "I am Osama Jammi, an engineering student in Information Systems at the National School of AI and Data Sciences. Passionate about web development and ERP systems, I gained solid experience in Full Stack development during my internship at Rechbois, where I worked on critical projects using Spring Boot, Angular, and Keycloak. My goal is to create innovative and efficient technological solutions that meet the needs of modern businesses.",
-                skillsTitle: "Technical Skills",
-                educationTitle: "My Journey",
-                edu1Title: "Engineering Cycle in IS Management and Governance",
-                edu1School: "National School of AI and Data Sciences, Taroudant",
-                edu1Desc: "Specialization in Information Systems Management and Governance",
-                edu2Title: "DEUP Computer Engineering",
-                edu2School: "Ibn Zohr University, Taroudant",
-                edu3Title: "Bachelor's Degree in Physical Sciences",
-                edu3School: "High School",
-                projectsTitle: "My Projects",
-                project1Title: "Stock Management System",
-                project1Desc: "Development of a complete stock management system for construction sites with Devalto ERP integration and real-time synchronization.",
-                project2Title: "ERP Odoo Implementation",
-                project2Desc: "In-depth study and development of custom modules for commercial and logistics management on Odoo.",
-                project3Title: "Distributed Messaging System",
-                project3Desc: "Design of event-driven architectures for distributed systems with Apache Kafka and RabbitMQ.",
-                viewProject: "View Project",
-                viewProject2: "View Project",
-                viewProject3: "View Project",
-                contactTitle: "Contact Me",
-                contactText: "Feel free to contact me for any collaboration opportunity or to discuss exciting projects.",
-                phoneLabel: "Phone",
-                footerText: "All rights reserved.",
-                currentLang: "EN"
+                navAbout:"About",navSkills:"Skills",navEdu:"Journey",navProjects:"Projects",navContact:"Contact",
+                heroBadge:"Open to opportunities · 2026",heroRole:"Full Stack Developer",
+                heroSub:'& ERP Specialist <span class="mono">// Spring Boot · Angular · React Native</span>',
+                heroLead:"Information Systems engineering student. I build complete web & mobile apps, secure REST APIs and ERP integrations that keep business operations running.",
+                heroCtaProjects:"View my projects",heroCtaCv:"Download CV",chipFullstack:"Full Stack",
+                aboutTitle:"About me",
+                aboutP1:"I'm Osama Jammi, an Information Systems engineering student at ENSIASD (Taroudant), specialized in IS Management, Audit and Governance.",
+                aboutP2:"During my internship at Riche Bois (Casablanca), I built a complete stock & transport management system — Spring Boot backend, Angular web and a React Native mobile app — while migrating security from Auth0 to Keycloak across 3 critical systems.",
+                aboutP3:"I love turning complex business needs into clean, secure and maintainable technical solutions.",
+                statSystems:"Critical systems secured",statProjects:"Major projects delivered",statStacks:"Stacks (web · mobile · ERP)",statGrad:"Engineering degree",
+                skillsTitle:"Tech stack",skillsSub:"The tools I use to build, secure and ship.",
+                skLangFw:"Languages & Frameworks",skData:"Databases",skSec:"Security & Messaging",skDevops:"DevOps & Tools",skErp:"ERP & BI",skGov:"Governance & Methods",
+                eduTitle:"Journey & experience",
+                edu1:"Engineering Cycle — IS Management & Governance",edu1org:"ENSIASD, Taroudant",edu1desc:"Specialization in IS Governance, Audit and Management.",
+                expDate:"Jul. 2025 — Sep. 2025",exp1:"Full Stack Developer Intern — Riche Bois",exp1org:"Casablanca",
+                exp1desc:"Stock & transport management system (Spring Boot, Angular, React Native), secure REST APIs, Devalto ERP integration, Auth0 → Keycloak migration with two-factor auth.",
+                edu2:"DEUP Computer Engineering",edu2org:"Ibn Zohr University, Taroudant",
+                projTitle:"Selected projects",projSub:"A few full-stack, mobile and ERP builds.",
+                tagFeatured:"★ Recent · Full Stack + Mobile",tagArchi:"Distributed architecture",
+                proj4Title:"Transport & Delivery — Riche Bois",
+                proj4Desc:"Complete transport & delivery management platform: Angular back-office, Spring Boot API and a React Native mobile app for drivers (QR scanning of delivery notes, GPS tracking, depot & trip management, supervisor/admin roles).",
+                proj1Title:"Stock Management System",
+                proj1Desc:"Complete stock management system for construction sites with Devalto ERP integration, real-time sync and centralized security via Keycloak.",
+                proj2Title:"ERP Odoo Implementation",
+                proj2Desc:"Functional and technical study of Odoo and development of custom modules (models, views, controllers, security rules).",
+                proj3Title:"Distributed Messaging System",
+                proj3Desc:"Design of event-driven architectures for distributed systems with Apache Kafka and RabbitMQ.",
+                contactTitle:"Let's work together",contactSub:"An opportunity, a project or just a hello — my inbox is open.",
+                phoneLabel:"Phone",footer:"Designed & built with passion.",curLang:"EN"
             }
         };
 
-        // Set Language
-        function setLanguage(lang) {
+        function setLanguage(lang){
             const t = translations[lang];
-            
-            // Update all text elements
-            Object.keys(t).forEach(key => {
-                const element = document.getElementById(key);
-                if (element) {
-                    element.textContent = t[key];
-                }
+            document.querySelectorAll('[data-i18n]').forEach(el=>{
+                const k = el.getAttribute('data-i18n');
+                if(t[k] !== undefined){ el.innerHTML = t[k]; }
             });
-
-            // Save to localStorage
+            document.getElementById('curLang').textContent = t.curLang;
+            document.documentElement.lang = lang;
             localStorage.setItem('language', lang);
-            
-            // Close dropdown
-            document.getElementById('languageDropdown').classList.remove('show');
+            document.getElementById('langMenu').classList.remove('show');
         }
+        function toggleLang(e){ e.stopPropagation(); document.getElementById('langMenu').classList.toggle('show'); }
+        document.addEventListener('click', e=>{ if(!e.target.closest('.lang-wrap')) document.getElementById('langMenu').classList.remove('show'); });
 
-        // Toggle Language Dropdown
-        function toggleLanguageDropdown() {
-            document.getElementById('languageDropdown').classList.toggle('show');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-dropdown')) {
-                document.getElementById('languageDropdown').classList.remove('show');
-            }
-        });
-
-        // Toggle Theme
-        function toggleTheme() {
+        function toggleTheme(){
             document.body.classList.toggle('light');
-            const icon = document.getElementById('themeIcon');
-            
-            if (document.body.classList.contains('light')) {
-                icon.className = 'fas fa-sun';
-                localStorage.setItem('theme', 'light');
-            } else {
-                icon.className = 'fas fa-moon';
-                localStorage.setItem('theme', 'dark');
-            }
+            const light = document.body.classList.contains('light');
+            document.getElementById('themeIcon').className = light ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', light ? 'light' : 'dark');
         }
 
-        // Scroll to Top
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function toggleMenu(){ document.getElementById('nav').classList.toggle('open'); }
+        function closeMenu(){ document.getElementById('nav').classList.remove('open'); }
 
-        // Show/Hide Scroll to Top Button
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.getElementById('scrollTop');
-            const header = document.getElementById('header');
-            
-            if (window.scrollY > 300) {
-                scrollTop.classList.add('visible');
-            } else {
-                scrollTop.classList.remove('visible');
-            }
-
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        window.addEventListener('scroll', ()=>{
+            const h = document.getElementById('header'), top = document.getElementById('toTop');
+            h.classList.toggle('scrolled', window.scrollY > 40);
+            top.classList.toggle('show', window.scrollY > 400);
         });
 
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-        }
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
 
-        function closeMobileMenu() {
-            document.getElementById('mobileMenu').classList.remove('active');
-        }
-
-        // Load saved preferences
-        window.addEventListener('load', () => {
-            // Load theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light');
-                document.getElementById('themeIcon').className = 'fas fa-sun';
-            }
-
-            // Load language
-            const savedLang = localStorage.getItem('language') || 'fr';
-            setLanguage(savedLang);
-
-            // Set current year
+        window.addEventListener('load', ()=>{
+            if(localStorage.getItem('theme') === 'light'){ document.body.classList.add('light'); document.getElementById('themeIcon').className='fas fa-sun'; }
+            setLanguage(localStorage.getItem('language') || 'fr');
             document.getElementById('year').textContent = new Date().getFullYear();
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+            document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
         });
     </script>
 </body>
-
-
 </html>
-
