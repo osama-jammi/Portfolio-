@@ -7,6 +7,10 @@
     <meta name="description" content="Portfolio d'Osama Jammi, Ingénieur SAP ABAP / RAP, Spring Boot, Angular, React Native.">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- GitHub Calendar CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
+    
     <style>
         :root {
             --sapBrandColor: #0070F2;
@@ -520,15 +524,28 @@
             margin-top: 0.5rem;
         }
 
-        /* --- GitHub Chart --- */
-        .gh-chart {
+        /* --- GitHub Chart Customization --- */
+        .gh-chart-container {
             width: 100%;
-            max-width: 800px;
             margin-top: 1rem;
             border-radius: 0.5rem;
             background-color: var(--sapTileBackground);
             padding: 1rem;
             border: 1px solid var(--sapTileBorder);
+        }
+        
+        /* Make GitHub calendar text adapt to theme */
+        body.dark .calendar text.ContributionCalendar-label {
+            fill: var(--sapTextColor);
+        }
+        body.dark .calendar .contrib-number {
+            color: var(--sapTitleColor);
+        }
+        body.dark .calendar .text-muted {
+            color: #8b949e !important;
+        }
+        body.dark .calendar .contrib-column {
+            border-left: 1px solid var(--sapTileBorder);
         }
 
         @media (max-width: 768px) {
@@ -603,15 +620,18 @@
             <div class="panel">
                 <h2 class="panel-title" data-i18n="pnlProfile">Profile Summary</h2>
                 <div class="profile-text">
-                    <p data-i18n="profileText1">Hello, I'm Osama! I'm an engineering student specializing in IT Governance and Management. Passionate about building robust software, I have hands-on experience in full-stack development using Java Spring Boot, Angular, and React Native.</p>
+                    <p data-i18n="profileText1">Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).</p>
                     <br>
-                    <p data-i18n="profileText2">Recently, I achieved my SAP Back-End Developer certification, validating my expertise in ABAP Cloud, RAP, and CDS. I enjoy solving complex business logic problems and architecting clean, scalable systems.</p>
-                    <br>
-                    <p><strong><span data-i18n="profileText3">I am currently seeking a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027</span></strong>.</p>
+                    <p><strong><span data-i18n="profileText2">Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.</span></strong></p>
                 </div>
                 
                 <h3 style="margin-top:2rem; font-size:1rem; color:var(--sapTitleColor);" data-i18n="githubTitle">GitHub Contributions</h3>
-                <img src="https://ghchart.rshah.org/0070F2/osama-jammi" alt="GitHub Contributions" class="gh-chart">
+                <div class="gh-chart-container">
+                    <div class="calendar">
+                        <!-- Loading stuff -->
+                        Loading GitHub contributions...
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -918,7 +938,7 @@
             <div class="panel">
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-date">Sept. 2025 – Present (Expected 2027)</div>
+                        <div class="timeline-date">Sept. 2025 – Present</div>
                         <div class="timeline-title" data-i18n="edu1Title">Engineering Degree — IT Governance and Information Systems Management</div>
                         <div class="timeline-org" data-i18n="edu1Org">National School of Artificial Intelligence and Data Sciences (ENSIASD), Taroudant, Morocco</div>
                         <div class="timeline-desc">
@@ -930,7 +950,7 @@
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-date">Sept. 2022 – June 2024</div>
-                        <div class="timeline-title" data-i18n="edu2Title">DEUP in Computer Engineering (Two-year University Degree)</div>
+                        <div class="timeline-title" data-i18n="edu2Title">DEUP in Computer Engineering</div>
                         <div class="timeline-org">Ibn Zohr University, Taroudant, Morocco</div>
                         <div class="timeline-desc">
                             <ul>
@@ -945,15 +965,17 @@
 
     </div>
 
+    <!-- GitHub Calendar Script -->
+    <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+
     <script>
         const translations = {
             fr: {
                 tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabCertifications: "Certifications", tabEducation: "Formation",
                 roleDesc: "Développeur SAP ABAP / RAP | Java Spring Boot | Angular | React Native",
                 btnCV: "Télécharger CV", pnlProfile: "Résumé du profil", githubTitle: "Contributions GitHub",
-                profileText1: "Bonjour, je suis Osama ! Élève ingénieur spécialisé en Gouvernance et Management des SI. Passionné par la création de logiciels robustes, j'ai une solide expérience pratique en développement Full-Stack avec Java Spring Boot, Angular et React Native.",
-                profileText2: "Récemment, j'ai obtenu ma certification SAP Back-End Developer, validant mon expertise sur ABAP Cloud, RAP et CDS. J'aime résoudre des problèmes de logique métier complexes et concevoir des architectures propres et évolutives.",
-                profileText3: "Je suis actuellement à la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
+                profileText1: "Élève ingénieur en Gouvernance et Management des Systèmes d'Information, avec une solide expérience en développement Full-Stack (Java Spring Boot, Angular, React Native) et un cursus SAP certifié (ABAP, CDS, RAP, Fiori).",
+                profileText2: "À la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
                 
                 pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
                 pj1Desc: "Application SAP native de gestion des notes de frais développée avec le modèle RAP. Vues CDS, behavior definition, service OData V4 et Fiori Elements.",
@@ -987,7 +1009,7 @@
                 edu1Desc1: "Cours spécialisés en architecture d'entreprise, cloud computing, audit des SI (ITIL v4, COBIT) et ingénierie logicielle avancée.",
                 edu1Desc2: "Formation axée sur la fusion entre le développement technique et la gestion stratégique d'entreprise.",
                 
-                edu2Title: "DEUP en Génie Informatique (Bac+2)",
+                edu2Title: "DEUP en Génie Informatique",
                 edu2Desc1: "Acquisition de bases solides en algorithmique, programmation orientée objet (Java), bases de données (SQL) et développement web.",
                 edu2Desc2: "Diplômé avec mention, démontrant une forte appétence pour la logique backend et la modélisation de données.",
                 
@@ -997,9 +1019,8 @@
                 tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabCertifications: "Certifications", tabEducation: "Education",
                 roleDesc: "SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native",
                 btnCV: "Download CV", pnlProfile: "Profile Summary", githubTitle: "GitHub Contributions",
-                profileText1: "Hello, I'm Osama! I'm an engineering student specializing in IT Governance and Management. Passionate about building robust software, I have hands-on experience in full-stack development using Java Spring Boot, Angular, and React Native.",
-                profileText2: "Recently, I achieved my SAP Back-End Developer certification, validating my expertise in ABAP Cloud, RAP, and CDS. I enjoy solving complex business logic problems and architecting clean, scalable systems.",
-                profileText3: "I am currently seeking a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
+                profileText1: "Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).",
+                profileText2: "Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
                 
                 pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
                 pj1Desc: "Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions, OData V4 service, and Fiori Elements.",
@@ -1033,7 +1054,7 @@
                 edu1Desc1: "Specialized coursework in enterprise architecture, cloud computing, information systems audit (ITIL v4, COBIT), and advanced software engineering.",
                 edu1Desc2: "Focused on bridging technical development with strategic business management.",
                 
-                edu2Title: "DEUP in Computer Engineering (Two-year University Degree)",
+                edu2Title: "DEUP in Computer Engineering",
                 edu2Desc1: "Acquired a strong foundation in algorithmics, object-oriented programming (Java), databases (SQL), and web development fundamentals.",
                 edu2Desc2: "Graduated with honors, demonstrating a passion for backend logic and data modeling.",
                 
@@ -1066,6 +1087,9 @@
             tabElement.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
+
+        // Initialize GitHub Calendar
+        GitHubCalendar(".calendar", "osama-jammi", { responsive: true, tooltips: true });
     </script>
 </body>
 </html>
