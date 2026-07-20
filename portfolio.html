@@ -21,6 +21,7 @@
             --sapShellBackground: #354A5F;
             --sapShellText: #FFFFFF;
             --sapObjectHeaderBackground: #FFFFFF;
+            --sapSelectedTab: #0070F2;
             --font-family: "72", "Arial", "Helvetica", sans-serif;
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
             --shadow-hover: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
@@ -36,6 +37,7 @@
             --sapTileHover: #323C47;
             --sapShellBackground: #151A1E;
             --sapObjectHeaderBackground: #29313A;
+            --sapSelectedTab: #4599FF;
         }
 
         * {
@@ -79,17 +81,10 @@
             align-items: center;
             gap: 1rem;
         }
-        
-        .sap-logo {
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-            color: #FFF;
-        }
 
         .shell-bar-title {
-            font-size: 0.875rem;
-            font-weight: normal;
+            font-size: 1rem;
+            font-weight: bold;
         }
 
         .shell-bar-right {
@@ -119,147 +114,75 @@
         /* --- Main Content --- */
         .main-container {
             margin-top: 2.75rem;
-            padding: 2rem;
             max-width: 1280px;
             margin-left: auto;
             margin-right: auto;
+            padding-bottom: 3rem;
         }
 
-        /* --- Launchpad Group --- */
-        .launchpad-group {
-            margin-bottom: 2rem;
-        }
-
-        .launchpad-title {
-            font-size: 1.125rem;
-            color: var(--sapTitleColor);
-            margin-bottom: 1rem;
-            font-weight: normal;
-        }
-
-        .tiles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
-            gap: 1rem;
-        }
-
-        /* --- Fiori Tile --- */
-        .fiori-tile {
-            background-color: var(--sapTileBackground);
-            border: 1px solid var(--sapTileBorder);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            height: 176px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow);
-            transition: box-shadow 0.2s, background-color 0.2s;
-            position: relative;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .fiori-tile:hover {
-            background-color: var(--sapTileHover);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .tile-header {
-            flex-grow: 1;
-        }
-
-        .tile-title {
-            font-size: 1rem;
-            font-weight: normal;
-            color: var(--sapTitleColor);
-            margin-bottom: 0.25rem;
-        }
-
-        .tile-subtitle {
-            font-size: 0.75rem;
-            color: #666;
-        }
-
-        body.dark .tile-subtitle {
-            color: #AAA;
-        }
-
-        .tile-kpi {
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--sapTitleColor);
-            margin-top: 0.5rem;
-        }
-
-        .tile-icon {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            color: var(--sapHighlightColor);
-        }
-
-        /* --- Object Page (Sections) --- */
-        .object-page {
-            display: none;
-            background-color: var(--sapBackgroundColor);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        .object-page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* --- Object Page Header --- */
         .object-header {
             background-color: var(--sapObjectHeaderBackground);
-            padding: 2rem;
-            margin: -2rem -2rem 2rem -2rem;
+            padding: 2rem 2rem 0 2rem;
             box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .header-top {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background-color: var(--sapBrandColor);
-            color: white;
-            display: grid;
-            place-items: center;
-            font-size: 2rem;
-            font-weight: bold;
+            border: 3px solid var(--sapTileBorder);
+            overflow: hidden;
+            flex-shrink: 0;
         }
 
         .avatar img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
             object-fit: cover;
         }
 
-        .header-content h1 {
-            font-size: 1.5rem;
+        .header-info h1 {
+            font-size: 1.75rem;
             color: var(--sapTitleColor);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
-        .header-content p {
+        .header-info h2 {
+            font-size: 1rem;
             color: var(--sapTextColor);
-            font-size: 0.875rem;
+            font-weight: normal;
+            margin-bottom: 0.75rem;
         }
-        
+
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--sapTextColor);
+            flex-wrap: wrap;
+        }
+
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--sapHighlightColor);
+        }
+
         .header-actions {
             margin-left: auto;
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .sap-btn {
@@ -270,6 +193,10 @@
             cursor: pointer;
             border: 1px solid var(--sapBrandColor);
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
         }
 
         .sap-btn-primary {
@@ -290,7 +217,63 @@
             background-color: rgba(0, 112, 242, 0.1);
         }
 
-        /* --- Panels / Cards --- */
+        /* --- Icon Tab Bar --- */
+        .icon-tab-bar {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 2px solid var(--sapTileBorder);
+            padding-bottom: 0;
+            overflow-x: auto;
+        }
+
+        .tab-item {
+            padding: 1rem 0.5rem;
+            cursor: pointer;
+            color: var(--sapTextColor);
+            font-weight: bold;
+            font-size: 0.875rem;
+            position: relative;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .tab-item:hover {
+            color: var(--sapSelectedTab);
+        }
+
+        .tab-item.active {
+            color: var(--sapSelectedTab);
+        }
+
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--sapSelectedTab);
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        /* --- Tab Content --- */
+        .tab-content {
+            display: none;
+            padding: 0 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Panels --- */
         .panel {
             background-color: var(--sapTileBackground);
             border: 1px solid var(--sapTileBorder);
@@ -308,7 +291,93 @@
             margin-bottom: 1rem;
         }
 
-        /* --- Timeline (Experience/Education) --- */
+        /* --- Visual Projects --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s, transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--sapTileBorder);
+        }
+
+        .project-body {
+            padding: 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--sapBackgroundColor);
+            border-radius: 0.25rem;
+            display: grid;
+            place-items: center;
+            color: var(--sapBrandColor);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .project-title {
+            font-size: 1.125rem;
+            color: var(--sapTitleColor);
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .project-desc {
+            font-size: 0.875rem;
+            color: var(--sapTextColor);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .chip {
+            background-color: var(--sapBackgroundColor);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 1rem;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            color: var(--sapTextColor);
+            font-weight: bold;
+        }
+
+        /* --- Timeline --- */
         .timeline {
             position: relative;
             padding-left: 1.5rem;
@@ -371,59 +440,22 @@
             margin-top: 0.5rem;
         }
 
-        /* --- Grid Lists (Skills & Projects) --- */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .obj-card {
-            border: 1px solid var(--sapTileBorder);
-            border-radius: 0.25rem;
-            padding: 1rem;
-            background-color: var(--sapBackgroundColor);
-        }
-
-        .obj-card h4 {
-            font-size: 1rem;
-            color: var(--sapTitleColor);
-            margin-bottom: 0.5rem;
-        }
-
-        .obj-card p {
-            font-size: 0.875rem;
-            color: var(--sapTextColor);
-        }
-        
-        .chip-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .chip {
-            background-color: var(--sapTileBackground);
-            border: 1px solid var(--sapTileBorder);
-            border-radius: 1rem;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
-            color: var(--sapTextColor);
-        }
-
-        #backBtn {
-            display: none;
-        }
-
         @media (max-width: 768px) {
-            .header-actions {
-                display: none;
-            }
-            .object-header {
+            .header-top {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
+                align-items: center;
+                text-align: center;
+            }
+            .contact-info {
+                justify-content: center;
+            }
+            .header-actions {
+                margin: 1rem auto 0 auto;
+                justify-content: center;
+                width: 100%;
+            }
+            .tab-content {
+                padding: 0 1rem;
             }
         }
     </style>
@@ -433,124 +465,49 @@
     <!-- Shell Bar -->
     <header class="shell-bar">
         <div class="shell-bar-left">
-            <button class="shell-btn" id="backBtn" onclick="goHome()" title="Home"><i class="fas fa-home"></i></button>
-            <div class="sap-logo">SAP Fiori</div>
-            <div class="shell-bar-title" id="shellTitle" data-i18n="shellTitle">JAMMI Osama - Portfolio</div>
+            <div class="shell-bar-title" id="shellTitle">JAMMI Osama - Portfolio</div>
         </div>
         <div class="shell-bar-right">
             <button class="shell-btn" onclick="toggleTheme()" title="Toggle Theme"><i class="fas fa-moon"></i></button>
             <button class="shell-btn" onclick="toggleLang()" title="Translate" id="langBtn">EN</button>
-            <button class="shell-btn" title="User Profile"><i class="fas fa-user-circle"></i></button>
         </div>
     </header>
 
     <div class="main-container">
         
-        <!-- Fiori Launchpad (Home) -->
-        <div id="launchpad" class="object-page active">
-            
-            <div class="launchpad-group">
-                <h2 class="launchpad-title" data-i18n="grpProfile">Profile & Overview</h2>
-                <div class="tiles-grid">
-                    <!-- About Me Tile -->
-                    <div class="fiori-tile" onclick="openApp('about')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileAbout">About Me</h3>
-                            <div class="tile-subtitle" data-i18n="tileAboutSub">Overview & Contact</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-address-card"></i></div>
-                    </div>
-                    
-                    <!-- Download CV Tile -->
-                    <a href="cv.pdf" download class="fiori-tile">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileCV">Resume (CV)</h3>
-                            <div class="tile-subtitle" data-i18n="tileCVSub">Download PDF</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-download"></i></div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="launchpad-group">
-                <h2 class="launchpad-title" data-i18n="grpExperience">Experience & Expertise</h2>
-                <div class="tiles-grid">
-                    <!-- Experience Tile -->
-                    <div class="fiori-tile" onclick="openApp('experience')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileExp">Professional Exp.</h3>
-                            <div class="tile-subtitle" data-i18n="tileExpSub">Internships & Freelance</div>
-                            <div class="tile-kpi">3</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-briefcase"></i></div>
-                    </div>
-                    
-                    <!-- Education Tile -->
-                    <div class="fiori-tile" onclick="openApp('education')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileEdu">Education</h3>
-                            <div class="tile-subtitle" data-i18n="tileEduSub">Academic Background</div>
-                            <div class="tile-kpi">2027</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-graduation-cap"></i></div>
-                    </div>
-
-                    <!-- Skills Tile -->
-                    <div class="fiori-tile" onclick="openApp('skills')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileSkills">Technical Skills</h3>
-                            <div class="tile-subtitle" data-i18n="tileSkillsSub">SAP, Java, Web</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-cogs"></i></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="launchpad-group">
-                <h2 class="launchpad-title" data-i18n="grpProjects">Showcase</h2>
-                <div class="tiles-grid">
-                    <!-- Projects Tile -->
-                    <div class="fiori-tile" onclick="openApp('projects')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileProj">Projects</h3>
-                            <div class="tile-subtitle" data-i18n="tileProjSub">RAP, Fiori, Spring</div>
-                            <div class="tile-kpi">5+</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-laptop-code"></i></div>
-                    </div>
-                    
-                    <!-- Certifications Tile -->
-                    <div class="fiori-tile" onclick="openApp('certs')">
-                        <div class="tile-header">
-                            <h3 class="tile-title" data-i18n="tileCerts">Certifications</h3>
-                            <div class="tile-subtitle" data-i18n="tileCertsSub">SAP Verified</div>
-                            <div class="tile-kpi">SAP</div>
-                        </div>
-                        <div class="tile-icon"><i class="fas fa-certificate"></i></div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-
-        <!-- App View: About Me -->
-        <div id="about" class="object-page">
-            <div class="object-header">
+        <!-- Object Page Header (Always visible) -->
+        <div class="object-header">
+            <div class="header-top">
                 <div class="avatar">
                     <img src="profile.jpeg" alt="JAMMI Osama">
                 </div>
-                <div class="header-content">
+                <div class="header-info">
                     <h1>JAMMI Osama</h1>
-                    <p data-i18n="roleDesc">SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native</p>
-                    <p>jammiosama@gmail.com | +212 646 95 35 26</p>
+                    <h2 data-i18n="roleDesc">SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native</h2>
+                    <div class="contact-info">
+                        <a href="mailto:jammiosama@gmail.com"><i class="fas fa-envelope"></i> jammiosama@gmail.com</a>
+                        <a href="tel:+212646953526"><i class="fas fa-phone"></i> +212 646 95 35 26</a>
+                        <a href="https://linkedin.com/in/jammi-osama" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://github.com/osama-jammi" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
                 </div>
                 <div class="header-actions">
-                    <a href="mailto:jammiosama@gmail.com" class="sap-btn sap-btn-primary" data-i18n="btnEmail">Send Email</a>
-                    <a href="https://linkedin.com/in/jammi-osama" target="_blank" class="sap-btn sap-btn-secondary">LinkedIn</a>
-                    <a href="https://github.com/osama-jammi" target="_blank" class="sap-btn sap-btn-secondary">GitHub</a>
+                    <a href="cv.pdf" download class="sap-btn sap-btn-primary"><i class="fas fa-download"></i> <span data-i18n="btnCV">Download CV</span></a>
                 </div>
             </div>
-            
+
+            <!-- Icon Tab Bar -->
+            <div class="icon-tab-bar">
+                <div class="tab-item active" onclick="switchTab('tab-profile', this)" data-i18n="tabProfile">Profile</div>
+                <div class="tab-item" onclick="switchTab('tab-projects', this)" data-i18n="tabProjects">Projects</div>
+                <div class="tab-item" onclick="switchTab('tab-experience', this)" data-i18n="tabExperience">Experience</div>
+                <div class="tab-item" onclick="switchTab('tab-skills', this)" data-i18n="tabSkills">Skills</div>
+                <div class="tab-item" onclick="switchTab('tab-education', this)" data-i18n="tabEducation">Education</div>
+            </div>
+        </div>
+
+        <!-- Tab: Profile Summary -->
+        <div id="tab-profile" class="tab-content active">
             <div class="panel">
                 <h2 class="panel-title" data-i18n="pnlProfile">Profile Summary</h2>
                 <p data-i18n="profileText1">Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).</p>
@@ -559,17 +516,91 @@
             </div>
         </div>
 
-        <!-- App View: Experience -->
-        <div id="experience" class="object-page">
-            <div class="object-header">
-                <div class="header-content">
-                    <h1 data-i18n="hdrExp">Professional Experience</h1>
-                    <p data-i18n="hdrExpSub">Internships and Freelance Work</p>
+        <!-- Tab: Projects (Highly Visual) -->
+        <div id="tab-projects" class="tab-content">
+            <div class="project-grid">
+                
+                <!-- SAP RAP Project -->
+                <div class="project-card">
+                    <img src="project6.png" alt="RAP Travel & Expense Manager" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=SAP+Project'">
+                    <div class="project-body">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-plane-departure"></i></div>
+                            <div class="project-title" data-i18n="pj1Title">RAP Travel & Expense Manager (SAP BTP)</div>
+                        </div>
+                        <p class="project-desc" data-i18n="pj1Desc">Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions with Submit/Approve/Reject actions, validations, OData V4 service, and SAP Fiori Elements UI on SAP BTP ABAP.</p>
+                        <div class="chip-container">
+                            <span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">OData V4</span><span class="chip">SAP Fiori</span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- SAP Smartforms Project -->
+                <div class="project-card">
+                    <img src="project7.png" alt="SAP Smartforms" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Smartforms'">
+                    <div class="project-body">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-file-invoice"></i></div>
+                            <div class="project-title" data-i18n="pjSmartTitle">SAP Smartforms Library</div>
+                        </div>
+                        <p class="project-desc" data-i18n="pjSmartDesc">Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes, business documents): layout creation, ABAP editing logic, integration with print programs and testing.</p>
+                        <div class="chip-container">
+                            <span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span><span class="chip">SAP GUI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-Commerce Microservices -->
+                <div class="project-card">
+                    <img src="project5.svg" alt="E-Commerce Microservices" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Microservices'">
+                    <div class="project-body">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <div class="project-title" data-i18n="pj2Title">E-Commerce Microservices Platform</div>
+                        </div>
+                        <p class="project-desc" data-i18n="pj2Desc">Microservices architecture (Auth, Products, Orders, Notifications) secured via Keycloak, OAuth2 and JWT. Asynchronous communication via RabbitMQ, modern Angular interface, and continuous deployment (CI/CD) on Microsoft Azure.</p>
+                        <div class="chip-container">
+                            <span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">Angular</span><span class="chip">RabbitMQ</span><span class="chip">Azure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transport & Delivery -->
+                <div class="project-card">
+                    <img src="project4.svg" alt="Transport & Delivery" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Transport'">
+                    <div class="project-body">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-truck"></i></div>
+                            <div class="project-title" data-i18n="pj3Title">Transport & Delivery Management Solution</div>
+                        </div>
+                        <p class="project-desc" data-i18n="pj3Desc">Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning for delivery notes, GPS tracking, trip management, supervisor/admin roles).</p>
+                        <div class="chip-container">
+                            <span class="chip">React Native</span><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">QR / GPS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Management -->
+                <div class="project-card">
+                    <img src="project1.png" alt="Stock Management" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Stock'">
+                    <div class="project-body">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-boxes"></i></div>
+                            <div class="project-title" data-i18n="pjStockTitle">Inventory Management System</div>
+                        </div>
+                        <p class="project-desc" data-i18n="pjStockDesc">Comprehensive inventory management system for construction sites with Devalto ERP integration, real-time synchronization, and centralized security via Keycloak.</p>
+                        <div class="chip-container">
+                            <span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            
+        </div>
+
+        <!-- Tab: Experience -->
+        <div id="tab-experience" class="tab-content">
             <div class="panel">
-                <h2 class="panel-title" data-i18n="pnlTimeline">Timeline</h2>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-date">June 2026 – Aug. 2026</div>
@@ -609,15 +640,78 @@
             </div>
         </div>
 
-        <!-- App View: Education -->
-        <div id="education" class="object-page">
-            <div class="object-header">
-                <div class="header-content">
-                    <h1 data-i18n="hdrEdu">Education</h1>
-                    <p data-i18n="hdrEduSub">Academic Degrees</p>
+        <!-- Tab: Skills -->
+        <div id="tab-skills" class="tab-content">
+            <div class="panel">
+                <h2 class="panel-title" data-i18n="hdrSkills">Technical Skills</h2>
+                <div class="project-grid">
+                    <div class="project-card" style="padding: 1.5rem; height: auto;">
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skSAP">SAP Development</h4>
+                        <div class="chip-container">
+                            <span class="chip">ABAP / ABAP Cloud</span>
+                            <span class="chip">CDS Views</span>
+                            <span class="chip">RAP</span>
+                            <span class="chip">OData v4</span>
+                            <span class="chip">SAP Fiori Elements</span>
+                            <span class="chip">Smartforms</span>
+                        </div>
+                    </div>
+                    <div class="project-card" style="padding: 1.5rem; height: auto;">
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skBackend">Backend & Languages</h4>
+                        <div class="chip-container">
+                            <span class="chip">Java</span>
+                            <span class="chip">Spring Boot</span>
+                            <span class="chip">Hibernate / JPA</span>
+                            <span class="chip">Microservices</span>
+                            <span class="chip">REST API</span>
+                            <span class="chip">Python</span>
+                            <span class="chip">SQL</span>
+                        </div>
+                    </div>
+                    <div class="project-card" style="padding: 1.5rem; height: auto;">
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skFrontend">Frontend & Mobile</h4>
+                        <div class="chip-container">
+                            <span class="chip">Angular</span>
+                            <span class="chip">React.js</span>
+                            <span class="chip">React Native</span>
+                            <span class="chip">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="project-card" style="padding: 1.5rem; height: auto;">
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skCloud">Cloud, DevOps & Security</h4>
+                        <div class="chip-container">
+                            <span class="chip">Docker</span>
+                            <span class="chip">Kubernetes</span>
+                            <span class="chip">Azure</span>
+                            <span class="chip">SAP BTP</span>
+                            <span class="chip">CI/CD</span>
+                            <span class="chip">Keycloak (OAuth2, JWT)</span>
+                            <span class="chip">RabbitMQ</span>
+                            <span class="chip">Git</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
+
+            <div class="panel">
+                <h2 class="panel-title" data-i18n="hdrCerts">Certifications</h2>
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                    <div>
+                        <h4 data-i18n="ct1Title">SAP Certified — Back-End Developer (ABAP Cloud)</h4>
+                        <p style="font-size:0.875rem; color:var(--sapTextColor); margin-bottom:0.5rem;">SAP</p>
+                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-secondary" style="display:inline-block; padding:0.25rem 0.5rem;" data-i18n="btnVerify">Verify Credential</a>
+                    </div>
+                    <div style="width: 1px; background: var(--sapTileBorder);"></div>
+                    <div>
+                        <h4 data-i18n="ct2Title">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
+                        <p style="font-size:0.875rem; color:var(--sapTextColor);">Mar. 2026 – May 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Education -->
+        <div id="tab-education" class="tab-content">
             <div class="panel">
                 <div class="timeline">
                     <div class="timeline-item">
@@ -634,158 +728,28 @@
             </div>
         </div>
 
-        <!-- App View: Skills -->
-        <div id="skills" class="object-page">
-            <div class="object-header">
-                <div class="header-content">
-                    <h1 data-i18n="hdrSkills">Technical Skills</h1>
-                    <p data-i18n="hdrSkillsSub">Technologies & Frameworks</p>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <div class="card-grid">
-                    <div class="obj-card">
-                        <h4 data-i18n="skSAP">SAP Development</h4>
-                        <div class="chip-container">
-                            <span class="chip">ABAP / ABAP Cloud</span>
-                            <span class="chip">CDS Views</span>
-                            <span class="chip">RAP</span>
-                            <span class="chip">OData v4</span>
-                            <span class="chip">SAP Fiori</span>
-                            <span class="chip">Smartforms</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="skBackend">Backend & Languages</h4>
-                        <div class="chip-container">
-                            <span class="chip">Java</span>
-                            <span class="chip">Spring Boot</span>
-                            <span class="chip">JPA / Hibernate</span>
-                            <span class="chip">Microservices</span>
-                            <span class="chip">Python</span>
-                            <span class="chip">SQL</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="skFrontend">Frontend & Mobile</h4>
-                        <div class="chip-container">
-                            <span class="chip">Angular</span>
-                            <span class="chip">React.js</span>
-                            <span class="chip">React Native</span>
-                            <span class="chip">JavaScript</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="skCloud">Cloud & DevOps</h4>
-                        <div class="chip-container">
-                            <span class="chip">Docker</span>
-                            <span class="chip">Kubernetes</span>
-                            <span class="chip">Azure</span>
-                            <span class="chip">SAP BTP</span>
-                            <span class="chip">CI/CD</span>
-                            <span class="chip">Git</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="skSec">Security & Databases</h4>
-                        <div class="chip-container">
-                            <span class="chip">PostgreSQL</span>
-                            <span class="chip">MySQL</span>
-                            <span class="chip">SQL Server</span>
-                            <span class="chip">Keycloak</span>
-                            <span class="chip">Kafka</span>
-                            <span class="chip">RabbitMQ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- App View: Projects -->
-        <div id="projects" class="object-page">
-            <div class="object-header">
-                <div class="header-content">
-                    <h1 data-i18n="hdrProj">Projects</h1>
-                    <p data-i18n="hdrProjSub">Key Implementations</p>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <div class="card-grid">
-                    <div class="obj-card">
-                        <h4 data-i18n="pj1Title">Business Management Application — SAP BTP, ABAP RAP</h4>
-                        <p data-i18n="pj1Desc">Data modeling with CDS views. Managed RAP implementation: behavior definitions, validations, determinations. Exposed OData V4 service consumed by Fiori Elements app.</p>
-                        <div class="chip-container">
-                            <span class="chip">ABAP Cloud</span>
-                            <span class="chip">RAP</span>
-                            <span class="chip">Fiori Elements</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="pj2Title">E-Commerce Microservices Platform</h4>
-                        <p data-i18n="pj2Desc">Spring Boot microservices secured with Keycloak/OAuth2, asynchronous communication via RabbitMQ, Angular front end, CI/CD on Microsoft Azure.</p>
-                        <div class="chip-container">
-                            <span class="chip">Spring Boot</span>
-                            <span class="chip">Microservices</span>
-                            <span class="chip">Azure</span>
-                        </div>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="pj3Title">Transport & Delivery Management Solution</h4>
-                        <p data-i18n="pj3Desc">React Native driver app (QR scanning, geolocation), Spring Boot backend, Angular back office, integrated with Divalto ERP.</p>
-                        <div class="chip-container">
-                            <span class="chip">React Native</span>
-                            <span class="chip">Spring Boot</span>
-                            <span class="chip">Angular</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- App View: Certs -->
-        <div id="certs" class="object-page">
-            <div class="object-header">
-                <div class="header-content">
-                    <h1 data-i18n="hdrCerts">Certifications</h1>
-                    <p data-i18n="hdrCertsSub">Verified Credentials</p>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <div class="card-grid">
-                    <div class="obj-card">
-                        <h4 data-i18n="ct1Title">SAP Certified — Back-End Developer (ABAP Cloud)</h4>
-                        <p>SAP</p>
-                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-secondary" style="display:inline-block; margin-top:1rem; padding:0.25rem 0.5rem;" data-i18n="btnVerify">Verify Credential</a>
-                    </div>
-                    <div class="obj-card">
-                        <h4 data-i18n="ct2Title">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
-                        <p>Mar. 2026 – May 2026</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </div>
 
     <script>
         const translations = {
             fr: {
-                shellTitle: "JAMMI Osama - Portfolio SAP Fiori",
-                grpProfile: "Profil & Aperçu", tileAbout: "À propos de moi", tileAboutSub: "Contact et Résumé",
-                tileCV: "Mon CV", tileCVSub: "Télécharger PDF",
-                grpExperience: "Expérience & Expertise", tileExp: "Exp. Pro.", tileExpSub: "Stages & Freelance",
-                tileEdu: "Formation", tileEduSub: "Parcours académique",
-                tileSkills: "Compétences Tech", tileSkillsSub: "SAP, Java, Web",
-                grpProjects: "Réalisations", tileProj: "Projets", tileProjSub: "RAP, Fiori, Spring",
-                tileCerts: "Certifications", tileCertsSub: "Vérifiées SAP",
+                tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabEducation: "Formation",
                 roleDesc: "Développeur SAP ABAP / RAP | Java Spring Boot | Angular | React Native",
-                btnEmail: "Envoyer un e-mail", pnlProfile: "Résumé du profil",
+                btnCV: "Télécharger CV", pnlProfile: "Résumé du profil",
                 profileText1: "Élève ingénieur en Gouvernance et Management des SI, avec une solide expérience Full Stack (Java Spring Boot, Angular, React Native) et une expertise certifiée SAP (ABAP, CDS, RAP, Fiori).",
                 profileText2: "À la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
-                hdrExp: "Expérience Professionnelle", hdrExpSub: "Stages et Freelance", pnlTimeline: "Historique",
+                
+                pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
+                pj1Desc: "Application SAP native de gestion des notes de frais développée de bout en bout avec le RESTful ABAP Programming Model (RAP managed + draft). Vues CDS, behavior definition, OData V4 et interface Fiori Elements.",
+                pjSmartTitle: "Bibliothèque de Formulaires SAP Smartforms",
+                pjSmartDesc: "Conception et développement de plus de 10 formulaires d'impression SAP Smartforms (factures, bons de livraison) : mise en page, logique ABAP, intégration et tests.",
+                pj2Title: "Plateforme E-Commerce Microservices",
+                pj2Desc: "Microservices Spring Boot sécurisés (Keycloak/OAuth2), communication asynchrone par RabbitMQ, frontend Angular, CI/CD sur Microsoft Azure.",
+                pj3Title: "Solution de Gestion de Transport et Livraison",
+                pj3Desc: "App chauffeur React Native (scan QR, GPS), backend Spring Boot, back-office Angular, intégration ERP Divalto.",
+                pjStockTitle: "Système de Gestion de Stock",
+                pjStockDesc: "Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.",
+                
                 exp1Title: "Stagiaire Développeur Full Stack",
                 exp1Desc1: "Création d'une solution complète de gestion du transport (web, mobile et back office).",
                 exp1Desc2: "Développement d'un backend sécurisé Spring Boot (JWT, Keycloak) intégré à l'ERP (Divalto).",
@@ -796,38 +760,32 @@
                 exp2Desc3: "Implémentation d'API REST sécurisées avec Spring Boot, JWT et PostgreSQL.",
                 exp3Title: "Stagiaire Full Stack",
                 exp3Desc1: "Développement d'apps métier avec Spring Boot et Angular, intégration ERP.",
-                hdrEdu: "Formation", hdrEduSub: "Diplômes Académiques",
+                
                 edu1Title: "Diplôme d'Ingénieur — Gouvernance & Management des SI",
                 edu1Org: "École Nationale Supérieure d'Intelligence Artificielle et de Data Sciences (ENSIASD), Maroc",
                 edu2Title: "DEUP en Génie Informatique (Bac+2)",
-                hdrSkills: "Compétences Techniques", hdrSkillsSub: "Technologies & Frameworks",
-                skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud & DevOps", skSec: "Sécurité & Bases de données",
-                hdrProj: "Projets", hdrProjSub: "Principales Réalisations",
-                pj1Title: "App. de Gestion d'Affaires — SAP BTP, ABAP RAP",
-                pj1Desc: "Modélisation de données (CDS views). Implémentation RAP : behavior definitions, validations. Service OData V4 consommé par une app Fiori Elements.",
-                pj2Title: "Plateforme E-Commerce Microservices",
-                pj2Desc: "Microservices Spring Boot sécurisés (Keycloak/OAuth2), com. asynchrone (RabbitMQ), frontend Angular, CI/CD sur Azure.",
-                pj3Title: "Solution de Gestion de Livraison",
-                pj3Desc: "App chauffeur React Native (QR, GPS), backend Spring Boot, back-office Angular, intégration ERP Divalto.",
-                hdrCerts: "Certifications", hdrCertsSub: "Badges Vérifiés",
-                ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)",
-                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud",
-                btnVerify: "Vérifier le badge"
+                
+                hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Sécurité",
+                hdrCerts: "Certifications", ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)", ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", btnVerify: "Vérifier le badge"
             },
             en: {
-                shellTitle: "JAMMI Osama - SAP Fiori Portfolio",
-                grpProfile: "Profile & Overview", tileAbout: "About Me", tileAboutSub: "Overview & Contact",
-                tileCV: "Resume (CV)", tileCVSub: "Download PDF",
-                grpExperience: "Experience & Expertise", tileExp: "Professional Exp.", tileExpSub: "Internships & Freelance",
-                tileEdu: "Education", tileEduSub: "Academic Background",
-                tileSkills: "Technical Skills", tileSkillsSub: "SAP, Java, Web",
-                grpProjects: "Showcase", tileProj: "Projects", tileProjSub: "RAP, Fiori, Spring",
-                tileCerts: "Certifications", tileCertsSub: "SAP Verified",
+                tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabEducation: "Education",
                 roleDesc: "SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native",
-                btnEmail: "Send Email", pnlProfile: "Profile Summary",
+                btnCV: "Download CV", pnlProfile: "Profile Summary",
                 profileText1: "Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).",
                 profileText2: "Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
-                hdrExp: "Professional Experience", hdrExpSub: "Internships and Freelance Work", pnlTimeline: "Timeline",
+                
+                pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
+                pj1Desc: "Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions with Submit/Approve/Reject actions, validations, OData V4 service, and SAP Fiori Elements UI on SAP BTP ABAP.",
+                pjSmartTitle: "SAP Smartforms Library",
+                pjSmartDesc: "Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes, business documents): layout creation, ABAP editing logic, integration with print programs and testing.",
+                pj2Title: "E-Commerce Microservices Platform",
+                pj2Desc: "Microservices architecture (Auth, Products, Orders, Notifications) secured via Keycloak, OAuth2 and JWT. Asynchronous communication via RabbitMQ, modern Angular interface, and continuous deployment (CI/CD) on Microsoft Azure.",
+                pj3Title: "Transport & Delivery Management Solution",
+                pj3Desc: "Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning for delivery notes, GPS tracking, trip management, supervisor/admin roles).",
+                pjStockTitle: "Inventory Management System",
+                pjStockDesc: "Comprehensive inventory management system for construction sites with Devalto ERP integration, real-time synchronization, and centralized security via Keycloak.",
+                
                 exp1Title: "Full Stack Developer Intern",
                 exp1Desc1: "Built a complete transport and delivery management solution (web, mobile and back office).",
                 exp1Desc2: "Developed a secured Spring Boot backend (JWT, Keycloak) integrated with the company's ERP (Divalto).",
@@ -838,23 +796,13 @@
                 exp2Desc3: "Implemented secured REST APIs with Spring Boot, JWT and PostgreSQL.",
                 exp3Title: "Full Stack Intern",
                 exp3Desc1: "Developed business applications with Spring Boot and Angular, integrated with the company's ERP.",
-                hdrEdu: "Education", hdrEduSub: "Academic Degrees",
+                
                 edu1Title: "Engineering Degree — IT Governance and Information Systems Management",
                 edu1Org: "National School of Artificial Intelligence and Data Sciences (ENSIASD), Morocco",
                 edu2Title: "DEUP in Computer Engineering (two-year university degree)",
-                hdrSkills: "Technical Skills", hdrSkillsSub: "Technologies & Frameworks",
-                skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud & DevOps", skSec: "Security & Databases",
-                hdrProj: "Projects", hdrProjSub: "Key Implementations",
-                pj1Title: "Business Management Application — SAP BTP, ABAP RAP",
-                pj1Desc: "Data modeling with CDS views. Managed RAP implementation: behavior definitions, validations. Exposed OData V4 service consumed by Fiori Elements app.",
-                pj2Title: "E-Commerce Microservices Platform",
-                pj2Desc: "Spring Boot microservices secured with Keycloak/OAuth2, asynchronous communication via RabbitMQ, Angular front end, CI/CD on Microsoft Azure.",
-                pj3Title: "Transport & Delivery Management Solution",
-                pj3Desc: "React Native driver app (QR scanning, geolocation), Spring Boot backend, Angular back office, integrated with Divalto ERP.",
-                hdrCerts: "Certifications", hdrCertsSub: "Verified Credentials",
-                ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)",
-                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud",
-                btnVerify: "Verify Credential"
+                
+                hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Security",
+                hdrCerts: "Certifications", ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)", ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", btnVerify: "Verify Credential"
             }
         };
 
@@ -876,17 +824,14 @@
             });
         }
 
-        function openApp(appId) {
-            document.querySelectorAll('.object-page').forEach(el => el.classList.remove('active'));
-            document.getElementById(appId).classList.add('active');
-            document.getElementById('backBtn').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function goHome() {
-            document.querySelectorAll('.object-page').forEach(el => el.classList.remove('active'));
-            document.getElementById('launchpad').classList.add('active');
-            document.getElementById('backBtn').style.display = 'none';
+        function switchTab(tabId, tabElement) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tabElement.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
         }
     </script>
 </body>
