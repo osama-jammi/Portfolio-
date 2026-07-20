@@ -456,35 +456,68 @@
             margin-bottom: 0.25rem;
         }
 
-        /* --- Cert Card --- */
-        .cert-card {
+        /* --- Certifications List (LinkedIn Style) --- */
+        .cert-list {
             display: flex;
-            gap: 1.5rem;
-            border: 1px solid var(--sapTileBorder);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            background-color: var(--sapTileBackground);
-            align-items: center;
+            flex-direction: column;
         }
         
-        .cert-badge {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
+        .cert-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--sapTileBorder);
         }
-
-        .cert-info h4 {
-            font-size: 1.125rem;
+        
+        .cert-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cert-logo {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            padding: 4px;
+            box-shadow: var(--shadow);
+            flex-shrink: 0;
+        }
+        
+        .cert-details {
+            flex-grow: 1;
+        }
+        
+        .cert-details h4 {
+            font-size: 1rem;
             color: var(--sapTitleColor);
+            margin-bottom: 0.25rem;
+        }
+        
+        .cert-org {
+            font-size: 0.875rem;
+            color: var(--sapTextColor);
+            margin-bottom: 0.25rem;
+        }
+        
+        .cert-date {
+            font-size: 0.875rem;
+            color: #666;
             margin-bottom: 0.5rem;
         }
         
-        .cert-info p {
+        body.dark .cert-date { color: #AAA; }
+        
+        .cert-meta {
+            font-size: 0.75rem;
+            color: var(--sapTextColor);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cert-skills {
             font-size: 0.875rem;
             color: var(--sapTextColor);
-            margin-bottom: 1rem;
+            margin-top: 0.5rem;
         }
 
         /* --- GitHub Chart --- */
@@ -514,10 +547,6 @@
             }
             .tab-content {
                 padding: 0 1rem;
-            }
-            .cert-card {
-                flex-direction: column;
-                text-align: center;
             }
         }
     </style>
@@ -564,6 +593,7 @@
                 <div class="tab-item" onclick="switchTab('tab-projects', this)" data-i18n="tabProjects">Projects</div>
                 <div class="tab-item" onclick="switchTab('tab-experience', this)" data-i18n="tabExperience">Experience</div>
                 <div class="tab-item" onclick="switchTab('tab-skills', this)" data-i18n="tabSkills">Skills</div>
+                <div class="tab-item" onclick="switchTab('tab-certifications', this)" data-i18n="tabCertifications">Certifications</div>
                 <div class="tab-item" onclick="switchTab('tab-education', this)" data-i18n="tabEducation">Education</div>
             </div>
         </div>
@@ -779,22 +809,106 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Certifications Section inside Skills tab -->
+        </div>
+        
+        <!-- Tab: Certifications -->
+        <div id="tab-certifications" class="tab-content">
             <div class="panel">
-                <h2 class="panel-title" data-i18n="hdrCerts">Certifications</h2>
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/6df10eeb-3771-460d-bc01-e2518e3845ba/image.png" alt="SAP Certified Badge" class="cert-badge">
-                    <div class="cert-info">
-                        <h4 data-i18n="ct1Title">SAP Certified — Back-End Developer (ABAP Cloud)</h4>
-                        <p data-i18n="ct1Desc">After more than 4 months of rigorous preparation, I achieved this SAP certification, validating my expertise in building robust back-end extensions and solutions using ABAP Cloud.</p>
-                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-primary" data-i18n="btnVerify">Verify Credential on Credly</a>
-                    </div>
-                </div>
+                <h2 class="panel-title" data-i18n="tabCertifications">Licenses & Certifications</h2>
                 
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--sapTileBorder);">
-                    <h4 data-i18n="ct2Title" style="color: var(--sapTitleColor); font-size: 1rem; margin-bottom: 0.25rem;">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
-                    <p style="font-size:0.875rem; color:var(--sapTextColor);">Completed coursework from Mar. 2026 to May 2026 covering RAP, CDS, and OData integrations.</p>
+                <div class="cert-list">
+                    
+                    <!-- SAP Cert -->
+                    <div class="cert-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/1024px-SAP_2011_logo.svg.png" alt="SAP Logo" class="cert-logo" style="padding: 10px;">
+                        <div class="cert-details">
+                            <h4>SAP Certified - Back-End Developer - ABAP Cloud</h4>
+                            <div class="cert-org">SAP</div>
+                            <div class="cert-date">Issued Jun 2026 · Expires Jun 2027</div>
+                            <div class="cert-skills"><strong>Skills:</strong> RAP, OData V4, ABAP Cloud</div>
+                            <div style="margin-top: 0.5rem;">
+                                <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Show credential <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ALX Data Analytics -->
+                    <div class="cert-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/ALX_Logo.png/512px-ALX_Logo.png" alt="ALX Logo" class="cert-logo" onerror="this.src='https://via.placeholder.com/64?text=ALX'">
+                        <div class="cert-details">
+                            <h4>Data Analytics</h4>
+                            <div class="cert-org">alx_africa</div>
+                            <div class="cert-date">Issued Dec 2024</div>
+                            <div class="cert-meta">Credential ID: XchH7SneJR</div>
+                            <div class="cert-skills"><strong>Skills:</strong> Preparing Data, Querying Data, Visualization</div>
+                            <div style="margin-top: 0.5rem;">
+                                <a href="https://savanna.alxafrica.com/certificates/XchH7SneJR" target="_blank" class="sap-btn sap-btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Show credential <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- IBM Data Analytics -->
+                    <div class="cert-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" class="cert-logo" style="padding: 8px;">
+                        <div class="cert-details">
+                            <h4>Introduction to Data Analytics</h4>
+                            <div class="cert-org">IBM</div>
+                            <div class="cert-date">Issued Nov 2024</div>
+                            <div class="cert-meta">Credential ID: J16FGCAIP2PL</div>
+                            <div style="margin-top: 0.5rem;">
+                                <a href="https://www.coursera.org/account/accomplishments/verify/J16FGCAIP2PL" target="_blank" class="sap-btn sap-btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Show credential <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 365 Data Science -->
+                    <div class="cert-item">
+                        <img src="https://mms.businesswire.com/media/20210720005701/en/892225/22/365_Data_Science_Logo.jpg" alt="365 Data Science Logo" class="cert-logo" onerror="this.src='https://via.placeholder.com/64?text=365'">
+                        <div class="cert-details">
+                            <h4>Certificate of completion - Data Analysis with Excel Pivot Tables</h4>
+                            <div class="cert-org">365 Data Science</div>
+                            <div class="cert-date">Issued Nov 2024</div>
+                            <div class="cert-meta">Credential ID: CC-007EC73F0F</div>
+                        </div>
+                    </div>
+
+                    <!-- ALX Morocco -->
+                    <div class="cert-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/ALX_Logo.png/512px-ALX_Logo.png" alt="ALX Logo" class="cert-logo" onerror="this.src='https://via.placeholder.com/64?text=ALX'">
+                        <div class="cert-details">
+                            <h4>Professional Foundation</h4>
+                            <div class="cert-org">ALX Morocco</div>
+                            <div class="cert-date">Issued Jun 2024 · Expired Aug 2024</div>
+                            <div class="cert-meta">Credential ID: zXpTxfCP6H</div>
+                            <div style="margin-top: 0.5rem;">
+                                <a href="https://intranet.alxswe.com/certificates/zXpTxfCP6H" target="_blank" class="sap-btn sap-btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Show credential <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- atingi.org -->
+                    <div class="cert-item">
+                        <img src="https://www.atingi.org/wp-content/themes/atingi/assets/images/atingi-logo.svg" alt="atingi Logo" class="cert-logo" onerror="this.src='https://via.placeholder.com/64?text=Atingi'" style="background-color: var(--sapBrandColor);">
+                        <div class="cert-details">
+                            <h4>How to Get Involved in Artificial Intelligence</h4>
+                            <div class="cert-org">atingi.org</div>
+                            <div class="cert-meta">Credential ID: 5084499418JO</div>
+                        </div>
+                    </div>
+
+                    <!-- Great Learning -->
+                    <div class="cert-item">
+                        <img src="https://d1vwxdpzbgdqj.cloudfront.net/gl-academy/images/gl_logo.png" alt="Great Learning Logo" class="cert-logo" onerror="this.src='https://via.placeholder.com/64?text=GL'" style="padding: 10px;">
+                        <div class="cert-details">
+                            <h4>MySQL Tutorial</h4>
+                            <div class="cert-org">Great Learning</div>
+                            <div class="cert-meta">Credential ID: ZXKUPTMG</div>
+                            <div style="margin-top: 0.5rem;">
+                                <a href="https://verify.mygreatlearning.com/verify/ZXKUPTMG" target="_blank" class="sap-btn sap-btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Show credential <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -834,7 +948,7 @@
     <script>
         const translations = {
             fr: {
-                tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabEducation: "Formation",
+                tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabCertifications: "Certifications", tabEducation: "Formation",
                 roleDesc: "Développeur SAP ABAP / RAP | Java Spring Boot | Angular | React Native",
                 btnCV: "Télécharger CV", pnlProfile: "Résumé du profil", githubTitle: "Contributions GitHub",
                 profileText1: "Bonjour, je suis Osama ! Élève ingénieur spécialisé en Gouvernance et Management des SI. Passionné par la création de logiciels robustes, j'ai une solide expérience pratique en développement Full-Stack avec Java Spring Boot, Angular et React Native.",
@@ -877,15 +991,10 @@
                 edu2Desc1: "Acquisition de bases solides en algorithmique, programmation orientée objet (Java), bases de données (SQL) et développement web.",
                 edu2Desc2: "Diplômé avec mention, démontrant une forte appétence pour la logique backend et la modélisation de données.",
                 
-                hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Sécurité",
-                hdrCerts: "Certifications", 
-                ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)", 
-                ct1Desc: "Après plus de 4 mois de préparation rigoureuse, j'ai obtenu cette certification SAP, validant mon expertise dans la création d'extensions backend robustes avec ABAP Cloud.",
-                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", 
-                btnVerify: "Vérifier sur Credly"
+                hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Sécurité"
             },
             en: {
-                tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabEducation: "Education",
+                tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabCertifications: "Certifications", tabEducation: "Education",
                 roleDesc: "SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native",
                 btnCV: "Download CV", pnlProfile: "Profile Summary", githubTitle: "GitHub Contributions",
                 profileText1: "Hello, I'm Osama! I'm an engineering student specializing in IT Governance and Management. Passionate about building robust software, I have hands-on experience in full-stack development using Java Spring Boot, Angular, and React Native.",
@@ -928,12 +1037,7 @@
                 edu2Desc1: "Acquired a strong foundation in algorithmics, object-oriented programming (Java), databases (SQL), and web development fundamentals.",
                 edu2Desc2: "Graduated with honors, demonstrating a passion for backend logic and data modeling.",
                 
-                hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Security",
-                hdrCerts: "Certifications", 
-                ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)", 
-                ct1Desc: "After more than 4 months of rigorous preparation, I achieved this SAP certification, validating my expertise in building robust back-end extensions and solutions using ABAP Cloud.",
-                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", 
-                btnVerify: "Verify Credential on Credly"
+                hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Security"
             }
         };
 
