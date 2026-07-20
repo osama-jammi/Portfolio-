@@ -1,682 +1,893 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osama Jammi — Développeur Full Stack & Spécialiste ERP</title>
-    <meta name="description" content="Portfolio d'Osama Jammi, élève ingénieur en Systèmes d'Information. Développeur Full Stack : Spring Boot, Angular, React Native, ERP Odoo, SAP ABAP Cloud.">
+    <title>JAMMI Osama — SAP ABAP/RAP Developer</title>
+    <meta name="description" content="Portfolio d'Osama Jammi, Ingénieur SAP ABAP / RAP, Spring Boot, Angular, React Native.">
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --bg: #07060d;
-            --bg-2: #0c0a18;
-            --surface: rgba(255, 255, 255, 0.04);
-            --surface-2: rgba(255, 255, 255, 0.06);
-            --border: rgba(255, 255, 255, 0.09);
-            --border-strong: rgba(255, 255, 255, 0.16);
-            --text: #ECEAF6;
-            --muted: #9a96b8;
-            --violet: #a855f7;
-            --cyan: #22d3ee;
-            --grad: linear-gradient(120deg, #a855f7 0%, #6366f1 45%, #22d3ee 100%);
-            --shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+            --sapBrandColor: #0070F2;
+            --sapHighlightColor: #0A6ED1;
+            --sapBaseColor: #F4F7F9;
+            --sapBackgroundColor: #EDF0F5;
+            --sapTextColor: #32363A;
+            --sapTitleColor: #1D2D3E;
+            --sapTileBackground: #FFFFFF;
+            --sapTileBorder: #D9D9D9;
+            --sapTileHover: #F4F4F4;
+            --sapShellBackground: #354A5F;
+            --sapShellText: #FFFFFF;
+            --sapObjectHeaderBackground: #FFFFFF;
+            --font-family: "72", "Arial", "Helvetica", sans-serif;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
         }
 
-        body.light {
-            --bg: #f4f4fb;
-            --bg-2: #eceaf6;
-            --surface: rgba(20, 16, 40, 0.04);
-            --surface-2: rgba(20, 16, 40, 0.06);
-            --border: rgba(20, 16, 40, 0.10);
-            --border-strong: rgba(20, 16, 40, 0.18);
-            --text: #1a1730;
-            --muted: #585479;
-            --shadow: 0 24px 60px -24px rgba(80, 60, 160, 0.30);
+        body.dark {
+            --sapBaseColor: #1C2228;
+            --sapBackgroundColor: #13171C;
+            --sapTextColor: #FAFAFA;
+            --sapTitleColor: #FFFFFF;
+            --sapTileBackground: #29313A;
+            --sapTileBorder: #424D58;
+            --sapTileHover: #323C47;
+            --sapShellBackground: #151A1E;
+            --sapObjectHeaderBackground: #29313A;
         }
 
-        html { scroll-behavior: smooth; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+        }
 
         body {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.65;
-            overflow-x: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
+            background-color: var(--sapBackgroundColor);
+            color: var(--sapTextColor);
+            line-height: 1.5;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        h1, h2, h3, h4, .font-display { font-family: 'Sora', sans-serif; }
-        code, .mono { font-family: 'JetBrains Mono', monospace; }
-
-        /* ---------- Animated background ---------- */
-        .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: radial-gradient(140% 100% at 50% 0%, var(--bg-2), var(--bg) 60%); }
-        .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float 22s ease-in-out infinite alternate; }
-        .blob.v { width: 520px; height: 520px; background: #7c3aed; top: -160px; left: -120px; }
-        .blob.c { width: 460px; height: 460px; background: #0891b2; top: 30%; right: -140px; animation-delay: -7s; }
-        .blob.p { width: 420px; height: 420px; background: #4f46e5; bottom: -180px; left: 30%; animation-delay: -13s; }
-        body.light .blob { opacity: 0.28; }
-        @keyframes float { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 60px) scale(1.12); } }
-
-        .grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
-
-        /* ---------- Header ---------- */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            padding: 1.1rem 0; transition: all 0.35s ease;
+        a {
+            color: var(--sapHighlightColor);
+            text-decoration: none;
         }
-        header.scrolled { padding: 0.7rem 0; backdrop-filter: blur(18px); background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid var(--border); }
-        .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
-        .logo { font-family: 'Sora'; font-weight: 800; font-size: 1.35rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 0.6rem; }
-        .logo .mark { width: 38px; height: 38px; border-radius: 11px; background: var(--grad); display: grid; place-items: center; color: #fff; font-size: 0.95rem; box-shadow: 0 8px 24px -8px var(--violet); }
-        nav ul { display: flex; gap: 2rem; list-style: none; align-items: center; }
-        nav a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; position: relative; transition: color 0.25s; }
-        nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--grad); transition: width 0.3s; border-radius: 2px; }
-        nav a:hover { color: var(--text); } nav a:hover::after { width: 100%; }
 
-        .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
-        .pill-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 11px; cursor: pointer; font-size: 0.95rem; transition: all 0.25s; display: grid; place-items: center; }
-        .pill-btn:hover { border-color: var(--border-strong); background: var(--surface-2); transform: translateY(-2px); }
-        .lang-wrap { position: relative; }
-        .lang-menu { position: absolute; top: 120%; right: 0; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.4rem; min-width: 150px; display: none; box-shadow: var(--shadow); }
-        .lang-menu.show { display: block; }
-        .lang-menu button { width: 100%; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 0.8rem; background: transparent; border: none; color: var(--muted); border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
-        .lang-menu button:hover { background: var(--surface-2); color: var(--text); }
+        /* --- Shell Bar (Header) --- */
+        .shell-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2.75rem;
+            background-color: var(--sapShellBackground);
+            color: var(--sapShellText);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-        #menuBtn { display: none; }
+        .shell-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .sap-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            color: #FFF;
+        }
 
-        /* ---------- Hero ---------- */
-        #hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 0 4rem; }
-        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center; }
-        .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.95rem; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.6rem; }
-        .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 4px rgba(52,211,153,0.18); }
-        .hero-text h1 { font-size: clamp(2.6rem, 6vw, 4.3rem); font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 1rem; }
-        .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-text .subtitle { font-size: clamp(1.1rem, 2.5vw, 1.45rem); color: var(--text); font-weight: 600; margin-bottom: 1.2rem; }
-        .hero-text .subtitle .mono { color: var(--cyan); font-weight: 500; }
-        .hero-text p.lead { font-size: 1.05rem; color: var(--muted); max-width: 540px; margin-bottom: 2rem; }
-        .cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
-        .btn { padding: 0.9rem 1.6rem; border-radius: 13px; font-weight: 600; text-decoration: none; font-size: 0.98rem; display: inline-flex; align-items: center; gap: 0.6rem; transition: all 0.28s; border: 1px solid transparent; cursor: pointer; }
-        .btn-grad { background: var(--grad); color: #fff; box-shadow: 0 16px 40px -16px var(--violet); }
-        .btn-grad:hover { transform: translateY(-3px); box-shadow: 0 22px 50px -16px var(--violet); }
-        .btn-ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
-        .btn-ghost:hover { transform: translateY(-3px); border-color: var(--border-strong); background: var(--surface-2); }
+        .shell-bar-title {
+            font-size: 0.875rem;
+            font-weight: normal;
+        }
 
-        .socials { display: flex; gap: 0.7rem; margin-top: 1.8rem; }
-        .socials a { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-size: 1.1rem; transition: all 0.28s; }
-        .socials a:hover { color: var(--text); transform: translateY(-3px); border-color: var(--border-strong); }
+        .shell-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-        .hero-photo { position: relative; justify-self: center; }
-        .hero-photo .ring { position: absolute; inset: -14px; border-radius: 28px; background: var(--grad); filter: blur(22px); opacity: 0.55; z-index: -1; animation: pulse 5s ease-in-out infinite; }
-        @keyframes pulse { 50% { opacity: 0.8; } }
-        .hero-photo img { width: 100%; max-width: 340px; border-radius: 24px; border: 1px solid var(--border-strong); box-shadow: var(--shadow); display: block; }
-        .float-chip { position: absolute; background: color-mix(in srgb, var(--bg-2) 86%, transparent); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 14px; padding: 0.7rem 0.95rem; font-size: 0.82rem; display: flex; align-items: center; gap: 0.55rem; box-shadow: var(--shadow); animation: bob 4s ease-in-out infinite; }
-        .float-chip i { color: var(--cyan); }
-        .float-chip.one { top: 18%; left: -38px; }
-        .float-chip.two { bottom: 14%; right: -30px; animation-delay: -2s; }
-        .float-chip.two i { color: var(--violet); }
-        @keyframes bob { 50% { transform: translateY(-12px); } }
+        .shell-btn {
+            background: transparent;
+            border: none;
+            color: var(--sapShellText);
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s;
+            font-size: 1rem;
+        }
 
-        /* ---------- Sections ---------- */
-        section.block { padding: 5.5rem 0; }
-        .sec-head { text-align: center; max-width: 620px; margin: 0 auto 3rem; }
-        .sec-kicker { font-family: 'JetBrains Mono'; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.8rem; display: block; }
-        .sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -1px; }
-        .sec-head p { color: var(--muted); margin-top: 0.8rem; }
+        .shell-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-        .glass { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        /* --- Main Content --- */
+        .main-container {
+            margin-top: 2.75rem;
+            padding: 2rem;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-        /* About / stats */
-        .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; }
-        .about-card { padding: 2.2rem; }
-        .about-card p { color: var(--muted); }
-        .about-card p + p { margin-top: 1rem; }
-        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .stat { padding: 1.5rem; text-align: center; }
-        .stat .num { font-family: 'Sora'; font-size: 2rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat .lbl { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+        /* --- Launchpad Group --- */
+        .launchpad-group {
+            margin-bottom: 2rem;
+        }
 
-        /* Skills */
-        .skill-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.3rem; }
-        .skill-cat { padding: 1.8rem; }
-        .skill-cat:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
-        .skill-cat .ic { width: 48px; height: 48px; border-radius: 13px; background: var(--surface-2); display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 1.1rem; color: var(--cyan); border: 1px solid var(--border); }
-        .skill-cat h3 { font-size: 1.1rem; margin-bottom: 0.9rem; }
-        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .chip { font-family: 'JetBrains Mono'; font-size: 0.78rem; padding: 0.35rem 0.75rem; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); }
+        .launchpad-title {
+            font-size: 1.125rem;
+            color: var(--sapTitleColor);
+            margin-bottom: 1rem;
+            font-weight: normal;
+        }
 
-        /* Timeline */
-        .timeline { position: relative; max-width: 760px; margin: 0 auto; padding-left: 2rem; }
-        .timeline::before { content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--violet), var(--cyan)); border-radius: 2px; opacity: 0.5; }
-        .tl-item { position: relative; padding: 0 0 2rem 1.8rem; }
-        .tl-item::before { content: ''; position: absolute; left: -2rem; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--violet); box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 20%, transparent); }
-        .tl-date { font-family: 'JetBrains Mono'; font-size: 0.82rem; color: var(--cyan); }
-        .tl-item h4 { font-size: 1.18rem; margin: 0.3rem 0; }
-        .tl-item .org { color: var(--text); font-weight: 500; }
-        .tl-item .desc { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; }
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+            gap: 1rem;
+        }
 
-        /* Projects */
-        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.6rem; }
-        .proj-card { overflow: hidden; display: flex; flex-direction: column; }
-        .proj-card:hover { transform: translateY(-8px); border-color: var(--border-strong); box-shadow: var(--shadow); }
-        .proj-media { position: relative; height: 210px; overflow: hidden; border-bottom: 1px solid var(--border); }
-        .proj-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .proj-card:hover .proj-media img { transform: scale(1.07); }
-        .proj-tag { position: absolute; top: 0.9rem; left: 0.9rem; font-family: 'JetBrains Mono'; font-size: 0.72rem; padding: 0.3rem 0.7rem; border-radius: 999px; background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--border-strong); color: var(--text); }
-        .proj-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
-        .proj-body h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-        .proj-body .pdesc { color: var(--muted); font-size: 0.93rem; flex: 1; }
-        .proj-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.1rem; }
+        /* --- Fiori Tile --- */
+        .fiori-tile {
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            height: 176px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s, background-color 0.2s;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
 
-        /* Contact */
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
-        .contact-card { padding: 2rem; text-align: center; text-decoration: none; color: inherit; display: block; }
-        .contact-card:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
-        .contact-card .ic { width: 54px; height: 54px; border-radius: 14px; margin: 0 auto 1rem; display: grid; place-items: center; font-size: 1.4rem; color: #fff; background: var(--grad); }
-        .contact-card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
-        .contact-card p { color: var(--muted); font-size: 0.9rem; word-break: break-word; }
+        .fiori-tile:hover {
+            background-color: var(--sapTileHover);
+            box-shadow: var(--shadow-hover);
+        }
 
-        /* Certifications */
-        .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
-        .cert-card { padding: 1.6rem; display: flex; align-items: center; gap: 1.1rem; text-decoration: none; color: inherit; position: relative; }
-        .cert-card:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow); }
-        .cert-card.featured { border-color: color-mix(in srgb, var(--violet) 45%, var(--border)); }
-        .cert-ic { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; color: #fff; background: var(--grad); }
-        .cert-card h3 { font-size: 1.02rem; line-height: 1.35; margin-bottom: 0.25rem; }
-        .cert-card .org { color: var(--muted); font-size: 0.85rem; }
-        .cert-verify { position: absolute; top: 1rem; right: 1.1rem; font-family: 'JetBrains Mono'; font-size: 0.72rem; color: var(--cyan); opacity: 0; transform: translateX(-4px); transition: all 0.25s; }
-        .cert-card:hover .cert-verify { opacity: 1; transform: none; }
+        .tile-header {
+            flex-grow: 1;
+        }
 
-        footer { border-top: 1px solid var(--border); padding: 2.2rem 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+        .tile-title {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--sapTitleColor);
+            margin-bottom: 0.25rem;
+        }
 
-        /* Scroll reveal */
-        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .reveal.in { opacity: 1; transform: none; }
+        .tile-subtitle {
+            font-size: 0.75rem;
+            color: #666;
+        }
 
-        #toTop { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; border-radius: 14px; background: var(--grad); color: #fff; border: none; cursor: pointer; font-size: 1.1rem; z-index: 900; opacity: 0; pointer-events: none; transition: all 0.3s; box-shadow: 0 14px 34px -12px var(--violet); }
-        #toTop.show { opacity: 1; pointer-events: all; }
-        #toTop:hover { transform: translateY(-4px); }
+        body.dark .tile-subtitle {
+            color: #AAA;
+        }
 
-        /* ---------- Responsive ---------- */
-        @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-text .badge, .cta-row, .socials { justify-content: center; }
-            .hero-text p.lead { margin-left: auto; margin-right: auto; }
-            .hero-photo { order: -1; margin-bottom: 1rem; }
-            .about-grid { grid-template-columns: 1fr; }
-            #menuBtn { display: grid; }
-            nav { position: fixed; inset: 0 0 0 auto; width: min(80%, 320px); height: 100vh; background: var(--bg-2); border-left: 1px solid var(--border); padding: 5.5rem 2rem 2rem; transform: translateX(100%); transition: transform 0.4s ease; box-shadow: var(--shadow); }
-            nav.open { transform: none; }
-            nav ul { flex-direction: column; align-items: flex-start; gap: 1.6rem; }
-            .float-chip { display: none; }
+        .tile-kpi {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--sapTitleColor);
+            margin-top: 0.5rem;
+        }
+
+        .tile-icon {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--sapHighlightColor);
+        }
+
+        /* --- Object Page (Sections) --- */
+        .object-page {
+            display: none;
+            background-color: var(--sapBackgroundColor);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .object-page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .object-header {
+            background-color: var(--sapObjectHeaderBackground);
+            padding: 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--sapBrandColor);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+            color: var(--sapTitleColor);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-content p {
+            color: var(--sapTextColor);
+            font-size: 0.875rem;
+        }
+        
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .sap-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid var(--sapBrandColor);
+            transition: all 0.2s;
+        }
+
+        .sap-btn-primary {
+            background-color: var(--sapBrandColor);
+            color: white;
+        }
+
+        .sap-btn-primary:hover {
+            background-color: var(--sapHighlightColor);
+        }
+
+        .sap-btn-secondary {
+            background-color: transparent;
+            color: var(--sapBrandColor);
+        }
+        
+        .sap-btn-secondary:hover {
+            background-color: rgba(0, 112, 242, 0.1);
+        }
+
+        /* --- Panels / Cards --- */
+        .panel {
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-title {
+            font-size: 1.125rem;
+            color: var(--sapTitleColor);
+            border-bottom: 1px solid var(--sapTileBorder);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Timeline (Experience/Education) --- */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            height: 100%;
+            width: 2px;
+            background-color: var(--sapTileBorder);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--sapTileBackground);
+            border: 2px solid var(--sapBrandColor);
+        }
+
+        .timeline-date {
+            font-size: 0.75rem;
+            color: var(--sapHighlightColor);
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-title {
+            font-size: 1rem;
+            color: var(--sapTitleColor);
+            font-weight: bold;
+        }
+
+        .timeline-org {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        body.dark .timeline-org { color: #AAA; }
+
+        .timeline-desc {
+            font-size: 0.875rem;
+        }
+        
+        .timeline-desc ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* --- Grid Lists (Skills & Projects) --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .obj-card {
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.25rem;
+            padding: 1rem;
+            background-color: var(--sapBackgroundColor);
+        }
+
+        .obj-card h4 {
+            font-size: 1rem;
+            color: var(--sapTitleColor);
+            margin-bottom: 0.5rem;
+        }
+
+        .obj-card p {
+            font-size: 0.875rem;
+            color: var(--sapTextColor);
+        }
+        
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .chip {
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 1rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--sapTextColor);
+        }
+
+        #backBtn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header-actions {
+                display: none;
+            }
+            .object-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
-
 <body>
-    <div class="aurora"><span class="blob v"></span><span class="blob c"></span><span class="blob p"></span></div>
-    <div class="grain"></div>
 
-    <!-- Header -->
-    <header id="header">
-        <div class="container nav-wrap">
-            <a href="#hero" class="logo"><span class="mark">OJ</span> Osama<span style="color:var(--muted);font-weight:500">.dev</span></a>
-            <nav id="nav">
-                <ul>
-                    <li><a href="#about" onclick="closeMenu()" data-i18n="navAbout">À propos</a></li>
-                    <li><a href="#skills" onclick="closeMenu()" data-i18n="navSkills">Compétences</a></li>
-                    <li><a href="#education" onclick="closeMenu()" data-i18n="navEdu">Parcours</a></li>
-                    <li><a href="#projects" onclick="closeMenu()" data-i18n="navProjects">Projets</a></li>
-                    <li><a href="#certs" onclick="closeMenu()" data-i18n="navCerts">Certifs</a></li>
-                    <li><a href="#contact" onclick="closeMenu()" data-i18n="navContact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="nav-actions">
-                <div class="lang-wrap">
-                    <button class="pill-btn" onclick="toggleLang(event)"><span id="curLang" class="mono" style="font-size:0.8rem">FR</span></button>
-                    <div id="langMenu" class="lang-menu">
-                        <button onclick="setLanguage('fr')"><span>🇫🇷</span> Français</button>
-                        <button onclick="setLanguage('en')"><span>🇬🇧</span> English</button>
-                    </div>
-                </div>
-                <button class="pill-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Theme"><i class="fas fa-moon" id="themeIcon"></i></button>
-                <button class="pill-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu"><i class="fas fa-bars"></i></button>
-            </div>
+    <!-- Shell Bar -->
+    <header class="shell-bar">
+        <div class="shell-bar-left">
+            <button class="shell-btn" id="backBtn" onclick="goHome()" title="Home"><i class="fas fa-home"></i></button>
+            <div class="sap-logo">SAP Fiori</div>
+            <div class="shell-bar-title" id="shellTitle" data-i18n="shellTitle">JAMMI Osama - Portfolio</div>
+        </div>
+        <div class="shell-bar-right">
+            <button class="shell-btn" onclick="toggleTheme()" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+            <button class="shell-btn" onclick="toggleLang()" title="Translate" id="langBtn">EN</button>
+            <button class="shell-btn" title="User Profile"><i class="fas fa-user-circle"></i></button>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section id="hero">
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <span class="badge"><span class="dot"></span> <span data-i18n="heroBadge">Disponible pour opportunités · 2026</span></span>
-                <h1>Osama Jammi<br><span class="grad-text" data-i18n="heroRole">Développeur Full Stack</span></h1>
-                <div class="subtitle" data-i18n="heroSub">& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span></div>
-                <p class="lead" data-i18n="heroLead">Élève ingénieur en Gouvernance & Management des SI. Je conçois des applications web et mobiles, des architectures microservices et des API REST sécurisées, déployées sur Docker & Microsoft Azure.</p>
-                <div class="cta-row">
-                    <a href="#projects" class="btn btn-grad"><i class="fas fa-layer-group"></i> <span data-i18n="heroCtaProjects">Voir mes projets</span></a>
-                    <a href="cv.pdf" download class="btn btn-ghost"><i class="fas fa-download"></i> <span data-i18n="heroCtaCv">Télécharger CV</span></a>
-                </div>
-                <div class="socials">
-                    <a href="https://github.com/osama-jammi" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="mailto:jammiosama@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+212646953526" aria-label="Phone"><i class="fas fa-phone"></i></a>
+    <div class="main-container">
+        
+        <!-- Fiori Launchpad (Home) -->
+        <div id="launchpad" class="object-page active">
+            
+            <div class="launchpad-group">
+                <h2 class="launchpad-title" data-i18n="grpProfile">Profile & Overview</h2>
+                <div class="tiles-grid">
+                    <!-- About Me Tile -->
+                    <div class="fiori-tile" onclick="openApp('about')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileAbout">About Me</h3>
+                            <div class="tile-subtitle" data-i18n="tileAboutSub">Overview & Contact</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-address-card"></i></div>
+                    </div>
+                    
+                    <!-- Download CV Tile -->
+                    <a href="cv.pdf" download class="fiori-tile">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileCV">Resume (CV)</h3>
+                            <div class="tile-subtitle" data-i18n="tileCVSub">Download PDF</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-download"></i></div>
+                    </a>
                 </div>
             </div>
-            <div class="hero-photo">
-                <div class="ring"></div>
-                <img src="profile.jpeg" alt="Osama Jammi">
-                <div class="float-chip one"><i class="fas fa-code"></i> <span data-i18n="chipFullstack">Full Stack</span></div>
-                <div class="float-chip two"><i class="fas fa-certificate"></i> SAP Certified · ABAP Cloud</div>
+
+            <div class="launchpad-group">
+                <h2 class="launchpad-title" data-i18n="grpExperience">Experience & Expertise</h2>
+                <div class="tiles-grid">
+                    <!-- Experience Tile -->
+                    <div class="fiori-tile" onclick="openApp('experience')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileExp">Professional Exp.</h3>
+                            <div class="tile-subtitle" data-i18n="tileExpSub">Internships & Freelance</div>
+                            <div class="tile-kpi">3</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-briefcase"></i></div>
+                    </div>
+                    
+                    <!-- Education Tile -->
+                    <div class="fiori-tile" onclick="openApp('education')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileEdu">Education</h3>
+                            <div class="tile-subtitle" data-i18n="tileEduSub">Academic Background</div>
+                            <div class="tile-kpi">2027</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-graduation-cap"></i></div>
+                    </div>
+
+                    <!-- Skills Tile -->
+                    <div class="fiori-tile" onclick="openApp('skills')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileSkills">Technical Skills</h3>
+                            <div class="tile-subtitle" data-i18n="tileSkillsSub">SAP, Java, Web</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-cogs"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="launchpad-group">
+                <h2 class="launchpad-title" data-i18n="grpProjects">Showcase</h2>
+                <div class="tiles-grid">
+                    <!-- Projects Tile -->
+                    <div class="fiori-tile" onclick="openApp('projects')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileProj">Projects</h3>
+                            <div class="tile-subtitle" data-i18n="tileProjSub">RAP, Fiori, Spring</div>
+                            <div class="tile-kpi">5+</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-laptop-code"></i></div>
+                    </div>
+                    
+                    <!-- Certifications Tile -->
+                    <div class="fiori-tile" onclick="openApp('certs')">
+                        <div class="tile-header">
+                            <h3 class="tile-title" data-i18n="tileCerts">Certifications</h3>
+                            <div class="tile-subtitle" data-i18n="tileCertsSub">SAP Verified</div>
+                            <div class="tile-kpi">SAP</div>
+                        </div>
+                        <div class="tile-icon"><i class="fas fa-certificate"></i></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- App View: About Me -->
+        <div id="about" class="object-page">
+            <div class="object-header">
+                <div class="avatar">
+                    <img src="profile.jpeg" alt="JAMMI Osama">
+                </div>
+                <div class="header-content">
+                    <h1>JAMMI Osama</h1>
+                    <p data-i18n="roleDesc">SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native</p>
+                    <p>jammiosama@gmail.com | +212 646 95 35 26</p>
+                </div>
+                <div class="header-actions">
+                    <a href="mailto:jammiosama@gmail.com" class="sap-btn sap-btn-primary" data-i18n="btnEmail">Send Email</a>
+                    <a href="https://linkedin.com/in/jammi-osama" target="_blank" class="sap-btn sap-btn-secondary">LinkedIn</a>
+                    <a href="https://github.com/osama-jammi" target="_blank" class="sap-btn sap-btn-secondary">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title" data-i18n="pnlProfile">Profile Summary</h2>
+                <p data-i18n="profileText1">Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).</p>
+                <br>
+                <p><strong data-i18n="profileText2">Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.</strong></p>
             </div>
         </div>
-    </section>
 
-    <!-- About -->
-    <section id="about" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 01</span>
-                <h2 data-i18n="aboutTitle">À propos de moi</h2>
-            </div>
-            <div class="about-grid">
-                <div class="glass about-card reveal">
-                    <p data-i18n="aboutP1">Je suis Osama Jammi, élève ingénieur en Gouvernance & Management des SI à l'ENSIASD (Taroudant), passionné par le développement logiciel et les architectures web modernes.</p>
-                    <p data-i18n="aboutP2">J'ai développé des applications métier full-stack (Spring Boot, Angular, React, React Native), des plateformes microservices et des API REST sécurisées, déployées avec Docker sur Microsoft Azure — chez Riche Bois, Dial Technologies et en freelance.</p>
-                    <p data-i18n="aboutP3">Récemment certifié <strong>SAP Back-End Developer — ABAP Cloud</strong>, je suis à la recherche d'un stage en développement Full Stack, Backend Java ou Cloud Engineering.</p>
-                </div>
-                <div class="stats">
-                    <div class="glass stat reveal"><div class="num">4</div><div class="lbl" data-i18n="statExp">Expériences (stages & freelance)</div></div>
-                    <div class="glass stat reveal"><div class="num">6</div><div class="lbl" data-i18n="statProjects">Projets majeurs livrés</div></div>
-                    <div class="glass stat reveal"><div class="num">SAP</div><div class="lbl" data-i18n="statCert">Certifié ABAP Cloud</div></div>
-                    <div class="glass stat reveal"><div class="num">2027</div><div class="lbl" data-i18n="statGrad">Diplôme d'ingénieur</div></div>
+        <!-- App View: Experience -->
+        <div id="experience" class="object-page">
+            <div class="object-header">
+                <div class="header-content">
+                    <h1 data-i18n="hdrExp">Professional Experience</h1>
+                    <p data-i18n="hdrExpSub">Internships and Freelance Work</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Skills -->
-    <section id="skills" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 02</span>
-                <h2 data-i18n="skillsTitle">Stack technique</h2>
-                <p data-i18n="skillsSub">Les outils que j'utilise pour construire, sécuriser et déployer.</p>
-            </div>
-            <div class="skill-cats">
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-code"></i></div>
-                    <h3 data-i18n="skLangFw">Langages & Frameworks</h3>
-                    <div class="chips"><span class="chip">Java</span><span class="chip">ABAP Cloud</span><span class="chip">Python</span><span class="chip">Spring Boot</span><span class="chip">JPA · Hibernate</span><span class="chip">Angular</span><span class="chip">React</span><span class="chip">React Native</span></div>
-                </div>
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-database"></i></div>
-                    <h3 data-i18n="skData">Bases de données</h3>
-                    <div class="chips"><span class="chip">Oracle</span><span class="chip">MySQL</span><span class="chip">SQL Server</span><span class="chip">PostgreSQL</span></div>
-                </div>
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-shield-halved"></i></div>
-                    <h3 data-i18n="skSec">Sécurité & Messagerie</h3>
-                    <div class="chips"><span class="chip">Keycloak</span><span class="chip">OAuth2 / JWT</span><span class="chip">Apache Kafka</span><span class="chip">RabbitMQ</span></div>
-                </div>
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-cloud"></i></div>
-                    <h3 data-i18n="skDevops">Cloud & DevOps</h3>
-                    <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Azure</span><span class="chip">CI/CD</span><span class="chip">Microservices</span><span class="chip">Git · Linux</span></div>
-                </div>
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-cubes"></i></div>
-                    <h3 data-i18n="skErp">ERP & Tests</h3>
-                    <div class="chips"><span class="chip">SAP BTP</span><span class="chip">Odoo</span><span class="chip">Devalto</span><span class="chip">JUnit 5</span><span class="chip">Mockito</span><span class="chip">Postman</span></div>
-                </div>
-                <div class="glass skill-cat reveal">
-                    <div class="ic"><i class="fas fa-sitemap"></i></div>
-                    <h3 data-i18n="skGov">Gouvernance & Méthodo</h3>
-                    <div class="chips"><span class="chip">ITIL v4</span><span class="chip">COBIT</span><span class="chip">CMMI</span><span class="chip">Agile Scrum</span><span class="chip">Kanban</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education -->
-    <section id="education" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 03</span>
-                <h2 data-i18n="eduTitle">Parcours & expérience</h2>
-            </div>
-            <div class="timeline">
-                <div class="tl-item reveal">
-                    <span class="tl-date">2025 — 2027</span>
-                    <h4 data-i18n="edu1">Cycle d'Ingénieur — Gouvernance & Management des SI</h4>
-                    <p class="org" data-i18n="edu1org">ENSIASD, Taroudant</p>
-                    <p class="desc" data-i18n="edu1desc">Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.</p>
-                </div>
-                <div class="tl-item reveal">
-                    <span class="tl-date" data-i18n="exp3Date">Juin 2026 — Sept. 2026</span>
-                    <h4 data-i18n="exp3">Stagiaire Full Stack & Mobile — Riche Bois</h4>
-                    <p class="org" data-i18n="exp3org">Casablanca</p>
-                    <p class="desc" data-i18n="exp3desc">Conception et développement d'une plateforme de gestion du transport et des livraisons : API REST Spring Boot, back-office Angular et application mobile React Native (Expo) pour les chauffeurs — scan QR des bons de livraison, suivi GPS temps réel, gestion des voyages et dépôts. Sécurité centralisée via Keycloak (OAuth2, JWT, rôles superviseur / admin / chauffeur), base SQL Server.</p>
-                </div>
-                <div class="tl-item reveal">
-                    <span class="tl-date" data-i18n="exp0Date">Fév. 2026 — Mai 2026</span>
-                    <h4 data-i18n="exp0">Développeur ERP & Mobile — Freelance</h4>
-                    <p class="org" data-i18n="exp0org">Taroudant</p>
-                    <p class="desc" data-i18n="exp0desc">ERP sur mesure pour un espace de coworking + application mobile React Native (24 écrans). API REST sécurisées (Spring Boot, JWT), temps réel via SSE, PostgreSQL, déploiement Docker sur Azure.</p>
-                </div>
-                <div class="tl-item reveal">
-                    <span class="tl-date" data-i18n="expDate">Juil. 2025 — Sept. 2025</span>
-                    <h4 data-i18n="exp1">Stagiaire Full Stack — Riche Bois</h4>
-                    <p class="org" data-i18n="exp1org">Casablanca</p>
-                    <p class="desc" data-i18n="exp1desc">Applications métier (Spring Boot, Angular), intégration ERP, sécurisation des accès via Keycloak — OAuth2, MFA et gestion des rôles.</p>
-                </div>
-                <div class="tl-item reveal">
-                    <span class="tl-date" data-i18n="exp2Date">Juil. 2024 — Sept. 2024</span>
-                    <h4 data-i18n="exp2">Stagiaire Full Stack — Dial Technologies</h4>
-                    <p class="org" data-i18n="exp2org">Casablanca</p>
-                    <p class="desc" data-i18n="exp2desc">Applications web (Spring Boot, React), projets d'intégration ERP & CRM, conception et consommation d'API REST en environnement Agile.</p>
-                </div>
-                <div class="tl-item reveal">
-                    <span class="tl-date">2023 — 2024</span>
-                    <h4 data-i18n="edu2">DEUP Génie Informatique</h4>
-                    <p class="org" data-i18n="edu2org">Université Ibn Zohr, Taroudant</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 04</span>
-                <h2 data-i18n="projTitle">Projets sélectionnés</h2>
-                <p data-i18n="projSub">Quelques réalisations full-stack, mobiles, microservices et SAP.</p>
-            </div>
-            <div class="proj-grid">
-                <!-- RAP Travel & Expense Manager (SAP) -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagRap">★ 2026 · SAP RAP</span><img src="project6.png" alt="RAP Travel & Expense Manager - SAP Fiori"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj6Title">RAP Travel &amp; Expense Manager</h3>
-                        <p class="pdesc" data-i18n="proj6Desc">Application SAP native de gestion des notes de frais, développée de bout en bout avec le RESTful ABAP Programming Model (RAP managed + draft) : vues CDS (interface & projection), behavior definition avec actions Submit/Approve/Reject, déterminations et validations, service OData V4 et UI SAP Fiori Elements (List Report & Object Page) sur SAP BTP ABAP.</p>
-                        <div class="proj-tech chips"><span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">OData V4</span><span class="chip">SAP Fiori</span><span class="chip">SAP BTP</span></div>
+            
+            <div class="panel">
+                <h2 class="panel-title" data-i18n="pnlTimeline">Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">June 2026 – Aug. 2026</div>
+                        <div class="timeline-title" data-i18n="exp1Title">Full Stack Developer Intern</div>
+                        <div class="timeline-org">Riche Bois, Casablanca</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li data-i18n="exp1Desc1">Built a complete transport and delivery management solution (web, mobile and back office).</li>
+                                <li data-i18n="exp1Desc2">Developed a secured Spring Boot backend (JWT, Keycloak) integrated with the company's ERP (Divalto).</li>
+                                <li data-i18n="exp1Desc3">Delivered a React Native driver app: QR code scanning of deliveries, geolocation and real-time trip tracking.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <!-- SAP Smartforms -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagSmartforms">🔧 En cours · SAP Smartforms</span><img src="project7.png" alt="SAP Smartforms - Formulaires d'impression"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj7Title">Formulaires SAP Smartforms</h3>
-                        <p class="pdesc" data-i18n="proj7Desc">Conception et développement d'une bibliothèque de plus de 10 formulaires d'impression SAP Smartforms (factures, bons de livraison, documents métier) : mise en page, logique d'édition en ABAP, intégration aux programmes d'impression et tests. Premier formulaire livré, les suivants en cours de développement.</p>
-                        <div class="proj-tech chips"><span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span><span class="chip">SAP GUI</span></div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Feb. 2026 – May 2026</div>
+                        <div class="timeline-title" data-i18n="exp2Title">Freelance ERP & Mobile Developer</div>
+                        <div class="timeline-org">Taroudant</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li data-i18n="exp2Desc1">Designed and developed a custom ERP for a coworking space.</li>
+                                <li data-i18n="exp2Desc2">Built a React Native mobile application with 24 screens.</li>
+                                <li data-i18n="exp2Desc3">Implemented secured REST APIs with Spring Boot, JWT and PostgreSQL.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <!-- E-Commerce Microservices -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagMicro">★ 2026 · Microservices</span><img src="project5.svg" alt="Plateforme E-Commerce Microservices"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj5Title">Plateforme E-Commerce Microservices</h3>
-                        <p class="pdesc" data-i18n="proj5Desc">Architecture microservices (Authentification, Produits, Commandes, Notifications) sécurisée via Keycloak, OAuth2 et JWT, communication asynchrone par RabbitMQ, interface Angular moderne et déploiement continu (CI/CD) sur Microsoft Azure.</p>
-                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">Angular</span><span class="chip">RabbitMQ</span><span class="chip">Keycloak</span><span class="chip">Azure · CI/CD</span></div>
-                    </div>
-                </div>
-                <!-- Transport & Livraison -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagFeatured">★ Full Stack + Mobile</span><img src="project4.svg" alt="Transport & Livraison Riche Bois"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj4Title">Transport & Livraison — Riche Bois</h3>
-                        <p class="pdesc" data-i18n="proj4Desc">Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).</p>
-                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">React Native</span><span class="chip">Expo</span><span class="chip">SQL Server</span><span class="chip">QR · GPS</span></div>
-                    </div>
-                </div>
-                <!-- Stock -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag">Full Stack · ERP</span><img src="project1.png" alt="Système de Gestion de Stock"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj1Title">Système de Gestion de Stock</h3>
-                        <p class="pdesc" data-i18n="proj1Desc">Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.</p>
-                        <div class="proj-tech chips"><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span></div>
-                    </div>
-                </div>
-                <!-- Odoo -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag">ERP</span><img src="project2.png" alt="Implémentation ERP Odoo"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj2Title">Implémentation ERP Odoo</h3>
-                        <p class="pdesc" data-i18n="proj2Desc">Étude fonctionnelle et technique d'Odoo et développement de modules personnalisés (modèles, vues, contrôleurs, règles de sécurité).</p>
-                        <div class="proj-tech chips"><span class="chip">Odoo</span><span class="chip">Python</span><span class="chip">PostgreSQL</span><span class="chip">XML</span></div>
-                    </div>
-                </div>
-                <!-- Messaging -->
-                <div class="glass proj-card reveal">
-                    <div class="proj-media"><span class="proj-tag" data-i18n="tagArchi">Architecture distribuée</span><img src="project3.png" alt="Système de Messagerie Distribué"></div>
-                    <div class="proj-body">
-                        <h3 data-i18n="proj3Title">Système de Messagerie Distribué</h3>
-                        <p class="pdesc" data-i18n="proj3Desc">Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.</p>
-                        <div class="proj-tech chips"><span class="chip">Apache Kafka</span><span class="chip">RabbitMQ</span><span class="chip">Java</span><span class="chip">Oracle DB</span></div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">July 2025 – Sept. 2025</div>
+                        <div class="timeline-title" data-i18n="exp3Title">Full Stack Intern</div>
+                        <div class="timeline-org">Riche Bois, Casablanca</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li data-i18n="exp3Desc1">Developed business applications with Spring Boot and Angular, integrated with the company's ERP.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Certifications -->
-    <section id="certs" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 05</span>
-                <h2 data-i18n="certsTitle">Certifications</h2>
-                <p data-i18n="certsSub">Compétences validées et badges vérifiables.</p>
-            </div>
-            <div class="certs-grid">
-                <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" rel="noopener" class="glass cert-card featured reveal">
-                    <div class="cert-ic"><i class="fas fa-certificate"></i></div>
-                    <div>
-                        <h3 data-i18n="cert1">SAP Certified — Back-End Developer · ABAP Cloud</h3>
-                        <p class="org">SAP · <span data-i18n="cert1org">Badge vérifié sur Credly</span></p>
-                    </div>
-                    <span class="cert-verify" data-i18n="certVerify">Vérifier ↗</span>
-                </a>
-                <div class="glass cert-card reveal">
-                    <div class="cert-ic"><i class="fas fa-graduation-cap"></i></div>
-                    <div>
-                        <h3 data-i18n="cert2">SAP Learning Journey — Developing with ABAP in SAP BTP</h3>
-                        <p class="org">SAP · Mars 2026 — Mai 2026</p>
-                    </div>
+        <!-- App View: Education -->
+        <div id="education" class="object-page">
+            <div class="object-header">
+                <div class="header-content">
+                    <h1 data-i18n="hdrEdu">Education</h1>
+                    <p data-i18n="hdrEduSub">Academic Degrees</p>
                 </div>
-                <div class="glass cert-card reveal">
-                    <div class="cert-ic"><i class="fas fa-leaf"></i></div>
-                    <div>
-                        <h3 data-i18n="cert3">Spring Boot & Microservices</h3>
-                        <p class="org">Janv. 2026 — Mars 2026</p>
+            </div>
+            
+            <div class="panel">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025 – 2027</div>
+                        <div class="timeline-title" data-i18n="edu1Title">Engineering Degree — IT Governance and Information Systems Management</div>
+                        <div class="timeline-org" data-i18n="edu1Org">National School of Artificial Intelligence and Data Sciences (ENSIASD), Morocco</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 – 2024</div>
+                        <div class="timeline-title" data-i18n="edu2Title">DEUP in Computer Engineering (two-year university degree)</div>
+                        <div class="timeline-org">Ibn Zohr University</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Contact -->
-    <section id="contact" class="block">
-        <div class="container">
-            <div class="sec-head reveal">
-                <span class="sec-kicker">// 06</span>
-                <h2 data-i18n="contactTitle">Travaillons ensemble</h2>
-                <p data-i18n="contactSub">Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.</p>
+        <!-- App View: Skills -->
+        <div id="skills" class="object-page">
+            <div class="object-header">
+                <div class="header-content">
+                    <h1 data-i18n="hdrSkills">Technical Skills</h1>
+                    <p data-i18n="hdrSkillsSub">Technologies & Frameworks</p>
+                </div>
             </div>
-            <div class="contact-grid">
-                <a href="mailto:jammiosama@gmail.com" class="glass contact-card reveal"><div class="ic"><i class="fas fa-envelope"></i></div><h3>Email</h3><p>jammiosama@gmail.com</p></a>
-                <a href="tel:+212646953526" class="glass contact-card reveal"><div class="ic"><i class="fas fa-phone"></i></div><h3 data-i18n="phoneLabel">Téléphone</h3><p>+212 646 95 35 26</p></a>
-                <a href="https://www.linkedin.com/in/jammi-osama/" target="_blank" class="glass contact-card reveal"><div class="ic"><i class="fab fa-linkedin-in"></i></div><h3>LinkedIn</h3><p>jammi-osama</p></a>
-                <a href="https://github.com/osama-jammi" target="_blank" class="glass contact-card reveal"><div class="ic"><i class="fab fa-github"></i></div><h3>GitHub</h3><p>osama-jammi</p></a>
+            
+            <div class="panel">
+                <div class="card-grid">
+                    <div class="obj-card">
+                        <h4 data-i18n="skSAP">SAP Development</h4>
+                        <div class="chip-container">
+                            <span class="chip">ABAP / ABAP Cloud</span>
+                            <span class="chip">CDS Views</span>
+                            <span class="chip">RAP</span>
+                            <span class="chip">OData v4</span>
+                            <span class="chip">SAP Fiori</span>
+                            <span class="chip">Smartforms</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="skBackend">Backend & Languages</h4>
+                        <div class="chip-container">
+                            <span class="chip">Java</span>
+                            <span class="chip">Spring Boot</span>
+                            <span class="chip">JPA / Hibernate</span>
+                            <span class="chip">Microservices</span>
+                            <span class="chip">Python</span>
+                            <span class="chip">SQL</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="skFrontend">Frontend & Mobile</h4>
+                        <div class="chip-container">
+                            <span class="chip">Angular</span>
+                            <span class="chip">React.js</span>
+                            <span class="chip">React Native</span>
+                            <span class="chip">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="skCloud">Cloud & DevOps</h4>
+                        <div class="chip-container">
+                            <span class="chip">Docker</span>
+                            <span class="chip">Kubernetes</span>
+                            <span class="chip">Azure</span>
+                            <span class="chip">SAP BTP</span>
+                            <span class="chip">CI/CD</span>
+                            <span class="chip">Git</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="skSec">Security & Databases</h4>
+                        <div class="chip-container">
+                            <span class="chip">PostgreSQL</span>
+                            <span class="chip">MySQL</span>
+                            <span class="chip">SQL Server</span>
+                            <span class="chip">Keycloak</span>
+                            <span class="chip">Kafka</span>
+                            <span class="chip">RabbitMQ</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <p>© <span id="year"></span> Osama Jammi · <span data-i18n="footer">Conçu & développé avec passion.</span></p>
+        <!-- App View: Projects -->
+        <div id="projects" class="object-page">
+            <div class="object-header">
+                <div class="header-content">
+                    <h1 data-i18n="hdrProj">Projects</h1>
+                    <p data-i18n="hdrProjSub">Key Implementations</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="card-grid">
+                    <div class="obj-card">
+                        <h4 data-i18n="pj1Title">Business Management Application — SAP BTP, ABAP RAP</h4>
+                        <p data-i18n="pj1Desc">Data modeling with CDS views. Managed RAP implementation: behavior definitions, validations, determinations. Exposed OData V4 service consumed by Fiori Elements app.</p>
+                        <div class="chip-container">
+                            <span class="chip">ABAP Cloud</span>
+                            <span class="chip">RAP</span>
+                            <span class="chip">Fiori Elements</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="pj2Title">E-Commerce Microservices Platform</h4>
+                        <p data-i18n="pj2Desc">Spring Boot microservices secured with Keycloak/OAuth2, asynchronous communication via RabbitMQ, Angular front end, CI/CD on Microsoft Azure.</p>
+                        <div class="chip-container">
+                            <span class="chip">Spring Boot</span>
+                            <span class="chip">Microservices</span>
+                            <span class="chip">Azure</span>
+                        </div>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="pj3Title">Transport & Delivery Management Solution</h4>
+                        <p data-i18n="pj3Desc">React Native driver app (QR scanning, geolocation), Spring Boot backend, Angular back office, integrated with Divalto ERP.</p>
+                        <div class="chip-container">
+                            <span class="chip">React Native</span>
+                            <span class="chip">Spring Boot</span>
+                            <span class="chip">Angular</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
 
-    <button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Top"><i class="fas fa-arrow-up"></i></button>
+        <!-- App View: Certs -->
+        <div id="certs" class="object-page">
+            <div class="object-header">
+                <div class="header-content">
+                    <h1 data-i18n="hdrCerts">Certifications</h1>
+                    <p data-i18n="hdrCertsSub">Verified Credentials</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="card-grid">
+                    <div class="obj-card">
+                        <h4 data-i18n="ct1Title">SAP Certified — Back-End Developer (ABAP Cloud)</h4>
+                        <p>SAP</p>
+                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-secondary" style="display:inline-block; margin-top:1rem; padding:0.25rem 0.5rem;" data-i18n="btnVerify">Verify Credential</a>
+                    </div>
+                    <div class="obj-card">
+                        <h4 data-i18n="ct2Title">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
+                        <p>Mar. 2026 – May 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
     <script>
         const translations = {
             fr: {
-                navAbout:"À propos",navSkills:"Compétences",navEdu:"Parcours",navProjects:"Projets",navCerts:"Certifs",navContact:"Contact",
-                heroBadge:"Disponible pour opportunités · 2026",heroRole:"Développeur Full Stack",
-                heroSub:'& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span>',
-                heroLead:"Élève ingénieur en Gouvernance & Management des SI. Je conçois des applications web et mobiles, des architectures microservices et des API REST sécurisées, déployées sur Docker & Microsoft Azure.",
-                heroCtaProjects:"Voir mes projets",heroCtaCv:"Télécharger CV",chipFullstack:"Full Stack",
-                aboutTitle:"À propos de moi",
-                aboutP1:"Je suis Osama Jammi, élève ingénieur en Gouvernance & Management des SI à l'ENSIASD (Taroudant), passionné par le développement logiciel et les architectures web modernes.",
-                aboutP2:"J'ai développé des applications métier full-stack (Spring Boot, Angular, React, React Native), des plateformes microservices et des API REST sécurisées, déployées avec Docker sur Microsoft Azure — chez Riche Bois, Dial Technologies et en freelance.",
-                aboutP3:"Récemment certifié <strong>SAP Back-End Developer — ABAP Cloud</strong>, je suis à la recherche d'un stage en développement Full Stack, Backend Java ou Cloud Engineering.",
-                statExp:"Expériences (stages & freelance)",statProjects:"Projets majeurs livrés",statCert:"Certifié ABAP Cloud",statGrad:"Diplôme d'ingénieur",
-                skillsTitle:"Stack technique",skillsSub:"Les outils que j'utilise pour construire, sécuriser et déployer.",
-                skLangFw:"Langages & Frameworks",skData:"Bases de données",skSec:"Sécurité & Messagerie",skDevops:"Cloud & DevOps",skErp:"ERP & Tests",skGov:"Gouvernance & Méthodo",
-                eduTitle:"Parcours & expérience",
-                edu1:"Cycle d'Ingénieur — Gouvernance & Management des SI",edu1org:"ENSIASD, Taroudant",edu1desc:"Spécialisation Gouvernance, Audit et Management des Systèmes d'Information.",
-                exp3Date:"Juin 2026 — Sept. 2026",
-                exp3:"Stagiaire Full Stack & Mobile — Riche Bois",
-                exp3org:"Casablanca",
-                exp3desc:"Conception et développement d'une plateforme de gestion du transport et des livraisons : API REST Spring Boot, back-office Angular et application mobile React Native (Expo) pour les chauffeurs — scan QR des bons de livraison, suivi GPS temps réel, gestion des voyages et dépôts. Sécurité centralisée via Keycloak (OAuth2, JWT, rôles superviseur / admin / chauffeur), base SQL Server.",
-                exp0Date:"Fév. 2026 — Mai 2026",exp0:"Développeur ERP & Mobile — Freelance",exp0org:"Taroudant",
-                exp0desc:"ERP sur mesure pour un espace de coworking + application mobile React Native (24 écrans). API REST sécurisées (Spring Boot, JWT), temps réel via SSE, PostgreSQL, déploiement Docker sur Azure.",
-                expDate:"Juil. 2025 — Sept. 2025",exp1:"Stagiaire Full Stack — Riche Bois",exp1org:"Casablanca",
-                exp1desc:"Applications métier (Spring Boot, Angular), intégration ERP, sécurisation des accès via Keycloak — OAuth2, MFA et gestion des rôles.",
-                exp2Date:"Juil. 2024 — Sept. 2024",exp2:"Stagiaire Full Stack — Dial Technologies",exp2org:"Casablanca",
-                exp2desc:"Applications web (Spring Boot, React), projets d'intégration ERP & CRM, conception et consommation d'API REST en environnement Agile.",
-                edu2:"DEUP Génie Informatique",edu2org:"Université Ibn Zohr, Taroudant",
-                projTitle:"Projets sélectionnés",projSub:"Quelques réalisations full-stack, mobiles, microservices et SAP.",
-                tagRap:"★ 2026 · SAP RAP",
-                proj6Title:"RAP Travel & Expense Manager",
-                proj6Desc:"Application SAP native de gestion des notes de frais, développée de bout en bout avec le RESTful ABAP Programming Model (RAP managed + draft) : vues CDS (interface & projection), behavior definition avec actions Submit/Approve/Reject, déterminations et validations, service OData V4 et UI SAP Fiori Elements (List Report & Object Page) sur SAP BTP ABAP.",
-                tagSmartforms:"🔧 En cours · SAP Smartforms",
-                proj7Title:"Formulaires SAP Smartforms",
-                proj7Desc:"Conception et développement d'une bibliothèque de plus de 10 formulaires d'impression SAP Smartforms (factures, bons de livraison, documents métier) : mise en page, logique d'édition en ABAP, intégration aux programmes d'impression et tests. Premier formulaire livré, les suivants en cours de développement.",
-                tagMicro:"★ 2026 · Microservices",tagFeatured:"★ Full Stack + Mobile",tagArchi:"Architecture distribuée",
-                proj5Title:"Plateforme E-Commerce Microservices",
-                proj5Desc:"Architecture microservices (Authentification, Produits, Commandes, Notifications) sécurisée via Keycloak, OAuth2 et JWT, communication asynchrone par RabbitMQ, interface Angular moderne et déploiement continu (CI/CD) sur Microsoft Azure.",
-                proj4Title:"Transport & Livraison — Riche Bois",
-                proj4Desc:"Plateforme complète de gestion du transport et des livraisons : back-office Angular, API Spring Boot et application mobile React Native pour les chauffeurs (scan QR des bons de livraison, suivi GPS, gestion des dépôts et voyages, rôles superviseur/admin).",
-                proj1Title:"Système de Gestion de Stock",
-                proj1Desc:"Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.",
-                proj2Title:"Implémentation ERP Odoo",
-                proj2Desc:"Étude fonctionnelle et technique d'Odoo et développement de modules personnalisés (modèles, vues, contrôleurs, règles de sécurité).",
-                proj3Title:"Système de Messagerie Distribué",
-                proj3Desc:"Conception d'architectures événementielles pour systèmes distribués avec Apache Kafka et RabbitMQ.",
-                certsTitle:"Certifications",certsSub:"Compétences validées et badges vérifiables.",
-                cert1:"SAP Certified — Back-End Developer · ABAP Cloud",cert1org:"Badge vérifié sur Credly",
-                cert2:"SAP Learning Journey — Developing with ABAP in SAP BTP",
-                cert3:"Spring Boot & Microservices",certVerify:"Vérifier ↗",
-                contactTitle:"Travaillons ensemble",contactSub:"Une opportunité, un projet ou juste un bonjour — ma boîte est ouverte.",
-                phoneLabel:"Téléphone",footer:"Conçu & développé avec passion.",curLang:"FR"
+                shellTitle: "JAMMI Osama - Portfolio SAP Fiori",
+                grpProfile: "Profil & Aperçu", tileAbout: "À propos de moi", tileAboutSub: "Contact et Résumé",
+                tileCV: "Mon CV", tileCVSub: "Télécharger PDF",
+                grpExperience: "Expérience & Expertise", tileExp: "Exp. Pro.", tileExpSub: "Stages & Freelance",
+                tileEdu: "Formation", tileEduSub: "Parcours académique",
+                tileSkills: "Compétences Tech", tileSkillsSub: "SAP, Java, Web",
+                grpProjects: "Réalisations", tileProj: "Projets", tileProjSub: "RAP, Fiori, Spring",
+                tileCerts: "Certifications", tileCertsSub: "Vérifiées SAP",
+                roleDesc: "Développeur SAP ABAP / RAP | Java Spring Boot | Angular | React Native",
+                btnEmail: "Envoyer un e-mail", pnlProfile: "Résumé du profil",
+                profileText1: "Élève ingénieur en Gouvernance et Management des SI, avec une solide expérience Full Stack (Java Spring Boot, Angular, React Native) et une expertise certifiée SAP (ABAP, CDS, RAP, Fiori).",
+                profileText2: "À la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
+                hdrExp: "Expérience Professionnelle", hdrExpSub: "Stages et Freelance", pnlTimeline: "Historique",
+                exp1Title: "Stagiaire Développeur Full Stack",
+                exp1Desc1: "Création d'une solution complète de gestion du transport (web, mobile et back office).",
+                exp1Desc2: "Développement d'un backend sécurisé Spring Boot (JWT, Keycloak) intégré à l'ERP (Divalto).",
+                exp1Desc3: "Livrable app React Native : scan QR code, géolocalisation et suivi en temps réel.",
+                exp2Title: "Développeur Freelance ERP & Mobile",
+                exp2Desc1: "Conception d'un ERP sur mesure pour un espace de coworking.",
+                exp2Desc2: "Création d'une app mobile React Native (24 écrans).",
+                exp2Desc3: "Implémentation d'API REST sécurisées avec Spring Boot, JWT et PostgreSQL.",
+                exp3Title: "Stagiaire Full Stack",
+                exp3Desc1: "Développement d'apps métier avec Spring Boot et Angular, intégration ERP.",
+                hdrEdu: "Formation", hdrEduSub: "Diplômes Académiques",
+                edu1Title: "Diplôme d'Ingénieur — Gouvernance & Management des SI",
+                edu1Org: "École Nationale Supérieure d'Intelligence Artificielle et de Data Sciences (ENSIASD), Maroc",
+                edu2Title: "DEUP en Génie Informatique (Bac+2)",
+                hdrSkills: "Compétences Techniques", hdrSkillsSub: "Technologies & Frameworks",
+                skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud & DevOps", skSec: "Sécurité & Bases de données",
+                hdrProj: "Projets", hdrProjSub: "Principales Réalisations",
+                pj1Title: "App. de Gestion d'Affaires — SAP BTP, ABAP RAP",
+                pj1Desc: "Modélisation de données (CDS views). Implémentation RAP : behavior definitions, validations. Service OData V4 consommé par une app Fiori Elements.",
+                pj2Title: "Plateforme E-Commerce Microservices",
+                pj2Desc: "Microservices Spring Boot sécurisés (Keycloak/OAuth2), com. asynchrone (RabbitMQ), frontend Angular, CI/CD sur Azure.",
+                pj3Title: "Solution de Gestion de Livraison",
+                pj3Desc: "App chauffeur React Native (QR, GPS), backend Spring Boot, back-office Angular, intégration ERP Divalto.",
+                hdrCerts: "Certifications", hdrCertsSub: "Badges Vérifiés",
+                ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)",
+                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud",
+                btnVerify: "Vérifier le badge"
             },
             en: {
-                navAbout:"About",navSkills:"Skills",navEdu:"Journey",navProjects:"Projects",navCerts:"Certs",navContact:"Contact",
-                heroBadge:"Open to opportunities · 2026",heroRole:"Full Stack Developer",
-                heroSub:'& Cloud · SAP ABAP <span class="mono">// Spring Boot · Angular · React · Docker</span>',
-                heroLead:"IS Governance & Management engineering student. I build web & mobile apps, microservices architectures and secure REST APIs, deployed on Docker & Microsoft Azure.",
-                heroCtaProjects:"View my projects",heroCtaCv:"Download CV",chipFullstack:"Full Stack",
-                aboutTitle:"About me",
-                aboutP1:"I'm Osama Jammi, an IS Governance & Management engineering student at ENSIASD (Taroudant), passionate about software development and modern web architectures.",
-                aboutP2:"I've built full-stack business apps (Spring Boot, Angular, React, React Native), microservices platforms and secure REST APIs, deployed with Docker on Microsoft Azure — at Riche Bois, Dial Technologies and as a freelancer.",
-                aboutP3:"Recently certified <strong>SAP Back-End Developer — ABAP Cloud</strong>, I'm looking for an internship in Full Stack development, Java Backend or Cloud Engineering.",
-                statExp:"Experiences (internships & freelance)",statProjects:"Major projects delivered",statCert:"ABAP Cloud certified",statGrad:"Engineering degree",
-                skillsTitle:"Tech stack",skillsSub:"The tools I use to build, secure and ship.",
-                skLangFw:"Languages & Frameworks",skData:"Databases",skSec:"Security & Messaging",skDevops:"Cloud & DevOps",skErp:"ERP & Tests",skGov:"Governance & Methods",
-                eduTitle:"Journey & experience",
-                edu1:"Engineering Cycle — IS Governance & Management",edu1org:"ENSIASD, Taroudant",edu1desc:"Specialization in IS Governance, Audit and Management.",
-                exp3Date:"Jun. 2026 — Sep. 2026",
-                exp3:"Full Stack & Mobile Intern — Riche Bois",
-                exp3org:"Casablanca",
-                exp3desc:"Design and development of a transport & delivery management platform: Spring Boot REST APIs, Angular back-office and a React Native (Expo) mobile app for drivers — QR scanning of delivery notes, real-time GPS tracking, trip and depot management. Centralized security via Keycloak (OAuth2, JWT, supervisor / admin / driver roles), SQL Server database.",
-                exp0Date:"Feb. 2026 — May 2026",exp0:"ERP & Mobile Developer — Freelance",exp0org:"Taroudant",
-                exp0desc:"Custom ERP for a coworking space + a React Native mobile app (24 screens). Secure REST APIs (Spring Boot, JWT), real-time features via SSE, PostgreSQL, Docker deployment on Azure.",
-                expDate:"Jul. 2025 — Sep. 2025",exp1:"Full Stack Intern — Riche Bois",exp1org:"Casablanca",
-                exp1desc:"Business applications (Spring Boot, Angular), ERP integration, access security via Keycloak — OAuth2, MFA and role management.",
-                exp2Date:"Jul. 2024 — Sep. 2024",exp2:"Full Stack Intern — Dial Technologies",exp2org:"Casablanca",
-                exp2desc:"Web applications (Spring Boot, React), ERP & CRM integration projects, design and consumption of REST APIs in an Agile environment.",
-                edu2:"DEUP Computer Engineering",edu2org:"Ibn Zohr University, Taroudant",
-                projTitle:"Selected projects",projSub:"A few full-stack, mobile, microservices and SAP builds.",
-                tagRap:"★ 2026 · SAP RAP",
-                proj6Title:"RAP Travel & Expense Manager",
-                proj6Desc:"Native SAP expense-report application, built end-to-end with the RESTful ABAP Programming Model (managed RAP + draft): CDS views (interface & projection), behavior definition with Submit/Approve/Reject actions, determinations and validations, OData V4 service and SAP Fiori Elements UI (List Report & Object Page) on SAP BTP ABAP.",
-                tagSmartforms:"🔧 In progress · SAP Smartforms",
-                proj7Title:"SAP Smartforms",
-                proj7Desc:"Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes, business documents): layout design, ABAP print logic, integration with print programs and testing. First form delivered, more in progress.",
-                tagMicro:"★ 2026 · Microservices",tagFeatured:"★ Full Stack + Mobile",tagArchi:"Distributed architecture",
-                proj5Title:"E-Commerce Microservices Platform",
-                proj5Desc:"Microservices architecture (Authentication, Products, Orders, Notifications) secured with Keycloak, OAuth2 and JWT, asynchronous communication via RabbitMQ, modern Angular UI and continuous deployment (CI/CD) on Microsoft Azure.",
-                proj4Title:"Transport & Delivery — Riche Bois",
-                proj4Desc:"Complete transport & delivery management platform: Angular back-office, Spring Boot API and a React Native mobile app for drivers (QR scanning of delivery notes, GPS tracking, depot & trip management, supervisor/admin roles).",
-                proj1Title:"Stock Management System",
-                proj1Desc:"Complete stock management system for construction sites with Devalto ERP integration, real-time sync and centralized security via Keycloak.",
-                proj2Title:"ERP Odoo Implementation",
-                proj2Desc:"Functional and technical study of Odoo and development of custom modules (models, views, controllers, security rules).",
-                proj3Title:"Distributed Messaging System",
-                proj3Desc:"Design of event-driven architectures for distributed systems with Apache Kafka and RabbitMQ.",
-                certsTitle:"Certifications",certsSub:"Validated skills and verifiable badges.",
-                cert1:"SAP Certified — Back-End Developer · ABAP Cloud",cert1org:"Verified badge on Credly",
-                cert2:"SAP Learning Journey — Developing with ABAP in SAP BTP",
-                cert3:"Spring Boot & Microservices",certVerify:"Verify ↗",
-                contactTitle:"Let's work together",contactSub:"An opportunity, a project or just a hello — my inbox is open.",
-                phoneLabel:"Phone",footer:"Designed & built with passion.",curLang:"EN"
+                shellTitle: "JAMMI Osama - SAP Fiori Portfolio",
+                grpProfile: "Profile & Overview", tileAbout: "About Me", tileAboutSub: "Overview & Contact",
+                tileCV: "Resume (CV)", tileCVSub: "Download PDF",
+                grpExperience: "Experience & Expertise", tileExp: "Professional Exp.", tileExpSub: "Internships & Freelance",
+                tileEdu: "Education", tileEduSub: "Academic Background",
+                tileSkills: "Technical Skills", tileSkillsSub: "SAP, Java, Web",
+                grpProjects: "Showcase", tileProj: "Projects", tileProjSub: "RAP, Fiori, Spring",
+                tileCerts: "Certifications", tileCertsSub: "SAP Verified",
+                roleDesc: "SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native",
+                btnEmail: "Send Email", pnlProfile: "Profile Summary",
+                profileText1: "Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).",
+                profileText2: "Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
+                hdrExp: "Professional Experience", hdrExpSub: "Internships and Freelance Work", pnlTimeline: "Timeline",
+                exp1Title: "Full Stack Developer Intern",
+                exp1Desc1: "Built a complete transport and delivery management solution (web, mobile and back office).",
+                exp1Desc2: "Developed a secured Spring Boot backend (JWT, Keycloak) integrated with the company's ERP (Divalto).",
+                exp1Desc3: "Delivered a React Native driver app: QR code scanning of deliveries, geolocation and real-time trip tracking.",
+                exp2Title: "Freelance ERP & Mobile Developer",
+                exp2Desc1: "Designed and developed a custom ERP for a coworking space.",
+                exp2Desc2: "Built a React Native mobile application with 24 screens.",
+                exp2Desc3: "Implemented secured REST APIs with Spring Boot, JWT and PostgreSQL.",
+                exp3Title: "Full Stack Intern",
+                exp3Desc1: "Developed business applications with Spring Boot and Angular, integrated with the company's ERP.",
+                hdrEdu: "Education", hdrEduSub: "Academic Degrees",
+                edu1Title: "Engineering Degree — IT Governance and Information Systems Management",
+                edu1Org: "National School of Artificial Intelligence and Data Sciences (ENSIASD), Morocco",
+                edu2Title: "DEUP in Computer Engineering (two-year university degree)",
+                hdrSkills: "Technical Skills", hdrSkillsSub: "Technologies & Frameworks",
+                skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud & DevOps", skSec: "Security & Databases",
+                hdrProj: "Projects", hdrProjSub: "Key Implementations",
+                pj1Title: "Business Management Application — SAP BTP, ABAP RAP",
+                pj1Desc: "Data modeling with CDS views. Managed RAP implementation: behavior definitions, validations. Exposed OData V4 service consumed by Fiori Elements app.",
+                pj2Title: "E-Commerce Microservices Platform",
+                pj2Desc: "Spring Boot microservices secured with Keycloak/OAuth2, asynchronous communication via RabbitMQ, Angular front end, CI/CD on Microsoft Azure.",
+                pj3Title: "Transport & Delivery Management Solution",
+                pj3Desc: "React Native driver app (QR scanning, geolocation), Spring Boot backend, Angular back office, integrated with Divalto ERP.",
+                hdrCerts: "Certifications", hdrCertsSub: "Verified Credentials",
+                ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)",
+                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud",
+                btnVerify: "Verify Credential"
             }
         };
 
-        function setLanguage(lang){
-            const t = translations[lang];
-            document.querySelectorAll('[data-i18n]').forEach(el=>{
-                const k = el.getAttribute('data-i18n');
-                if(t[k] !== undefined){ el.innerHTML = t[k]; }
+        let currentLang = 'en';
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
             });
-            document.getElementById('curLang').textContent = t.curLang;
-            document.documentElement.lang = lang;
-            localStorage.setItem('language', lang);
-            document.getElementById('langMenu').classList.remove('show');
-        }
-        function toggleLang(e){ e.stopPropagation(); document.getElementById('langMenu').classList.toggle('show'); }
-        document.addEventListener('click', e=>{ if(!e.target.closest('.lang-wrap')) document.getElementById('langMenu').classList.remove('show'); });
-
-        function toggleTheme(){
-            document.body.classList.toggle('light');
-            const light = document.body.classList.contains('light');
-            document.getElementById('themeIcon').className = light ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', light ? 'light' : 'dark');
         }
 
-        function toggleMenu(){ document.getElementById('nav').classList.toggle('open'); }
-        function closeMenu(){ document.getElementById('nav').classList.remove('open'); }
+        function openApp(appId) {
+            document.querySelectorAll('.object-page').forEach(el => el.classList.remove('active'));
+            document.getElementById(appId).classList.add('active');
+            document.getElementById('backBtn').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
 
-        window.addEventListener('scroll', ()=>{
-            const h = document.getElementById('header'), top = document.getElementById('toTop');
-            h.classList.toggle('scrolled', window.scrollY > 40);
-            top.classList.toggle('show', window.scrollY > 400);
-        });
-
-        const io = new IntersectionObserver((entries)=>{
-            entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-        }, { threshold: 0.12 });
-
-        window.addEventListener('load', ()=>{
-            if(localStorage.getItem('theme') === 'light'){ document.body.classList.add('light'); document.getElementById('themeIcon').className='fas fa-sun'; }
-            setLanguage(localStorage.getItem('language') || 'fr');
-            document.getElementById('year').textContent = new Date().getFullYear();
-            document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-        });
+        function goHome() {
+            document.querySelectorAll('.object-page').forEach(el => el.classList.remove('active'));
+            document.getElementById('launchpad').classList.add('active');
+            document.getElementById('backBtn').style.display = 'none';
+        }
     </script>
 </body>
 </html>
