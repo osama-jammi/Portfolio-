@@ -1854,13 +1854,17 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                 const decoder = new TextDecoder("utf-8");
                 let done = false;
                 let fullText = "";
+                let buffer = "";
 
                 while (!done) {
                     const { value, done: readerDone } = await reader.read();
                     done = readerDone;
                     if (value) {
-                        const chunk = decoder.decode(value, { stream: true });
-                        const lines = chunk.split('\n');
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        // The last item might be an incomplete line, keep it in the buffer
+                        buffer = lines.pop();
+
                         for (const line of lines) {
                             if (line.startsWith('data: ')) {
                                 const dataStr = line.replace('data: ', '').trim();
