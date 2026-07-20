@@ -1814,7 +1814,7 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                     : "Error: The Gemini API Key has not been configured. Please open the portfolio code and replace 'YOUR_GEMINI_API_KEY_HERE' with your actual Google API key.";
             }
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
             const prompt = `${cvContext}\n\nUser Question (respond in ${language === 'fr' ? 'French' : 'English'}): ${userMessage}`;
 
             try {
