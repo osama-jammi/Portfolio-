@@ -1824,14 +1824,15 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             if(e.key === 'Enter') sendChatMessage();
         }
 
-        async function fetchGeminiResponse(userMessage, language) {
+        async function fetchGeminiResponseStream(userMessage, language, onChunk) {
             if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-                return language === 'fr' 
-                    ? "Erreur : La clé d'API Gemini n'a pas été configurée. Veuillez ouvrir le code du portfolio et remplacer 'YOUR_GEMINI_API_KEY_HERE' par votre véritable clé API Google." 
-                    : "Error: The Gemini API Key has not been configured. Please open the portfolio code and replace 'YOUR_GEMINI_API_KEY_HERE' with your actual Google API key.";
+                onChunk(language === 'fr' 
+                    ? "Erreur : La clé d'API Gemini n'a pas été configurée." 
+                    : "Error: The Gemini API Key has not been configured.");
+                return;
             }
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
             const prompt = `${cvContext}\n\nUser Question (respond in ${language === 'fr' ? 'French' : 'English'}): ${userMessage}`;
 
             try {
@@ -1844,15 +1845,43 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                     })
                 });
 
-                const data = await response.json();
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    return data.candidates[0].content.parts[0].text;
-                } else {
-                    return language === 'fr' ? "Désolé, je n'ai pas pu générer une réponse." : "Sorry, I couldn't generate a response.";
+                if (!response.ok) {
+                    onChunk(language === 'fr' ? "Erreur de l'API Google." : "Google API Error.");
+                    return;
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let done = false;
+                let fullText = "";
+
+                while (!done) {
+                    const { value, done: readerDone } = await reader.read();
+                    done = readerDone;
+                    if (value) {
+                        const chunk = decoder.decode(value, { stream: true });
+                        const lines = chunk.split('\n');
+                        for (const line of lines) {
+                            if (line.startsWith('data: ')) {
+                                const dataStr = line.replace('data: ', '').trim();
+                                if (dataStr) {
+                                    try {
+                                        const dataJson = JSON.parse(dataStr);
+                                        if (dataJson.candidates && dataJson.candidates[0].content.parts[0].text) {
+                                            fullText += dataJson.candidates[0].content.parts[0].text;
+                                            onChunk(fullText);
+                                        }
+                                    } catch (e) {
+                                        // Ignore parse errors on incomplete chunks
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                return language === 'fr' ? "Une erreur réseau s'est produite lors de la connexion à l'IA." : "A network error occurred while connecting to the AI.";
+                onChunk(language === 'fr' ? "Une erreur réseau s'est produite lors de la connexion à l'IA." : "A network error occurred while connecting to the AI.");
             }
         }
 
@@ -1864,18 +1893,26 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             addChatMsg(text, 'user');
             input.value = '';
             
-            // Add typing indicator
+            const typingId = 'typingIndicator-' + Date.now();
             const typingHtml = currentLang === 'fr' ? '<i class="fas fa-circle-notch fa-spin"></i> L\'IA réfléchit...' : '<i class="fas fa-circle-notch fa-spin"></i> AI is thinking...';
-            addChatMsg(typingHtml, 'bot typing', 'typingIndicator');
+            addChatMsg(typingHtml, 'bot typing', typingId);
             
-            // Fetch response from Gemini
-            const answer = await fetchGeminiResponse(text, currentLang);
+            const indicator = document.getElementById(typingId);
+            let isFirstChunk = true;
+
+            await fetchGeminiResponseStream(text, currentLang, (partialText) => {
+                if (isFirstChunk) {
+                    indicator.classList.remove('typing');
+                    indicator.classList.add('bot'); // Ensure it looks like a normal bot message
+                    isFirstChunk = false;
+                }
+                indicator.innerHTML = marked.parse(partialText);
+                indicator.querySelectorAll('p').forEach(p => p.style.marginBottom = '0');
+                const container = document.getElementById('chatMessages');
+                container.scrollTop = container.scrollHeight;
+            });
             
-            // Remove typing indicator and show real answer
-            const indicator = document.getElementById('typingIndicator');
-            if(indicator) indicator.remove();
-            
-            addChatMsg(answer, 'bot');
+            indicator.removeAttribute('id');
         }
 
         // Init
