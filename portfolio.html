@@ -314,6 +314,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
+            cursor: pointer; /* Added back to allow clicking anywhere on the card */
         }
 
         .project-card:hover {
@@ -865,7 +866,7 @@
         <div id="tab-projects" class="tab-content">
             <div class="project-grid">
                 
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('RAP-Travel-Expense-Manager', 'RAP Travel Expense Manager SAP BTP')">
                     <img src="project6.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=SAP+Project'">
                     <div class="project-body">
                         <div class="project-header">
@@ -877,13 +878,13 @@
                             <span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">Fiori</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="openProjectModal('RAP-Travel-Expense-Manager', 'RAP Travel Expense Manager SAP BTP')"><i class="fas fa-book-open"></i> README</button>
-                            <a href="https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('RAP-Travel-Expense-Manager', 'RAP Travel Expense Manager SAP BTP')"><i class="fas fa-book-open"></i> README</button>
+                            <a href="https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('ABAP-SmartForms-Adobe-Forms', 'SAP Smartforms Library')">
                     <img src="project7.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Smartforms'">
                     <div class="project-body">
                         <div class="project-header">
@@ -895,13 +896,13 @@
                             <span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="openProjectModal('ABAP-SmartForms-Adobe-Forms', 'SAP Smartforms Library')"><i class="fas fa-book-open"></i> README</button>
-                            <a href="https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('ABAP-SmartForms-Adobe-Forms', 'SAP Smartforms Library')"><i class="fas fa-book-open"></i> README</button>
+                            <a href="https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Chaghaf-mobile-app', 'E-Commerce Microservices Platform')">
                     <img src="project5.svg" alt="Project Image" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Microservices'">
                     <div class="project-body">
                         <div class="project-header">
@@ -913,13 +914,13 @@
                             <span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">RabbitMQ</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="openProjectModal('Chaghaf-mobile-app', 'E-Commerce Microservices Platform')"><i class="fas fa-book-open"></i> README</button>
-                            <a href="https://github.com/osama-jammi/Chaghaf-mobile-app.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('Chaghaf-mobile-app', 'E-Commerce Microservices Platform')"><i class="fas fa-book-open"></i> README</button>
+                            <a href="https://github.com/osama-jammi/Chaghaf-mobile-app.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Transport_APP', 'Transport Delivery Management Solution')">
                     <img src="project4.svg" alt="Project Image" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Transport'">
                     <div class="project-body">
                         <div class="project-header">
@@ -931,13 +932,13 @@
                             <span class="chip">React Native</span><span class="chip">Spring Boot</span><span class="chip">Angular</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="openProjectModal('Transport_APP', 'Transport Delivery Management Solution')"><i class="fas fa-book-open"></i> README</button>
-                            <a href="https://github.com/osama-jammi/Transport_APP.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('Transport_APP', 'Transport Delivery Management Solution')"><i class="fas fa-book-open"></i> README</button>
+                            <a href="https://github.com/osama-jammi/Transport_APP.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Grand-Import', 'Inventory Management System')">
                     <img src="project1.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Stock'">
                     <div class="project-body">
                         <div class="project-header">
@@ -949,8 +950,8 @@
                             <span class="chip">Spring Boot</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="openProjectModal('Grand-Import', 'Inventory Management System')"><i class="fas fa-book-open"></i> README</button>
-                            <a href="https://github.com/osama-jammi/Grand-Import.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('Grand-Import', 'Inventory Management System')"><i class="fas fa-book-open"></i> README</button>
+                            <a href="https://github.com/osama-jammi/Grand-Import.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
