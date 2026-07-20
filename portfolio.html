@@ -1568,8 +1568,24 @@
         let currentGhTotal = 0;
 
         async function fetchGithubData() {
+            let res;
             try {
-                const res = await fetch('https://api.allorigins.win/raw?url=https://github-contributions.vercel.app/api/v1/osama-jammi');
+                // Try corsproxy.io first
+                res = await fetch('https://corsproxy.io/?url=' + encodeURIComponent('https://github-contributions.vercel.app/api/v1/osama-jammi'));
+                if (!res.ok) throw new Error("corsproxy failed");
+            } catch (e1) {
+                try {
+                    // Fallback to allorigins
+                    res = await fetch('https://api.allorigins.win/raw?url=https://github-contributions.vercel.app/api/v1/osama-jammi');
+                    if (!res.ok) throw new Error("allorigins failed");
+                } catch (e2) {
+                    console.error("All proxies failed to fetch github data");
+                    document.getElementById('ghTitle').innerText = "Failed to load contributions.";
+                    return;
+                }
+            }
+
+            try {
                 githubData = await res.json();
                 
                 const sidebar = document.getElementById('githubSidebar');
@@ -1588,7 +1604,7 @@
                     switchYear(sidebar.firstChild, latest.total, latest.year);
                 }
             } catch (e) {
-                console.error("Error fetching github data", e);
+                console.error("Error parsing github data", e);
                 document.getElementById('ghTitle').innerText = "Failed to load contributions.";
             }
         }
