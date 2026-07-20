@@ -313,6 +313,7 @@
             transition: box-shadow 0.2s, transform 0.2s;
             display: flex;
             flex-direction: column;
+            cursor: pointer; /* Makes it look clickable */
         }
 
         .project-card:hover {
@@ -531,15 +532,13 @@
 
         /* --- Custom GitHub Contribution UI --- */
         .github-ui-container {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            border: 1px solid #30363d;
             border-radius: 6px;
             padding: 16px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             margin-top: 1rem;
             display: flex;
             gap: 16px;
+            transition: all 0.3s;
         }
 
         .github-ui-main {
@@ -560,32 +559,28 @@
 
         .github-ui-settings {
             font-size: 12px;
-            color: #8b949e;
             cursor: pointer;
-        }
-        
-        .github-ui-settings:hover {
-            color: #58a6ff;
         }
 
         .github-graph-box {
-            border: 1px solid #30363d;
+            border-width: 1px;
+            border-style: solid;
             border-radius: 6px;
             padding: 16px;
-            background-color: #0d1117;
             overflow-x: auto;
+            transition: all 0.3s;
         }
 
         .github-grid {
             display: grid;
-            grid-template-columns: auto repeat(53, 10px);
+            grid-template-columns: auto;
+            grid-auto-columns: 10px;
             grid-template-rows: repeat(7, 10px);
             gap: 3px;
         }
         
         .github-day-label {
             font-size: 9px;
-            color: #8b949e;
             text-align: right;
             padding-right: 8px;
             line-height: 10px;
@@ -595,15 +590,12 @@
             width: 10px;
             height: 10px;
             border-radius: 2px;
-            background-color: #161b22;
-            outline: 1px solid rgba(255,255,255,0.05);
-            outline-offset: -1px;
         }
-
-        .github-square.l1 { background-color: #0e4429; }
-        .github-square.l2 { background-color: #006d32; }
-        .github-square.l3 { background-color: #26a641; }
-        .github-square.l4 { background-color: #39d353; }
+        
+        .github-square:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
 
         .github-sidebar {
             width: 150px;
@@ -614,22 +606,13 @@
 
         .github-year-btn {
             background-color: transparent;
-            color: #8b949e;
             border: none;
             padding: 8px 16px;
             text-align: left;
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-        }
-
-        .github-year-btn.active {
-            background-color: #1f6feb;
-            color: #ffffff;
-        }
-        
-        .github-year-btn:hover:not(.active) {
-            background-color: #21262d;
+            transition: all 0.2s;
         }
 
         .github-footer {
@@ -638,7 +621,6 @@
             align-items: center;
             margin-top: 8px;
             font-size: 12px;
-            color: #8b949e;
         }
         
         .github-legend {
@@ -646,6 +628,116 @@
             align-items: center;
             gap: 4px;
         }
+
+        /* Dark Mode / Light Mode GitHub UI Variables */
+        body.dark .github-ui-container { background-color: #0d1117; color: #c9d1d9; border: 1px solid #30363d; }
+        body.dark .github-graph-box { background-color: #0d1117; border-color: #30363d; }
+        body.dark .github-ui-settings, body.dark .github-footer { color: #8b949e; }
+        body.dark .github-ui-settings:hover { color: #58a6ff; }
+        body.dark .github-year-btn { color: #8b949e; }
+        body.dark .github-year-btn.active { background-color: #1f6feb; color: #ffffff; }
+        body.dark .github-year-btn:hover:not(.active) { background-color: #21262d; }
+        body.dark .github-day-label { color: #8b949e; }
+        
+        body.dark .github-square { outline: 1px solid rgba(255,255,255,0.05); outline-offset: -1px; }
+        body.dark .github-square.l0 { background-color: #161b22; }
+        body.dark .github-square.l1 { background-color: #0e4429; }
+        body.dark .github-square.l2 { background-color: #006d32; }
+        body.dark .github-square.l3 { background-color: #26a641; }
+        body.dark .github-square.l4 { background-color: #39d353; }
+
+        body:not(.dark) .github-ui-container { background-color: #ffffff; color: #24292f; border: 1px solid #d0d7de; }
+        body:not(.dark) .github-graph-box { background-color: #ffffff; border-color: #d0d7de; }
+        body:not(.dark) .github-ui-settings, body:not(.dark) .github-footer { color: #57606a; }
+        body:not(.dark) .github-ui-settings:hover { color: #0969da; }
+        body:not(.dark) .github-year-btn { color: #57606a; }
+        body:not(.dark) .github-year-btn.active { background-color: #0969da; color: #ffffff; }
+        body:not(.dark) .github-year-btn:hover:not(.active) { background-color: #f3f4f6; }
+        body:not(.dark) .github-day-label { color: #57606a; }
+        
+        body:not(.dark) .github-square { outline: 1px solid rgba(27,31,35,0.06); outline-offset: -1px; }
+        body:not(.dark) .github-square.l0 { background-color: #ebedf0; }
+        body:not(.dark) .github-square.l1 { background-color: #9be9a8; }
+        body:not(.dark) .github-square.l2 { background-color: #40c463; }
+        body:not(.dark) .github-square.l3 { background-color: #30a14e; }
+        body:not(.dark) .github-square.l4 { background-color: #216e39; }
+
+        /* --- SAP Fiori Markdown Modal --- */
+        .fiori-dialog-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .fiori-dialog-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .fiori-dialog {
+            background-color: var(--sapTileBackground);
+            border-radius: 0.5rem;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        .fiori-dialog-overlay.active .fiori-dialog {
+            transform: translateY(0);
+        }
+        .fiori-dialog-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--sapTileBorder);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .fiori-dialog-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--sapTitleColor);
+        }
+        .fiori-dialog-close {
+            background: none;
+            border: none;
+            color: var(--sapTextColor);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+        .fiori-dialog-content {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+            color: var(--sapTextColor);
+            line-height: 1.6;
+        }
+        .fiori-dialog-content h1, .fiori-dialog-content h2, .fiori-dialog-content h3 {
+            color: var(--sapTitleColor);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .fiori-dialog-content h1:first-child { margin-top: 0; }
+        .fiori-dialog-content p { margin-bottom: 1rem; }
+        .fiori-dialog-content img { max-width: 100%; height: auto; border-radius: 0.25rem; margin-bottom: 1rem;}
+        .fiori-dialog-content pre { background-color: var(--sapBackgroundColor); padding: 1rem; border-radius: 0.25rem; overflow-x: auto; margin-bottom: 1rem; border: 1px solid var(--sapTileBorder); }
+        .fiori-dialog-content code { font-family: monospace; }
+        .fiori-dialog-content ul, .fiori-dialog-content ol { padding-left: 2rem; margin-bottom: 1rem; }
+        .fiori-dialog-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--sapTileBorder);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
 
         @media (max-width: 768px) {
             .header-top {
@@ -670,6 +762,7 @@
             .github-sidebar {
                 width: 100%;
                 flex-direction: row;
+                overflow-x: auto;
             }
         }
     </style>
@@ -731,24 +824,24 @@
                     <p><strong><span data-i18n="profileText2">Looking for a final-year internship in SAP development starting January 2027.</span></strong></p>
                 </div>
                 
-                <h3 style="margin-top:2rem; font-size:1rem; color:var(--sapTitleColor);">GitHub Contributions</h3>
+                <h3 style="margin-top:2rem; font-size:1rem; color:var(--sapTitleColor);" data-i18n="githubTitle">GitHub Contributions</h3>
                 
-                <!-- Exact GitHub UI Replica -->
+                <!-- Exact GitHub UI Replica with Live Data -->
                 <div class="github-ui-container">
                     <div class="github-ui-main">
                         <div class="github-ui-header">
-                            <div class="github-ui-title">388 contributions in the last year</div>
+                            <div class="github-ui-title" id="ghTitle">Loading contributions...</div>
                             <div class="github-ui-settings">Contribution settings <i class="fas fa-caret-down"></i></div>
                         </div>
                         <div class="github-graph-box">
                             <div class="github-grid" id="githubGrid">
-                                <!-- Generated via JS below -->
+                                <!-- Grid injected by JS -->
                             </div>
                             <div class="github-footer">
                                 <div>Learn how we count contributions</div>
                                 <div class="github-legend">
                                     Less 
-                                    <div class="github-square"></div>
+                                    <div class="github-square l0"></div>
                                     <div class="github-square l1"></div>
                                     <div class="github-square l2"></div>
                                     <div class="github-square l3"></div>
@@ -758,10 +851,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="github-sidebar">
-                        <button class="github-year-btn active" onclick="switchYear(this, '388', 2026)">2026</button>
-                        <button class="github-year-btn" onclick="switchYear(this, '245', 2025)">2025</button>
-                        <button class="github-year-btn" onclick="switchYear(this, '112', 2024)">2024</button>
+                    <div class="github-sidebar" id="githubSidebar">
+                        <!-- Buttons injected by JS -->
                     </div>
                 </div>
 
@@ -772,8 +863,7 @@
         <div id="tab-projects" class="tab-content">
             <div class="project-grid">
                 
-                <!-- SAP RAP Project -->
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('RAP-Travel-Expense-Manager', 'RAP Travel Expense Manager SAP BTP')">
                     <img src="project6.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=SAP+Project'">
                     <div class="project-body">
                         <div class="project-header">
@@ -785,13 +875,12 @@
                             <span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">Fiori</span>
                         </div>
                         <div class="project-actions">
-                            <a href="https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <a href="https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- SAP Smartforms Project -->
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('ABAP-SmartForms-Adobe-Forms', 'SAP Smartforms Library')">
                     <img src="project7.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Smartforms'">
                     <div class="project-body">
                         <div class="project-header">
@@ -803,13 +892,12 @@
                             <span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span>
                         </div>
                         <div class="project-actions">
-                            <a href="https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <a href="https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- E-Commerce Microservices -->
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Chaghaf-mobile-app', 'E-Commerce Microservices Platform')">
                     <img src="project5.svg" alt="Project Image" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Microservices'">
                     <div class="project-body">
                         <div class="project-header">
@@ -821,13 +909,12 @@
                             <span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">RabbitMQ</span>
                         </div>
                         <div class="project-actions">
-                            <a href="https://github.com/osama-jammi/Chaghaf-mobile-app.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <a href="https://github.com/osama-jammi/Chaghaf-mobile-app.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Transport & Delivery -->
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Transport_APP', 'Transport Delivery Management Solution')">
                     <img src="project4.svg" alt="Project Image" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=Transport'">
                     <div class="project-body">
                         <div class="project-header">
@@ -839,13 +926,12 @@
                             <span class="chip">React Native</span><span class="chip">Spring Boot</span><span class="chip">Angular</span>
                         </div>
                         <div class="project-actions">
-                            <a href="https://github.com/osama-jammi/Transport_APP.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <a href="https://github.com/osama-jammi/Transport_APP.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stock Management -->
-                <div class="project-card">
+                <div class="project-card" onclick="openProjectModal('Grand-Import', 'Inventory Management System')">
                     <img src="project1.png" alt="Project Image" class="project-image" onerror="this.src='https://via.placeholder.com/400x200?text=Stock'">
                     <div class="project-body">
                         <div class="project-header">
@@ -857,7 +943,7 @@
                             <span class="chip">Spring Boot</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span>
                         </div>
                         <div class="project-actions">
-                            <a href="https://github.com/osama-jammi/Grand-Import.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
+                            <a href="https://github.com/osama-jammi/Grand-Import.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -971,7 +1057,6 @@
                 
                 <div class="cert-list">
                     
-                    <!-- SAP Cert -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-sap">SAP</div>
                         <div class="cert-details">
@@ -985,7 +1070,6 @@
                         </div>
                     </div>
                     
-                    <!-- ALX Data Analytics -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-alx">alx</div>
                         <div class="cert-details">
@@ -1000,7 +1084,6 @@
                         </div>
                     </div>
                     
-                    <!-- IBM Data Analytics -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-ibm">IBM</div>
                         <div class="cert-details">
@@ -1014,7 +1097,6 @@
                         </div>
                     </div>
 
-                    <!-- 365 Data Science -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-365">365</div>
                         <div class="cert-details">
@@ -1025,7 +1107,6 @@
                         </div>
                     </div>
 
-                    <!-- ALX Morocco -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-alx">alx</div>
                         <div class="cert-details">
@@ -1039,7 +1120,6 @@
                         </div>
                     </div>
 
-                    <!-- Great Learning -->
                     <div class="cert-item">
                         <div class="css-logo css-logo-gl">Great<br>Learning</div>
                         <div class="cert-details">
@@ -1088,6 +1168,26 @@
 
     </div>
 
+    <!-- SAP Fiori Style Modal for Projects -->
+    <div class="fiori-dialog-overlay" id="projectModal" onclick="closeProjectModal(event)">
+        <div class="fiori-dialog" onclick="event.stopPropagation()">
+            <div class="fiori-dialog-header">
+                <div class="fiori-dialog-title" id="modalTitle">Project Details</div>
+                <button class="fiori-dialog-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="fiori-dialog-content" id="modalContent">
+                Loading...
+            </div>
+            <div class="fiori-dialog-footer">
+                <a href="#" id="modalGithubBtn" target="_blank" class="sap-btn sap-btn-primary"><i class="fab fa-github"></i> View on GitHub</a>
+                <button class="sap-btn sap-btn-secondary" onclick="closeProjectModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <script>
         const translations = {
             fr: {
@@ -1198,6 +1298,7 @@
                     el.innerText = translations[currentLang][key];
                 }
             });
+            updateGhTitleLang();
         }
 
         function switchTab(tabId, tabElement) {
@@ -1208,47 +1309,140 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Generate GitHub Contribution Grid
-        function renderGithubGrid() {
-            const grid = document.getElementById('githubGrid');
-            grid.innerHTML = '';
-            
-            // Generate labels for days (Mon, Wed, Fri)
-            const days = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
-            days.forEach(day => {
-                const label = document.createElement('div');
-                label.className = 'github-day-label';
-                label.innerText = day;
-                grid.appendChild(label);
-            });
+        // --- Real GitHub Data Integration ---
+        let githubData = null;
+        let currentGhYear = '';
+        let currentGhTotal = 0;
 
-            // Generate squares
-            // Simulate random activity to match the aesthetic of 388 contributions
-            for (let col = 0; col < 53; col++) {
-                for (let row = 0; row < 7; row++) {
-                    const square = document.createElement('div');
-                    square.className = 'github-square';
+        async function fetchGithubData() {
+            try {
+                const res = await fetch('https://github-contributions.vercel.app/api/v1/osama-jammi');
+                githubData = await res.json();
+                
+                const sidebar = document.getElementById('githubSidebar');
+                sidebar.innerHTML = '';
+                
+                if (githubData.years && githubData.years.length > 0) {
+                    githubData.years.forEach((yrObj, idx) => {
+                        const btn = document.createElement('button');
+                        btn.className = 'github-year-btn';
+                        btn.innerText = yrObj.year;
+                        btn.onclick = () => switchYear(btn, yrObj.total, yrObj.year);
+                        sidebar.appendChild(btn);
+                    });
                     
-                    // Add some random activity colors to mimic the screenshot
-                    if (Math.random() > 0.7) {
-                        const level = Math.floor(Math.random() * 4) + 1;
-                        square.classList.add('l' + level);
-                    }
-                    
-                    grid.appendChild(square);
+                    const latest = githubData.years[0];
+                    switchYear(sidebar.firstChild, latest.total, latest.year);
                 }
+            } catch (e) {
+                console.error("Error fetching github data", e);
+                document.getElementById('ghTitle').innerText = "Failed to load contributions.";
             }
         }
-        
+
         function switchYear(btn, total, year) {
             document.querySelectorAll('.github-year-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.querySelector('.github-ui-title').innerText = total + " contributions in " + year;
-            renderGithubGrid();
+            
+            currentGhYear = year;
+            currentGhTotal = total;
+            updateGhTitleLang();
+            
+            renderGithubGrid(year);
         }
 
-        // Initialize grid
-        renderGithubGrid();
+        function updateGhTitleLang() {
+            if(!currentGhYear) return;
+            const titleEl = document.getElementById('ghTitle');
+            if(currentLang === 'fr') {
+                titleEl.innerText = `${currentGhTotal} contributions en ${currentGhYear}`;
+            } else {
+                titleEl.innerText = `${currentGhTotal} contributions in ${currentGhYear}`;
+            }
+        }
+
+        function renderGithubGrid(year) {
+            const grid = document.getElementById('githubGrid');
+            grid.innerHTML = '';
+            
+            const days = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+            days.forEach((day, index) => {
+                const label = document.createElement('div');
+                label.className = 'github-day-label';
+                label.innerText = day;
+                label.style.gridColumn = '1';
+                label.style.gridRow = String(index + 1);
+                grid.appendChild(label);
+            });
+
+            if (!githubData || !githubData.contributions) return;
+            
+            const yearData = githubData.contributions.filter(c => c.date.startsWith(year));
+            yearData.sort((a, b) => new Date(a.date) - new Date(b.date));
+            if (yearData.length === 0) return;
+            
+            const firstDate = new Date(yearData[0].date + 'T12:00:00');
+            const startDay = firstDate.getDay();
+            
+            let currentColumn = 2;
+            let currentRow = startDay + 1;
+            
+            yearData.forEach(day => {
+                const square = document.createElement('div');
+                square.className = 'github-square l' + day.intensity;
+                square.title = `${day.count} contributions on ${day.date}`;
+                
+                square.style.gridColumn = currentColumn;
+                square.style.gridRow = currentRow;
+                grid.appendChild(square);
+                
+                currentRow++;
+                if (currentRow > 7) {
+                    currentRow = 1;
+                    currentColumn++;
+                }
+            });
+        }
+
+        // --- SAP Fiori Project Modal ---
+        async function openProjectModal(repoName, title) {
+            const modal = document.getElementById('projectModal');
+            const content = document.getElementById('modalContent');
+            const titleEl = document.getElementById('modalTitle');
+            const githubBtn = document.getElementById('modalGithubBtn');
+            
+            titleEl.innerText = title;
+            content.innerHTML = '<div style="text-align:center; padding: 3rem;"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--sapBrandColor)"></i><p style="margin-top:1rem;">Loading README...</p></div>';
+            githubBtn.href = `https://github.com/osama-jammi/${repoName}`;
+            
+            modal.classList.add('active');
+            
+            try {
+                // Try main branch first
+                let response = await fetch(`https://raw.githubusercontent.com/osama-jammi/${repoName}/main/README.md`);
+                if (!response.ok) {
+                    // Try master branch as fallback
+                    response = await fetch(`https://raw.githubusercontent.com/osama-jammi/${repoName}/master/README.md`);
+                }
+                
+                if (!response.ok) throw new Error('README not found');
+                
+                const text = await response.text();
+                // Parse markdown to HTML
+                content.innerHTML = marked.parse(text);
+            } catch (error) {
+                content.innerHTML = `<div style="text-align:center; color:#bb0000; padding:3rem;"><i class="fas fa-exclamation-triangle fa-2x"></i><p style="margin-top:1rem;">Unable to load README from GitHub. It might be private or empty.</p></div>`;
+            }
+        }
+        
+        function closeProjectModal(e) {
+            if(e && e.target !== document.getElementById('projectModal')) return;
+            document.getElementById('projectModal').classList.remove('active');
+        }
+
+        // Init
+        fetchGithubData();
+
     </script>
 </body>
 </html>
