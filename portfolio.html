@@ -1323,7 +1323,7 @@
 
         async function fetchGithubData() {
             try {
-                const res = await fetch('https://github-contributions.vercel.app/api/v1/osama-jammi');
+                const res = await fetch('https://api.allorigins.win/raw?url=https://github-contributions.vercel.app/api/v1/osama-jammi');
                 githubData = await res.json();
                 
                 const sidebar = document.getElementById('githubSidebar');
