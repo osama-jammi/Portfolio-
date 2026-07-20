@@ -314,7 +314,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
-            cursor: pointer; /* Added back to allow clicking anywhere on the card */
+            cursor: pointer;
         }
 
         .project-card:hover {
@@ -741,7 +741,168 @@
             gap: 0.5rem;
         }
 
-
+        /* --- Chatbot --- */
+        .chatbot-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: var(--sapBrandColor);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .chatbot-fab:hover {
+            transform: scale(1.1);
+            background-color: var(--sapHighlightColor);
+        }
+        .chatbot-window {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            width: 350px;
+            height: 500px;
+            max-height: calc(100vh - 8rem);
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-hover);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .chatbot-window.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .chatbot-header {
+            background-color: var(--sapShellBackground);
+            color: var(--sapShellText);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .chatbot-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: white;
+            color: var(--sapBrandColor);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .chatbot-title {
+            font-weight: bold;
+            flex-grow: 1;
+        }
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: var(--sapShellText);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background-color: var(--sapBackgroundColor);
+        }
+        .chat-msg {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            animation: fadeInMsg 0.3s;
+        }
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-msg.bot {
+            background-color: var(--sapTileBackground);
+            color: var(--sapTextColor);
+            border: 1px solid var(--sapTileBorder);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .chat-msg.user {
+            background-color: var(--sapBrandColor);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .chat-suggestions {
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            background-color: var(--sapTileBackground);
+            border-top: 1px solid var(--sapTileBorder);
+        }
+        .chat-suggestions::-webkit-scrollbar { display: none; }
+        .chat-suggestion-chip {
+            background-color: var(--sapBackgroundColor);
+            color: var(--sapBrandColor);
+            border: 1px solid var(--sapBrandColor);
+            padding: 0.3rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .chat-suggestion-chip:hover {
+            background-color: rgba(0, 112, 242, 0.1);
+        }
+        .chatbot-input {
+            display: flex;
+            padding: 0.75rem 1rem;
+            background-color: var(--sapTileBackground);
+            border-top: 1px solid var(--sapTileBorder);
+        }
+        .chatbot-input input {
+            flex-grow: 1;
+            border: 1px solid var(--sapTileBorder);
+            background-color: var(--sapBackgroundColor);
+            color: var(--sapTextColor);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.25rem;
+            outline: none;
+            font-size: 0.875rem;
+        }
+        .chatbot-input input:focus {
+            border-color: var(--sapBrandColor);
+        }
+        .chatbot-input button {
+            background-color: transparent;
+            color: var(--sapBrandColor);
+            border: none;
+            padding: 0 0.75rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
         @media (max-width: 768px) {
             .header-top {
                 flex-direction: column;
@@ -766,6 +927,14 @@
                 width: 100%;
                 flex-direction: row;
                 overflow-x: auto;
+            }
+            .chatbot-window {
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
             }
         }
     </style>
@@ -793,7 +962,7 @@
                 </div>
                 <div class="header-info">
                     <h1>JAMMI Osama</h1>
-                    <h2 data-i18n="roleDesc">SAP ABAP RAP Developer | Java Spring Boot | Angular | React Native</h2>
+                    <h2 data-i18n="roleDesc">SAP Technical Developer | ABAP | RAP | CDS Views</h2>
                     <div class="contact-info">
                         <a href="mailto:jammiosama@gmail.com"><i class="fas fa-envelope"></i> jammiosama@gmail.com</a>
                         <a href="tel:+212646953526"><i class="fas fa-phone"></i> +212 646 95 35 26</a>
@@ -1195,6 +1364,29 @@
             </div>
         </div>
     </div>
+    
+    <!-- Chatbot UI -->
+    <div class="chatbot-fab" onclick="toggleChat()" id="chatFab">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar"><i class="fas fa-robot"></i></div>
+            <div class="chatbot-title">OsamaBot - Assistant</div>
+            <button class="chatbot-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <!-- Messages go here -->
+        </div>
+        <div class="chat-suggestions" id="chatSuggestions">
+            <!-- Suggestions go here -->
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Type your question..." onkeypress="handleChatKey(event)">
+            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <!-- marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -1203,7 +1395,7 @@
         const translations = {
             fr: {
                 tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabCertifications: "Certifications", tabEducation: "Formation",
-                roleDesc: "Développeur SAP ABAP RAP | Java Spring Boot | Angular | React Native",
+                roleDesc: "Développeur Technique SAP | ABAP | RAP | Vues CDS",
                 btnCV: "Télécharger CV", pnlProfile: "Résumé du profil", githubTitle: "Contributions GitHub",
                 profileText1: "Élève ingénieur en Gouvernance et Management des Systèmes d'Information, avec une solide expérience en développement Full-Stack Java Spring Boot, Angular, React Native et un cursus SAP certifié ABAP, CDS, RAP, Fiori.",
                 profileText2: "À la recherche d'un stage de fin d'études en développement SAP à partir de Janvier 2027.",
@@ -1248,7 +1440,7 @@
             },
             en: {
                 tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabCertifications: "Certifications", tabEducation: "Education",
-                roleDesc: "SAP ABAP RAP Developer | Java Spring Boot | Angular | React Native",
+                roleDesc: "SAP Technical Developer | ABAP | RAP | CDS Views",
                 btnCV: "Download CV", pnlProfile: "Profile Summary", githubTitle: "GitHub Contributions",
                 profileText1: "Engineering student in IT Governance and Information Systems Management with solid Full Stack experience in Java Spring Boot, Angular, React Native and a certified SAP background in ABAP, CDS, RAP, Fiori.",
                 profileText2: "Looking for a final-year internship in SAP development starting January 2027.",
@@ -1310,6 +1502,13 @@
                 }
             });
             updateGhTitleLang();
+            
+            // Reset Chatbot language
+            document.getElementById('chatMessages').innerHTML = '';
+            if(chatOpen) {
+                addChatMsg(chatKnowledge[currentLang].welcome, 'bot');
+                renderChatSuggestions();
+            }
         }
 
         function switchTab(tabId, tabElement) {
@@ -1449,6 +1648,176 @@
         function closeProjectModal(e) {
             if(e && e.target !== document.getElementById('projectModal')) return;
             document.getElementById('projectModal').classList.remove('active');
+        }
+        
+        // --- Chatbot Virtual Assistant ---
+        let chatOpen = false;
+        
+        const chatKnowledge = {
+            fr: {
+                welcome: "Bonjour ! Je suis OsamaBot, l'assistant virtuel d'Osama Jammi. Posez-moi une question ou cliquez sur une suggestion ci-dessous.",
+                fallback: "Je n'ai pas bien compris. Pouvez-vous reformuler ? Vous pouvez m'interroger sur ses projets, son expérience SAP ou ses certifications.",
+                suggestions: [
+                    "Qui es-tu ?", "Tes projets SAP ?", "Ton expérience ?", "Contact"
+                ],
+                rules: [
+                    {
+                        keywords: ["qui", "present", "profil", "es-tu", "toi", "resume", "description"],
+                        answer: "Osama est un élève ingénieur en Gouvernance et Management des SI. C'est un développeur Full-Stack (Spring Boot, Angular, React Native) et surtout un développeur SAP passionné (ABAP Cloud, RAP, Fiori)."
+                    },
+                    {
+                        keywords: ["projet", "portfolio", "realisation", "rap", "fiori", "smartform", "abap"],
+                        answer: "Parmi ses projets clés : 1) 'RAP Travel Expense Manager', une appli SAP native sur BTP. 2) 'SAP Smartforms Library', conception de formulaires d'impression. 3) Des applications Full Stack comme un ERP Mobile et une plateforme E-Commerce."
+                    },
+                    {
+                        keywords: ["experience", "stage", "travail", "riche bois", "freelance"],
+                        answer: "Osama a effectué des stages chez Riche Bois où il a développé une solution de transport Full Stack et géré la migration Keycloak. Il a aussi travaillé en Freelance pour créer un ERP Mobile complet en React Native et Spring Boot."
+                    },
+                    {
+                        keywords: ["certification", "certif", "diplome", "certifie"],
+                        answer: "Osama est officiellement certifié 'SAP Certified - Back-End Developer - ABAP Cloud'. Il possède aussi des certifications reconnues en Data Analytics (ALX, IBM, 365 Data Science)."
+                    },
+                    {
+                        keywords: ["etude", "formation", "ecole", "universite", "ensi", "ibn zohr"],
+                        answer: "Il étudie actuellement en cycle d'ingénieur à l'ENSIASD (Gouvernance et Management des SI). Auparavant, il a obtenu un DEUP en Génie Informatique avec mention Très Bien à l'Université Ibn Zohr."
+                    },
+                    {
+                        keywords: ["recherche", "stage de fin", "pfe", "dispo", "janvier"],
+                        answer: "Osama est activement à la recherche d'un stage de fin d'études (PFE) dans le domaine du développement SAP, disponible à partir de Janvier 2027."
+                    },
+                    {
+                        keywords: ["contact", "email", "mail", "telephone", "linkedin", "joindre"],
+                        answer: "Vous pouvez contacter Osama par email à jammiosama@gmail.com, par téléphone au +212 646 95 35 26, ou via son profil LinkedIn en haut de la page."
+                    },
+                    {
+                        keywords: ["bonjour", "salut", "coucou", "hello"],
+                        answer: "Bonjour ! Comment puis-je vous aider à mieux connaître le profil d'Osama aujourd'hui ?"
+                    },
+                    {
+                        keywords: ["merci", "thanks"],
+                        answer: "De rien ! Si vous avez d'autres questions sur ses projets ou compétences, n'hésitez pas."
+                    }
+                ]
+            },
+            en: {
+                welcome: "Hello! I am OsamaBot, Osama Jammi's virtual assistant. Ask me a question or click a suggestion below.",
+                fallback: "I didn't quite catch that. Could you rephrase? You can ask me about his projects, SAP experience, or certifications.",
+                suggestions: [
+                    "Who are you?", "SAP Projects?", "Experience?", "Contact"
+                ],
+                rules: [
+                    {
+                        keywords: ["who", "present", "profile", "about", "you", "description"],
+                        answer: "Osama is an engineering student in IT Governance. He is a Full-Stack developer (Spring Boot, Angular, React Native) and a passionate SAP Developer (ABAP Cloud, RAP, Fiori)."
+                    },
+                    {
+                        keywords: ["project", "portfolio", "rap", "fiori", "smartform", "abap"],
+                        answer: "His key projects include: 1) A native SAP 'RAP Travel Expense Manager' on BTP. 2) A Smartforms library. 3) Full Stack applications like a Mobile ERP and an E-Commerce platform."
+                    },
+                    {
+                        keywords: ["experience", "internship", "work", "freelance", "riche bois"],
+                        answer: "Osama interned at Riche Bois (building a Full Stack transport solution and Keycloak migration). He also worked freelance to build a complete Mobile ERP in React Native and Spring Boot."
+                    },
+                    {
+                        keywords: ["certif", "degree", "diploma", "certified"],
+                        answer: "Osama holds the official 'SAP Certified - Back-End Developer - ABAP Cloud' certification. He also has Data Analytics certificates from ALX, IBM, and 365 Data Science."
+                    },
+                    {
+                        keywords: ["education", "school", "university", "study"],
+                        answer: "He is currently pursuing an Engineering Degree at ENSIASD (IT Governance) after earning a DEUP in Computer Engineering (with honors) from Ibn Zohr University."
+                    },
+                    {
+                        keywords: ["looking", "internship", "available", "january", "pfe"],
+                        answer: "Osama is actively looking for a final-year internship (PFE) in SAP development starting January 2027."
+                    },
+                    {
+                        keywords: ["contact", "email", "phone", "linkedin", "reach"],
+                        answer: "You can reach Osama by email at jammiosama@gmail.com, by phone at +212 646 95 35 26, or via his LinkedIn profile at the top of the page."
+                    },
+                    {
+                        keywords: ["hello", "hi", "hey"],
+                        answer: "Hello! How can I help you learn more about Osama's profile today?"
+                    },
+                    {
+                        keywords: ["thank", "thanks"],
+                        answer: "You're welcome! If you have any other questions about his skills or projects, feel free to ask."
+                    }
+                ]
+            }
+        };
+
+        function toggleChat() {
+            const win = document.getElementById('chatWindow');
+            const fab = document.getElementById('chatFab');
+            chatOpen = !chatOpen;
+            if(chatOpen) {
+                win.classList.add('active');
+                fab.style.transform = 'scale(0)';
+                if(document.getElementById('chatMessages').innerHTML.trim() === '') {
+                    addChatMsg(chatKnowledge[currentLang].welcome, 'bot');
+                    renderChatSuggestions();
+                }
+                setTimeout(() => document.getElementById('chatInput').focus(), 300);
+            } else {
+                win.classList.remove('active');
+                fab.style.transform = 'scale(1)';
+            }
+        }
+
+        function renderChatSuggestions() {
+            const container = document.getElementById('chatSuggestions');
+            container.innerHTML = '';
+            chatKnowledge[currentLang].suggestions.forEach(sugg => {
+                const chip = document.createElement('div');
+                chip.className = 'chat-suggestion-chip';
+                chip.innerText = sugg;
+                chip.onclick = () => {
+                    document.getElementById('chatInput').value = sugg;
+                    sendChatMessage();
+                };
+                container.appendChild(chip);
+            });
+            document.getElementById('chatInput').placeholder = currentLang === 'fr' ? "Posez votre question..." : "Type your question...";
+        }
+
+        function addChatMsg(text, sender) {
+            const container = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = 'chat-msg ' + sender;
+            msg.innerText = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleChatKey(e) {
+            if(e.key === 'Enter') sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if(!text) return;
+            
+            addChatMsg(text, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                const answer = findChatAnswer(text.toLowerCase());
+                addChatMsg(answer, 'bot');
+            }, 600);
+        }
+
+        function findChatAnswer(query) {
+            // Remove accents and special characters for better matching
+            const normalizedQuery = query.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/g, "");
+            const rules = chatKnowledge[currentLang].rules;
+            
+            for(let rule of rules) {
+                if(rule.keywords.some(kw => normalizedQuery.includes(kw))) {
+                    return rule.answer;
+                }
+            }
+            return chatKnowledge[currentLang].fallback;
         }
 
         // Init
