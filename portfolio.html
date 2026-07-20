@@ -1715,17 +1715,24 @@
         // =========================================================================================================
         // IMPORTANT: REMPLACEZ CETTE CHAINE PAR VOTRE CLÉ API GOOGLE GEMINI OBTENUE SUR https://aistudio.google.com/
         // =========================================================================================================
-        const GEMINI_API_KEY = "AQ.Ab8RN6LNcJ60kTspGbX4y28u4ludr5L-d4tk7StX41LU0FCBpQ"; 
+        const GEMINI_API_KEY = "AQ.Ab8RN6LlC91q3lte03gTgo4VAcIBAdsa_PPL9RVWAdXlQ5TCpw"; 
         
         const cvContext = `
-You are an AI assistant integrated into Osama Jammi's portfolio. Your job is to answer the user's questions about Osama Jammi based ONLY on the data below.
-If the user says hello, greet them back and ask how you can help them learn about Osama.
-Never make up information. Be professional and concise.
+You are an AI assistant integrated into Osama Jammi's portfolio website.
+Your ONLY purpose is to answer questions about Osama Jammi based on the data below. You must REFUSE to answer questions not related to Osama.
+If the user says hello, greet them warmly, introduce yourself as Osama's AI assistant, and suggest what they can ask about (projects, skills, experience, certifications, contact info).
+Be professional, friendly, and give detailed answers. Use bullet points and formatting when listing multiple items.
+Never make up information. If you don't have the answer in the data below, say so.
 
 Osama Jammi's Data:
-- Current Status: Engineering student in IT Governance and Information Systems Management at ENSIASD (National School of Artificial Intelligence and Data Sciences, Morocco), 2025-present. Looking for a final-year internship in SAP development starting January 2027.
-- Previous Education: DEUP in Computer Engineering (with honors) from Ibn Zohr University (2022-2024).
-- Roles: SAP Technical Developer | ABAP | RAP | CDS Views. Full Stack (Java Spring Boot, Angular, React Native).
+- Full Name: Osama Jammi
+- Date of Birth: 2004 (approximately 21-22 years old in 2026)
+- Nationality: Moroccan
+- Current Status: Engineering student in IT Governance and Information Systems Management at ENSIASD (National School of Artificial Intelligence and Data Sciences, Taroudant, Morocco), 2025-present. Looking for a final-year internship (PFE) in SAP development starting January 2027.
+- Previous Education: DEUP (Diploma of University Studies Professional) in Computer Engineering (with honors, major de promo) from Ibn Zohr University, Faculty of Sciences, Agadir (2022-2024).
+- Professional Title: SAP Technical Developer | ABAP | RAP | CDS Views
+- Also skilled in: Full Stack Development (Java Spring Boot, Angular, React Native).
+- Languages: Arabic (native), French (professional), English (professional).
 - SAP Skills: ABAP Cloud, CDS Views, RAP (RESTful ABAP Programming Model), OData v4, SAP Fiori Elements, Smartforms.
 - Backend Skills: Java, Spring Boot, Hibernate JPA, Microservices, REST API, Python, SQL.
 - Frontend/Mobile Skills: Angular, React.js, React Native, JavaScript.
@@ -1832,16 +1839,16 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                 return;
             }
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse`;
             const prompt = `${cvContext}\n\nUser Question (respond in ${language === 'fr' ? 'French' : 'English'}): ${userMessage}`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': GEMINI_API_KEY },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { temperature: 0.2, maxOutputTokens: 300 }
+                        generationConfig: { temperature: 0.3, maxOutputTokens: 1024 }
                     })
                 });
 
