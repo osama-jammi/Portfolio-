@@ -1717,61 +1717,69 @@
         // =========================================================================================================
         const GEMINI_API_KEY = "AQ.Ab8RN6LlC91q3lte03gTgo4VAcIBAdsa_PPL9RVWAdXlQ5TCpw"; 
         
-        const cvContext = `
-You are an AI assistant integrated into Osama Jammi's portfolio website.
-Your ONLY purpose is to answer questions about Osama Jammi based on the data below. You must REFUSE to answer questions not related to Osama.
-If the user says hello, greet them warmly, introduce yourself as Osama's AI assistant, and suggest what they can ask about (projects, skills, experience, certifications, contact info).
-Be professional, friendly, and give detailed answers. Use bullet points and formatting when listing multiple items.
-Never make up information. If you don't have the answer in the data below, say so.
+        const cvContext = `You are OsamaBot, an AI assistant on Osama Jammi's portfolio website.
 
-Osama Jammi's Data:
+RULES:
+1. ONLY answer questions about Osama Jammi. Politely refuse anything else in one short sentence.
+2. Respond in the SAME LANGUAGE the user writes in. If they write in French, reply in French. If English, reply in English.
+3. Keep answers concise (3-8 sentences max). Use bullet points only when listing 3+ items.
+4. NEVER repeat information you already said in the conversation. If the user asks something you covered, refer them back briefly.
+5. NEVER invent information. Only use the data below.
+6. When the user says hello, respond briefly: greet them, say you are Osama's AI assistant, and ask what they want to know.
+7. Do NOT re-list all topics every time. Just answer the question directly.
+
+OSAMA JAMMI - PROFILE:
 - Full Name: Osama Jammi
-- Date of Birth: 2004 (approximately 21-22 years old in 2026)
-- Nationality: Moroccan
-- Current Status: Engineering student in IT Governance and Information Systems Management at ENSIASD (National School of Artificial Intelligence and Data Sciences, Taroudant, Morocco), 2025-present. Looking for a final-year internship (PFE) in SAP development starting January 2027.
-- Previous Education: DEUP (Diploma of University Studies Professional) in Computer Engineering (with honors, major de promo) from Ibn Zohr University, Faculty of Sciences, Agadir (2022-2024).
-- Professional Title: SAP Technical Developer | ABAP | RAP | CDS Views
-- Also skilled in: Full Stack Development (Java Spring Boot, Angular, React Native).
-- Languages: Arabic (native), French (professional), English (professional).
-- SAP Skills: ABAP Cloud, CDS Views, RAP (RESTful ABAP Programming Model), OData v4, SAP Fiori Elements, Smartforms.
-- Backend Skills: Java, Spring Boot, Hibernate JPA, Microservices, REST API, Python, SQL.
-- Frontend/Mobile Skills: Angular, React.js, React Native, JavaScript.
-- Cloud/DevOps: Docker, Kubernetes, Azure, SAP BTP, CI/CD, Keycloak, RabbitMQ, Git.
+- Born: 2004 (~21-22 years old), Moroccan
+- Languages: Arabic (native), French (professional), English (professional)
+- Title: SAP Technical Developer (ABAP, RAP, CDS Views)
+- Also: Full Stack Developer (Java Spring Boot, Angular, React Native)
+- School: ENSIASD (AI & Data Sciences, Taroudant, Morocco), 2025-present, Engineering in IT Governance
+- Previous: DEUP Computer Engineering (honors, major de promo), Ibn Zohr University, Agadir (2022-2024)
+- Looking for: Final-year internship (PFE) in SAP dev, starting January 2027
 
-Certifications:
-- SAP Certified - Back-End Developer - ABAP Cloud (Jun 2026 - Jun 2027)
-- Data Analytics from ALX Africa
-- Introduction to Data Analytics from IBM
-- Certificate of completion - Data Analysis with Excel Pivot Tables from 365 Data Science
-- Professional Foundation from ALX Morocco
-- MySQL Tutorial from Great Learning
+SKILLS:
+- SAP: ABAP Cloud, CDS Views, RAP, OData v4, Fiori Elements, Smartforms
+- Backend: Java, Spring Boot, Hibernate JPA, Microservices, REST API, Python, SQL
+- Frontend/Mobile: Angular, React.js, React Native, JavaScript
+- DevOps/Cloud: Docker, Kubernetes, Azure, SAP BTP, CI/CD, Keycloak, RabbitMQ, Git
 
-Projects:
-1. RAP Travel Expense Manager (SAP BTP): Native SAP app for expense management developed end-to-end with the RAP. Includes CDS views, behavior definitions, OData V4 service, and Fiori Elements. Link: https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git
-2. SAP Smartforms Library: Design and development of a library of print forms (invoices, delivery notes) with ABAP editing logic. Link: https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git
-3. E-Commerce Microservices Platform: Secured via Keycloak, async communication via RabbitMQ, modern Angular interface, CI/CD on Azure. Link: https://github.com/osama-jammi/Chaghaf-mobile-app.git
-4. Transport Delivery Management Solution: Complete platform with Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR scan, GPS). Link: https://github.com/osama-jammi/Transport_APP.git
-5. Inventory Management System: For construction sites with Devalto ERP integration, real-time sync, secured via Keycloak. Link: https://github.com/osama-jammi/Grand-Import.git
+CERTIFICATIONS:
+1. SAP Certified Back-End Developer - ABAP Cloud (Jun 2026)
+2. Data Analytics - ALX Africa
+3. Intro to Data Analytics - IBM
+4. Data Analysis with Excel Pivot Tables - 365 Data Science
+5. Professional Foundation - ALX Morocco
+6. MySQL Tutorial - Great Learning
 
-Experience:
-- Full Stack Developer Intern at Riche Bois (Jun-Aug 2026): Built the transport solution (Spring Boot, React Native, Angular dashboards, JasperReports).
-- Freelance ERP Mobile Developer (Feb-May 2026): Built custom ERP for a coworking space (React Native 24 screens, Spring Boot, Docker, Azure).
-- Full Stack Intern at Riche Bois (Jul-Sep 2025): High-performance business apps, Keycloak migration with MFA.
+PROJECTS (none use AI/ML):
+1. RAP Travel Expense Manager (SAP BTP) - Full RAP app: CDS views, behavior defs, OData V4, Fiori Elements. GitHub: osama-jammi/RAP-Travel-Expense-Manager
+2. SAP Smartforms Library - Print forms (invoices, delivery notes) with ABAP logic. GitHub: osama-jammi/ABAP-SmartForms-Adobe-Forms
+3. E-Commerce Microservices - Keycloak, RabbitMQ, Angular, CI/CD on Azure. GitHub: osama-jammi/Chaghaf-mobile-app
+4. Transport Delivery Management - Angular back-office, Spring Boot API, React Native mobile (QR, GPS). GitHub: osama-jammi/Transport_APP
+5. Inventory Management System - Construction sites, Devalto ERP integration, Keycloak. GitHub: osama-jammi/Grand-Import
 
-Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jammi-osama, GitHub: osama-jammi.
-`;
+EXPERIENCE:
+1. Full Stack Intern @ Riche Bois (Jun-Aug 2026): Transport solution (Spring Boot, React Native, Angular dashboards, JasperReports)
+2. Freelance ERP Mobile Dev (Feb-May 2026): Custom ERP for coworking space (React Native 24 screens, Spring Boot, Docker, Azure)
+3. Full Stack Intern @ Riche Bois (Jul-Sep 2025): Business apps, Keycloak migration with MFA
+
+CONTACT: jammiosama@gmail.com | +212 646 95 35 26 | LinkedIn: in/jammi-osama | GitHub: osama-jammi`;
+
+        // Conversation history for multi-turn chat
+        let chatHistory = [];
 
         const chatKnowledge = {
             fr: {
-                welcome: "Je suis une IA pour répondre aux questions que vous pouvez poser sur Osama à partir des données que j'ai. Comment puis-je vous aider ?",
+                welcome: "Bonjour ! 👋 Je suis l'assistant IA d'Osama Jammi. Posez-moi vos questions sur son parcours, ses projets, ses compétences ou son expérience !",
                 suggestions: [
-                    "Donne toutes les compétences SAP", "Donne moi tous tes projets", "Parle sur l'expérience à Riche Bois", "Contact"
+                    "Compétences SAP", "Tous les projets", "Expérience Riche Bois", "Contact", "Âge d'Osama", "Certifications"
                 ]
             },
             en: {
-                welcome: "I am an AI to answer questions you might have about Osama based on the data I have. How can I help you?",
+                welcome: "Hello! 👋 I'm Osama Jammi's AI assistant. Ask me about his skills, projects, experience, or certifications!",
                 suggestions: [
-                    "Give me all SAP skills", "Give me all your projects", "Tell me about the Riche Bois experience", "Contact"
+                    "SAP skills", "All projects", "Riche Bois experience", "Contact", "Osama's age", "Certifications"
                 ]
             }
         };
@@ -1782,7 +1790,7 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             chatOpen = !chatOpen;
             if(chatOpen) {
                 win.classList.add('active');
-                tooltip.style.display = 'none'; // Hide tooltip when chat is open
+                tooltip.style.display = 'none';
                 if(document.getElementById('chatMessages').innerHTML.trim() === '') {
                     addChatMsg(chatKnowledge[currentLang].welcome, 'bot');
                     renderChatSuggestions();
@@ -1790,7 +1798,7 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                 setTimeout(() => document.getElementById('chatInput').focus(), 300);
             } else {
                 win.classList.remove('active');
-                tooltip.style.display = 'block'; // Show tooltip when chat is closed
+                tooltip.style.display = 'block';
             }
         }
 
@@ -1815,10 +1823,8 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             const msg = document.createElement('div');
             msg.className = 'chat-msg ' + sender;
             if (id) msg.id = id;
-            // Use marked.parse to support markdown bolding/lists from Gemini
-            if (sender === 'bot' && id !== 'typingIndicator') {
+            if (sender === 'bot' && (!id || !id.startsWith('typingIndicator'))) {
                 msg.innerHTML = marked.parse(text);
-                // Fix margins inside chat bubbles
                 msg.querySelectorAll('p').forEach(p => p.style.marginBottom = '0');
             } else {
                 msg.innerHTML = text;
@@ -1831,29 +1837,43 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             if(e.key === 'Enter') sendChatMessage();
         }
 
-        async function fetchGeminiResponseStream(userMessage, language, onChunk) {
+        async function fetchGeminiResponseStream(userMessage, onChunk) {
             if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-                onChunk(language === 'fr' 
-                    ? "Erreur : La clé d'API Gemini n'a pas été configurée." 
-                    : "Error: The Gemini API Key has not been configured.");
+                onChunk("Erreur : La clé d'API Gemini n'a pas été configurée.");
                 return;
             }
 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse`;
-            const prompt = `${cvContext}\n\nUser Question (respond in ${language === 'fr' ? 'French' : 'English'}): ${userMessage}`;
+            
+            // Build conversation contents with history
+            const contents = [];
+            // First message includes system context
+            contents.push({ role: 'user', parts: [{ text: cvContext + '\n\nRemember the rules above. Now answer:' }] });
+            contents.push({ role: 'model', parts: [{ text: 'Understood. I will only answer questions about Osama Jammi, be concise, match the user language, and never repeat myself.' }] });
+            
+            // Add conversation history (last 10 exchanges max to save tokens)
+            const recentHistory = chatHistory.slice(-10);
+            for (const msg of recentHistory) {
+                contents.push(msg);
+            }
+            
+            // Add current user message
+            contents.push({ role: 'user', parts: [{ text: userMessage }] });
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'x-goog-api-key': GEMINI_API_KEY },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { temperature: 0.3, maxOutputTokens: 1024 }
+                        contents: contents,
+                        generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
                     })
                 });
 
                 if (!response.ok) {
-                    onChunk(language === 'fr' ? "Erreur de l'API Google." : "Google API Error.");
+                    const errData = await response.text();
+                    console.error("API Error:", response.status, errData);
+                    onChunk("Erreur de l'API Google. Veuillez réessayer.");
                     return;
                 }
 
@@ -1869,30 +1889,47 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
                     if (value) {
                         buffer += decoder.decode(value, { stream: true });
                         const lines = buffer.split('\n');
-                        // The last item might be an incomplete line, keep it in the buffer
                         buffer = lines.pop();
 
                         for (const line of lines) {
                             if (line.startsWith('data: ')) {
-                                const dataStr = line.replace('data: ', '').trim();
+                                const dataStr = line.slice(6).trim();
                                 if (dataStr) {
                                     try {
                                         const dataJson = JSON.parse(dataStr);
-                                        if (dataJson.candidates && dataJson.candidates[0].content.parts[0].text) {
+                                        if (dataJson.candidates && dataJson.candidates[0]?.content?.parts?.[0]?.text) {
                                             fullText += dataJson.candidates[0].content.parts[0].text;
                                             onChunk(fullText);
                                         }
-                                    } catch (e) {
-                                        // Ignore parse errors on incomplete chunks
-                                    }
+                                    } catch (e) { /* ignore incomplete JSON */ }
                                 }
                             }
                         }
                     }
                 }
+                // Process any remaining buffer
+                if (buffer.trim()) {
+                    if (buffer.startsWith('data: ')) {
+                        const dataStr = buffer.slice(6).trim();
+                        try {
+                            const dataJson = JSON.parse(dataStr);
+                            if (dataJson.candidates && dataJson.candidates[0]?.content?.parts?.[0]?.text) {
+                                fullText += dataJson.candidates[0].content.parts[0].text;
+                                onChunk(fullText);
+                            }
+                        } catch (e) { /* ignore */ }
+                    }
+                }
+                
+                // Save to history for multi-turn context
+                if (fullText) {
+                    chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+                    chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
+                }
+                
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                onChunk(language === 'fr' ? "Une erreur réseau s'est produite lors de la connexion à l'IA." : "A network error occurred while connecting to the AI.");
+                onChunk("Une erreur réseau s'est produite. Veuillez réessayer.");
             }
         }
 
@@ -1904,6 +1941,10 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             addChatMsg(text, 'user');
             input.value = '';
             
+            // Hide suggestions after first real message
+            const suggestionsEl = document.getElementById('chatSuggestions');
+            if (suggestionsEl) suggestionsEl.style.display = 'none';
+            
             const typingId = 'typingIndicator-' + Date.now();
             const typingHtml = currentLang === 'fr' ? '<i class="fas fa-circle-notch fa-spin"></i> L\'IA réfléchit...' : '<i class="fas fa-circle-notch fa-spin"></i> AI is thinking...';
             addChatMsg(typingHtml, 'bot typing', typingId);
@@ -1911,10 +1952,10 @@ Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jam
             const indicator = document.getElementById(typingId);
             let isFirstChunk = true;
 
-            await fetchGeminiResponseStream(text, currentLang, (partialText) => {
+            await fetchGeminiResponseStream(text, (partialText) => {
                 if (isFirstChunk) {
                     indicator.classList.remove('typing');
-                    indicator.classList.add('bot'); // Ensure it looks like a normal bot message
+                    indicator.classList.add('bot');
                     isFirstChunk = false;
                 }
                 indicator.innerHTML = marked.parse(partialText);
