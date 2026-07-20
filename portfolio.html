@@ -193,7 +193,7 @@
             cursor: pointer;
             border: 1px solid var(--sapBrandColor);
             transition: all 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
@@ -291,6 +291,12 @@
             margin-bottom: 1rem;
         }
 
+        .profile-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--sapTextColor);
+        }
+
         /* --- Visual Projects --- */
         .project-grid {
             display: grid;
@@ -360,6 +366,12 @@
             margin-bottom: 1rem;
             flex-grow: 1;
         }
+        
+        .project-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
 
         .chip-container {
             display: flex;
@@ -395,7 +407,7 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .timeline-item::before {
@@ -440,6 +452,52 @@
             margin-top: 0.5rem;
         }
 
+        .timeline-desc ul li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* --- Cert Card --- */
+        .cert-card {
+            display: flex;
+            gap: 1.5rem;
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            background-color: var(--sapTileBackground);
+            align-items: center;
+        }
+        
+        .cert-badge {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .cert-info h4 {
+            font-size: 1.125rem;
+            color: var(--sapTitleColor);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cert-info p {
+            font-size: 0.875rem;
+            color: var(--sapTextColor);
+            margin-bottom: 1rem;
+        }
+
+        /* --- GitHub Chart --- */
+        .gh-chart {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--sapTileBackground);
+            padding: 1rem;
+            border: 1px solid var(--sapTileBorder);
+        }
+
         @media (max-width: 768px) {
             .header-top {
                 flex-direction: column;
@@ -456,6 +514,10 @@
             }
             .tab-content {
                 padding: 0 1rem;
+            }
+            .cert-card {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -510,9 +572,16 @@
         <div id="tab-profile" class="tab-content active">
             <div class="panel">
                 <h2 class="panel-title" data-i18n="pnlProfile">Profile Summary</h2>
-                <p data-i18n="profileText1">Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).</p>
-                <br>
-                <p><strong data-i18n="profileText2">Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.</strong></p>
+                <div class="profile-text">
+                    <p data-i18n="profileText1">Hello, I'm Osama! I'm an engineering student specializing in IT Governance and Management. Passionate about building robust software, I have hands-on experience in full-stack development using Java Spring Boot, Angular, and React Native.</p>
+                    <br>
+                    <p data-i18n="profileText2">Recently, I achieved my SAP Back-End Developer certification, validating my expertise in ABAP Cloud, RAP, and CDS. I enjoy solving complex business logic problems and architecting clean, scalable systems.</p>
+                    <br>
+                    <p><strong><span data-i18n="profileText3">I am currently seeking a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027</span></strong>.</p>
+                </div>
+                
+                <h3 style="margin-top:2rem; font-size:1rem; color:var(--sapTitleColor);" data-i18n="githubTitle">GitHub Contributions</h3>
+                <img src="https://ghchart.rshah.org/0070F2/osama-jammi" alt="GitHub Contributions" class="gh-chart">
             </div>
         </div>
 
@@ -528,9 +597,12 @@
                             <div class="project-icon"><i class="fas fa-plane-departure"></i></div>
                             <div class="project-title" data-i18n="pj1Title">RAP Travel & Expense Manager (SAP BTP)</div>
                         </div>
-                        <p class="project-desc" data-i18n="pj1Desc">Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions with Submit/Approve/Reject actions, validations, OData V4 service, and SAP Fiori Elements UI on SAP BTP ABAP.</p>
+                        <p class="project-desc" data-i18n="pj1Desc">Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions with actions and validations, OData V4 service, and SAP Fiori Elements UI.</p>
                         <div class="chip-container">
-                            <span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">OData V4</span><span class="chip">SAP Fiori</span>
+                            <span class="chip">ABAP Cloud</span><span class="chip">RAP</span><span class="chip">CDS Views</span><span class="chip">Fiori Elements</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -543,9 +615,12 @@
                             <div class="project-icon"><i class="fas fa-file-invoice"></i></div>
                             <div class="project-title" data-i18n="pjSmartTitle">SAP Smartforms Library</div>
                         </div>
-                        <p class="project-desc" data-i18n="pjSmartDesc">Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes, business documents): layout creation, ABAP editing logic, integration with print programs and testing.</p>
+                        <p class="project-desc" data-i18n="pjSmartDesc">Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes): layout creation, ABAP editing logic, integration with print programs and testing.</p>
                         <div class="chip-container">
-                            <span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span><span class="chip">SAP GUI</span>
+                            <span class="chip">SAP Smartforms</span><span class="chip">ABAP</span><span class="chip">SAPscript</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -558,9 +633,12 @@
                             <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
                             <div class="project-title" data-i18n="pj2Title">E-Commerce Microservices Platform</div>
                         </div>
-                        <p class="project-desc" data-i18n="pj2Desc">Microservices architecture (Auth, Products, Orders, Notifications) secured via Keycloak, OAuth2 and JWT. Asynchronous communication via RabbitMQ, modern Angular interface, and continuous deployment (CI/CD) on Microsoft Azure.</p>
+                        <p class="project-desc" data-i18n="pj2Desc">Microservices architecture (Auth, Products, Orders, Notifications) secured via Keycloak, OAuth2 and JWT. Asynchronous communication via RabbitMQ, Angular front end, CI/CD on Azure.</p>
                         <div class="chip-container">
-                            <span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">Angular</span><span class="chip">RabbitMQ</span><span class="chip">Azure</span>
+                            <span class="chip">Spring Boot</span><span class="chip">Microservices</span><span class="chip">RabbitMQ</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/osama-jammi/Chaghaf-mobile-app.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -573,9 +651,12 @@
                             <div class="project-icon"><i class="fas fa-truck"></i></div>
                             <div class="project-title" data-i18n="pj3Title">Transport & Delivery Management Solution</div>
                         </div>
-                        <p class="project-desc" data-i18n="pj3Desc">Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning for delivery notes, GPS tracking, trip management, supervisor/admin roles).</p>
+                        <p class="project-desc" data-i18n="pj3Desc">Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning, GPS tracking, trip management).</p>
                         <div class="chip-container">
-                            <span class="chip">React Native</span><span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">QR / GPS</span>
+                            <span class="chip">React Native</span><span class="chip">Spring Boot</span><span class="chip">Angular</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/osama-jammi/Transport_APP.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -590,7 +671,10 @@
                         </div>
                         <p class="project-desc" data-i18n="pjStockDesc">Comprehensive inventory management system for construction sites with Devalto ERP integration, real-time synchronization, and centralized security via Keycloak.</p>
                         <div class="chip-container">
-                            <span class="chip">Spring Boot</span><span class="chip">Angular</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span>
+                            <span class="chip">Spring Boot</span><span class="chip">Keycloak</span><span class="chip">SQL Server</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/osama-jammi/Grand-Import.git" target="_blank" class="sap-btn sap-btn-secondary"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
                 </div>
@@ -608,9 +692,10 @@
                         <div class="timeline-org">Riche Bois, Casablanca</div>
                         <div class="timeline-desc">
                             <ul>
-                                <li data-i18n="exp1Desc1">Built a complete transport and delivery management solution (web, mobile and back office).</li>
-                                <li data-i18n="exp1Desc2">Developed a secured Spring Boot backend (JWT, Keycloak) integrated with the company's ERP (Divalto).</li>
-                                <li data-i18n="exp1Desc3">Delivered a React Native driver app: QR code scanning of deliveries, geolocation and real-time trip tracking.</li>
+                                <li data-i18n="exp1Desc1">Built a complete transport and delivery management solution combining a responsive web back office and a driver mobile app.</li>
+                                <li data-i18n="exp1Desc2">Developed a robust Spring Boot backend with layered architecture, securing endpoints using Keycloak (OAuth2, JWT, role-based access for Supervisors, Admins, Drivers) and integrating with the company's ERP (Divalto).</li>
+                                <li data-i18n="exp1Desc3">Delivered a React Native driver app featuring QR code scanning for delivery validation, geolocation, and real-time trip tracking updates.</li>
+                                <li data-i18n="exp1Desc4">Generated dynamic delivery notes using JasperReports and built supervision dashboards in Angular to track performance metrics.</li>
                             </ul>
                         </div>
                     </div>
@@ -620,9 +705,10 @@
                         <div class="timeline-org">Taroudant</div>
                         <div class="timeline-desc">
                             <ul>
-                                <li data-i18n="exp2Desc1">Designed and developed a custom ERP for a coworking space.</li>
-                                <li data-i18n="exp2Desc2">Built a React Native mobile application with 24 screens.</li>
-                                <li data-i18n="exp2Desc3">Implemented secured REST APIs with Spring Boot, JWT and PostgreSQL.</li>
+                                <li data-i18n="exp2Desc1">Designed and developed a custom ERP system specifically tailored for a coworking space's operational needs.</li>
+                                <li data-i18n="exp2Desc2">Built a comprehensive React Native mobile application containing 24 distinct screens for user bookings and management.</li>
+                                <li data-i18n="exp2Desc3">Implemented secured REST APIs with Spring Boot, JWT, and PostgreSQL to handle complex relational data.</li>
+                                <li data-i18n="exp2Desc4">Containerized applications using Docker and orchestrated deployment onto Microsoft Azure for high availability.</li>
                             </ul>
                         </div>
                     </div>
@@ -632,7 +718,8 @@
                         <div class="timeline-org">Riche Bois, Casablanca</div>
                         <div class="timeline-desc">
                             <ul>
-                                <li data-i18n="exp3Desc1">Developed business applications with Spring Boot and Angular, integrated with the company's ERP.</li>
+                                <li data-i18n="exp3Desc1">Developed high-performance business applications using Spring Boot and Angular, directly integrated with the company's ERP system.</li>
+                                <li data-i18n="exp3Desc2">Led the migration and consolidation of access management by implementing Keycloak: configuring OAuth2 flows, Multi-Factor Authentication (MFA), and complex role management.</li>
                             </ul>
                         </div>
                     </div>
@@ -646,7 +733,7 @@
                 <h2 class="panel-title" data-i18n="hdrSkills">Technical Skills</h2>
                 <div class="project-grid">
                     <div class="project-card" style="padding: 1.5rem; height: auto;">
-                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skSAP">SAP Development</h4>
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor); display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-cubes" style="color:var(--sapBrandColor)"></i> <span data-i18n="skSAP">SAP Development</span></h4>
                         <div class="chip-container">
                             <span class="chip">ABAP / ABAP Cloud</span>
                             <span class="chip">CDS Views</span>
@@ -657,7 +744,7 @@
                         </div>
                     </div>
                     <div class="project-card" style="padding: 1.5rem; height: auto;">
-                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skBackend">Backend & Languages</h4>
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor); display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-server" style="color:var(--sapBrandColor)"></i> <span data-i18n="skBackend">Backend & Languages</span></h4>
                         <div class="chip-container">
                             <span class="chip">Java</span>
                             <span class="chip">Spring Boot</span>
@@ -669,7 +756,7 @@
                         </div>
                     </div>
                     <div class="project-card" style="padding: 1.5rem; height: auto;">
-                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skFrontend">Frontend & Mobile</h4>
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor); display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-mobile-alt" style="color:var(--sapBrandColor)"></i> <span data-i18n="skFrontend">Frontend & Mobile</span></h4>
                         <div class="chip-container">
                             <span class="chip">Angular</span>
                             <span class="chip">React.js</span>
@@ -678,34 +765,36 @@
                         </div>
                     </div>
                     <div class="project-card" style="padding: 1.5rem; height: auto;">
-                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor);" data-i18n="skCloud">Cloud, DevOps & Security</h4>
+                        <h4 style="margin-bottom:1rem; color:var(--sapTitleColor); display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-cloud" style="color:var(--sapBrandColor)"></i> <span data-i18n="skCloud">Cloud, DevOps & Security</span></h4>
                         <div class="chip-container">
                             <span class="chip">Docker</span>
                             <span class="chip">Kubernetes</span>
                             <span class="chip">Azure</span>
                             <span class="chip">SAP BTP</span>
                             <span class="chip">CI/CD</span>
-                            <span class="chip">Keycloak (OAuth2, JWT)</span>
+                            <span class="chip">Keycloak (OAuth2)</span>
                             <span class="chip">RabbitMQ</span>
                             <span class="chip">Git</span>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
+            <!-- Certifications Section inside Skills tab -->
             <div class="panel">
                 <h2 class="panel-title" data-i18n="hdrCerts">Certifications</h2>
-                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                    <div>
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/6df10eeb-3771-460d-bc01-e2518e3845ba/image.png" alt="SAP Certified Badge" class="cert-badge">
+                    <div class="cert-info">
                         <h4 data-i18n="ct1Title">SAP Certified — Back-End Developer (ABAP Cloud)</h4>
-                        <p style="font-size:0.875rem; color:var(--sapTextColor); margin-bottom:0.5rem;">SAP</p>
-                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-secondary" style="display:inline-block; padding:0.25rem 0.5rem;" data-i18n="btnVerify">Verify Credential</a>
+                        <p data-i18n="ct1Desc">After more than 4 months of rigorous preparation, I achieved this SAP certification, validating my expertise in building robust back-end extensions and solutions using ABAP Cloud.</p>
+                        <a href="https://www.credly.com/badges/1d88529f-3f7b-4a4a-b719-c719bcf54caf/linked_in_profile" target="_blank" class="sap-btn sap-btn-primary" data-i18n="btnVerify">Verify Credential on Credly</a>
                     </div>
-                    <div style="width: 1px; background: var(--sapTileBorder);"></div>
-                    <div>
-                        <h4 data-i18n="ct2Title">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
-                        <p style="font-size:0.875rem; color:var(--sapTextColor);">Mar. 2026 – May 2026</p>
-                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--sapTileBorder);">
+                    <h4 data-i18n="ct2Title" style="color: var(--sapTitleColor); font-size: 1rem; margin-bottom: 0.25rem;">SAP Learning Journey: Back-End Developer – ABAP Cloud</h4>
+                    <p style="font-size:0.875rem; color:var(--sapTextColor);">Completed coursework from Mar. 2026 to May 2026 covering RAP, CDS, and OData integrations.</p>
                 </div>
             </div>
         </div>
@@ -715,14 +804,26 @@
             <div class="panel">
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-date">2025 – 2027</div>
+                        <div class="timeline-date">Sept. 2025 – Present (Expected 2027)</div>
                         <div class="timeline-title" data-i18n="edu1Title">Engineering Degree — IT Governance and Information Systems Management</div>
-                        <div class="timeline-org" data-i18n="edu1Org">National School of Artificial Intelligence and Data Sciences (ENSIASD), Morocco</div>
+                        <div class="timeline-org" data-i18n="edu1Org">National School of Artificial Intelligence and Data Sciences (ENSIASD), Taroudant, Morocco</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li data-i18n="edu1Desc1">Specialized coursework in enterprise architecture, cloud computing, information systems audit (ITIL v4, COBIT), and advanced software engineering.</li>
+                                <li data-i18n="edu1Desc2">Focused on bridging technical development with strategic business management.</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">2022 – 2024</div>
-                        <div class="timeline-title" data-i18n="edu2Title">DEUP in Computer Engineering (two-year university degree)</div>
-                        <div class="timeline-org">Ibn Zohr University</div>
+                        <div class="timeline-date">Sept. 2022 – June 2024</div>
+                        <div class="timeline-title" data-i18n="edu2Title">DEUP in Computer Engineering (Two-year University Degree)</div>
+                        <div class="timeline-org">Ibn Zohr University, Taroudant, Morocco</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li data-i18n="edu2Desc1">Acquired a strong foundation in algorithmics, object-oriented programming (Java), databases (SQL), and web development fundamentals.</li>
+                                <li data-i18n="edu2Desc2">Graduated with honors, demonstrating a passion for backend logic and data modeling.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -735,74 +836,104 @@
             fr: {
                 tabProfile: "Profil", tabProjects: "Projets", tabExperience: "Expérience", tabSkills: "Compétences", tabEducation: "Formation",
                 roleDesc: "Développeur SAP ABAP / RAP | Java Spring Boot | Angular | React Native",
-                btnCV: "Télécharger CV", pnlProfile: "Résumé du profil",
-                profileText1: "Élève ingénieur en Gouvernance et Management des SI, avec une solide expérience Full Stack (Java Spring Boot, Angular, React Native) et une expertise certifiée SAP (ABAP, CDS, RAP, Fiori).",
-                profileText2: "À la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
+                btnCV: "Télécharger CV", pnlProfile: "Résumé du profil", githubTitle: "Contributions GitHub",
+                profileText1: "Bonjour, je suis Osama ! Élève ingénieur spécialisé en Gouvernance et Management des SI. Passionné par la création de logiciels robustes, j'ai une solide expérience pratique en développement Full-Stack avec Java Spring Boot, Angular et React Native.",
+                profileText2: "Récemment, j'ai obtenu ma certification SAP Back-End Developer, validant mon expertise sur ABAP Cloud, RAP et CDS. J'aime résoudre des problèmes de logique métier complexes et concevoir des architectures propres et évolutives.",
+                profileText3: "Je suis actuellement à la recherche d'un stage de fin d'études en développement SAP (ABAP / RAP / BTP) à partir de Janvier 2027.",
                 
                 pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
-                pj1Desc: "Application SAP native de gestion des notes de frais développée de bout en bout avec le RESTful ABAP Programming Model (RAP managed + draft). Vues CDS, behavior definition, OData V4 et interface Fiori Elements.",
+                pj1Desc: "Application SAP native de gestion des notes de frais développée avec le modèle RAP. Vues CDS, behavior definition, service OData V4 et Fiori Elements.",
                 pjSmartTitle: "Bibliothèque de Formulaires SAP Smartforms",
-                pjSmartDesc: "Conception et développement de plus de 10 formulaires d'impression SAP Smartforms (factures, bons de livraison) : mise en page, logique ABAP, intégration et tests.",
+                pjSmartDesc: "Conception de plus de 10 formulaires d'impression SAP Smartforms (factures, bons de livraison) : mise en page, logique ABAP, intégration et tests.",
                 pj2Title: "Plateforme E-Commerce Microservices",
-                pj2Desc: "Microservices Spring Boot sécurisés (Keycloak/OAuth2), communication asynchrone par RabbitMQ, frontend Angular, CI/CD sur Microsoft Azure.",
-                pj3Title: "Solution de Gestion de Transport et Livraison",
+                pj2Desc: "Microservices Spring Boot sécurisés (Keycloak), communication asynchrone (RabbitMQ), frontend Angular, CI/CD sur Azure.",
+                pj3Title: "Solution de Gestion de Transport",
                 pj3Desc: "App chauffeur React Native (scan QR, GPS), backend Spring Boot, back-office Angular, intégration ERP Divalto.",
                 pjStockTitle: "Système de Gestion de Stock",
-                pjStockDesc: "Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité centralisée via Keycloak.",
+                pjStockDesc: "Système complet de gestion de stock pour chantiers avec intégration ERP Devalto, synchronisation temps réel et sécurité via Keycloak.",
                 
                 exp1Title: "Stagiaire Développeur Full Stack",
-                exp1Desc1: "Création d'une solution complète de gestion du transport (web, mobile et back office).",
-                exp1Desc2: "Développement d'un backend sécurisé Spring Boot (JWT, Keycloak) intégré à l'ERP (Divalto).",
-                exp1Desc3: "Livrable app React Native : scan QR code, géolocalisation et suivi en temps réel.",
+                exp1Desc1: "Création d'une solution complète de gestion du transport combinant un back-office web et une application mobile pour chauffeurs.",
+                exp1Desc2: "Développement d'un backend Spring Boot robuste avec architecture en couches, sécurisé via Keycloak (OAuth2, JWT) et intégré à l'ERP de l'entreprise.",
+                exp1Desc3: "Livrable app React Native : validation des livraisons par QR code, géolocalisation et suivi des trajets en temps réel.",
+                exp1Desc4: "Génération de bons de livraison dynamiques via JasperReports et tableaux de bord de supervision en Angular.",
+                
                 exp2Title: "Développeur Freelance ERP & Mobile",
-                exp2Desc1: "Conception d'un ERP sur mesure pour un espace de coworking.",
-                exp2Desc2: "Création d'une app mobile React Native (24 écrans).",
-                exp2Desc3: "Implémentation d'API REST sécurisées avec Spring Boot, JWT et PostgreSQL.",
+                exp2Desc1: "Conception et développement d'un système ERP sur mesure adapté aux besoins opérationnels d'un espace de coworking.",
+                exp2Desc2: "Création d'une application mobile React Native complète de 24 écrans pour les réservations.",
+                exp2Desc3: "Implémentation d'API REST sécurisées avec Spring Boot, JWT et PostgreSQL pour la gestion des données relationnelles.",
+                exp2Desc4: "Conteneurisation via Docker et déploiement orchestré sur Microsoft Azure pour la haute disponibilité.",
+                
                 exp3Title: "Stagiaire Full Stack",
-                exp3Desc1: "Développement d'apps métier avec Spring Boot et Angular, intégration ERP.",
+                exp3Desc1: "Développement d'applications métier performantes en Spring Boot et Angular, intégrées directement à l'ERP.",
+                exp3Desc2: "Migration et consolidation de la gestion des accès via Keycloak : flux OAuth2, authentification multifacteur (MFA) et gestion des rôles.",
                 
                 edu1Title: "Diplôme d'Ingénieur — Gouvernance & Management des SI",
-                edu1Org: "École Nationale Supérieure d'Intelligence Artificielle et de Data Sciences (ENSIASD), Maroc",
+                edu1Org: "École Nationale Supérieure d'Intelligence Artificielle et de Data Sciences (ENSIASD), Taroudant, Maroc",
+                edu1Desc1: "Cours spécialisés en architecture d'entreprise, cloud computing, audit des SI (ITIL v4, COBIT) et ingénierie logicielle avancée.",
+                edu1Desc2: "Formation axée sur la fusion entre le développement technique et la gestion stratégique d'entreprise.",
+                
                 edu2Title: "DEUP en Génie Informatique (Bac+2)",
+                edu2Desc1: "Acquisition de bases solides en algorithmique, programmation orientée objet (Java), bases de données (SQL) et développement web.",
+                edu2Desc2: "Diplômé avec mention, démontrant une forte appétence pour la logique backend et la modélisation de données.",
                 
                 hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend & Langages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Sécurité",
-                hdrCerts: "Certifications", ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)", ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", btnVerify: "Vérifier le badge"
+                hdrCerts: "Certifications", 
+                ct1Title: "Certifié SAP — Back-End Developer (ABAP Cloud)", 
+                ct1Desc: "Après plus de 4 mois de préparation rigoureuse, j'ai obtenu cette certification SAP, validant mon expertise dans la création d'extensions backend robustes avec ABAP Cloud.",
+                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", 
+                btnVerify: "Vérifier sur Credly"
             },
             en: {
                 tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabEducation: "Education",
                 roleDesc: "SAP ABAP / RAP Developer | Java Spring Boot | Angular | React Native",
-                btnCV: "Download CV", pnlProfile: "Profile Summary",
-                profileText1: "Engineering student in IT Governance and Information Systems Management, with solid Full Stack experience (Java Spring Boot, Angular, React Native) and a certified SAP background (ABAP, CDS, RAP, Fiori).",
-                profileText2: "Looking for a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
+                btnCV: "Download CV", pnlProfile: "Profile Summary", githubTitle: "GitHub Contributions",
+                profileText1: "Hello, I'm Osama! I'm an engineering student specializing in IT Governance and Management. Passionate about building robust software, I have hands-on experience in full-stack development using Java Spring Boot, Angular, and React Native.",
+                profileText2: "Recently, I achieved my SAP Back-End Developer certification, validating my expertise in ABAP Cloud, RAP, and CDS. I enjoy solving complex business logic problems and architecting clean, scalable systems.",
+                profileText3: "I am currently seeking a final-year internship in SAP development (ABAP / RAP / BTP) starting January 2027.",
                 
                 pj1Title: "RAP Travel & Expense Manager (SAP BTP)",
-                pj1Desc: "Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions with Submit/Approve/Reject actions, validations, OData V4 service, and SAP Fiori Elements UI on SAP BTP ABAP.",
+                pj1Desc: "Native SAP app for expense management developed end-to-end with the RESTful ABAP Programming Model (RAP managed + draft). Includes CDS views, behavior definitions, OData V4 service, and Fiori Elements.",
                 pjSmartTitle: "SAP Smartforms Library",
-                pjSmartDesc: "Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes, business documents): layout creation, ABAP editing logic, integration with print programs and testing.",
+                pjSmartDesc: "Design and development of a library of 10+ SAP Smartforms print forms (invoices, delivery notes): layout creation, ABAP editing logic, integration with print programs and testing.",
                 pj2Title: "E-Commerce Microservices Platform",
-                pj2Desc: "Microservices architecture (Auth, Products, Orders, Notifications) secured via Keycloak, OAuth2 and JWT. Asynchronous communication via RabbitMQ, modern Angular interface, and continuous deployment (CI/CD) on Microsoft Azure.",
+                pj2Desc: "Microservices architecture secured via Keycloak. Asynchronous communication via RabbitMQ, modern Angular interface, and continuous deployment (CI/CD) on Azure.",
                 pj3Title: "Transport & Delivery Management Solution",
-                pj3Desc: "Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning for delivery notes, GPS tracking, trip management, supervisor/admin roles).",
+                pj3Desc: "Complete management platform: Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR code scanning, GPS tracking, trip management).",
                 pjStockTitle: "Inventory Management System",
                 pjStockDesc: "Comprehensive inventory management system for construction sites with Devalto ERP integration, real-time synchronization, and centralized security via Keycloak.",
                 
                 exp1Title: "Full Stack Developer Intern",
-                exp1Desc1: "Built a complete transport and delivery management solution (web, mobile and back office).",
-                exp1Desc2: "Developed a secured Spring Boot backend (JWT, Keycloak) integrated with the company's ERP (Divalto).",
-                exp1Desc3: "Delivered a React Native driver app: QR code scanning of deliveries, geolocation and real-time trip tracking.",
+                exp1Desc1: "Built a complete transport and delivery management solution combining a responsive web back office and a driver mobile app.",
+                exp1Desc2: "Developed a robust Spring Boot backend with layered architecture, securing endpoints using Keycloak (OAuth2, JWT) and integrating with the company's ERP.",
+                exp1Desc3: "Delivered a React Native driver app featuring QR code scanning for delivery validation, geolocation, and real-time trip tracking updates.",
+                exp1Desc4: "Generated dynamic delivery notes using JasperReports and built supervision dashboards in Angular to track performance metrics.",
+                
                 exp2Title: "Freelance ERP & Mobile Developer",
-                exp2Desc1: "Designed and developed a custom ERP for a coworking space.",
-                exp2Desc2: "Built a React Native mobile application with 24 screens.",
-                exp2Desc3: "Implemented secured REST APIs with Spring Boot, JWT and PostgreSQL.",
+                exp2Desc1: "Designed and developed a custom ERP system specifically tailored for a coworking space's operational needs.",
+                exp2Desc2: "Built a comprehensive React Native mobile application containing 24 distinct screens for user bookings and management.",
+                exp2Desc3: "Implemented secured REST APIs with Spring Boot, JWT, and PostgreSQL to handle complex relational data.",
+                exp2Desc4: "Containerized applications using Docker and orchestrated deployment onto Microsoft Azure for high availability.",
+                
                 exp3Title: "Full Stack Intern",
-                exp3Desc1: "Developed business applications with Spring Boot and Angular, integrated with the company's ERP.",
+                exp3Desc1: "Developed high-performance business applications using Spring Boot and Angular, directly integrated with the company's ERP system.",
+                exp3Desc2: "Led the migration and consolidation of access management by implementing Keycloak: configuring OAuth2 flows, MFA, and complex role management.",
                 
                 edu1Title: "Engineering Degree — IT Governance and Information Systems Management",
-                edu1Org: "National School of Artificial Intelligence and Data Sciences (ENSIASD), Morocco",
-                edu2Title: "DEUP in Computer Engineering (two-year university degree)",
+                edu1Org: "National School of Artificial Intelligence and Data Sciences (ENSIASD), Taroudant, Morocco",
+                edu1Desc1: "Specialized coursework in enterprise architecture, cloud computing, information systems audit (ITIL v4, COBIT), and advanced software engineering.",
+                edu1Desc2: "Focused on bridging technical development with strategic business management.",
+                
+                edu2Title: "DEUP in Computer Engineering (Two-year University Degree)",
+                edu2Desc1: "Acquired a strong foundation in algorithmics, object-oriented programming (Java), databases (SQL), and web development fundamentals.",
+                edu2Desc2: "Graduated with honors, demonstrating a passion for backend logic and data modeling.",
                 
                 hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend & Languages", skFrontend: "Frontend & Mobile", skCloud: "Cloud, DevOps & Security",
-                hdrCerts: "Certifications", ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)", ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", btnVerify: "Verify Credential"
+                hdrCerts: "Certifications", 
+                ct1Title: "SAP Certified — Back-End Developer (ABAP Cloud)", 
+                ct1Desc: "After more than 4 months of rigorous preparation, I achieved this SAP certification, validating my expertise in building robust back-end extensions and solutions using ABAP Cloud.",
+                ct2Title: "SAP Learning Journey: Back-End Developer – ABAP Cloud", 
+                btnVerify: "Verify Credential on Credly"
             }
         };
 
@@ -825,11 +956,9 @@
         }
 
         function switchTab(tabId, tabElement) {
-            // Remove active class from all tabs and content
             document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             
-            // Add active class to clicked tab and corresponding content
             tabElement.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
