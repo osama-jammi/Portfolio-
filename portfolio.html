@@ -742,10 +742,44 @@
         }
 
         /* --- Chatbot --- */
-        .chatbot-fab {
+        .chatbot-fab-wrapper {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .chatbot-tooltip {
+            background-color: var(--sapTileBackground);
+            color: var(--sapTextColor);
+            border: 1px solid var(--sapTileBorder);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            animation: bounceTooltip 2s infinite;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+        }
+        .chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -6px;
+            transform: translateY(-50%);
+            border-width: 6px 0 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--sapTileBackground);
+        }
+        @keyframes bounceTooltip {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-5px); }
+        }
+        .chatbot-fab {
             width: 3.5rem;
             height: 3.5rem;
             background-color: var(--sapBrandColor);
@@ -757,7 +791,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
             transition: transform 0.3s, background-color 0.3s;
         }
         .chatbot-fab:hover {
@@ -852,6 +885,12 @@
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 0.25rem;
+        }
+        .chat-msg.typing {
+            color: var(--sapHighlightColor);
+            font-style: italic;
+            border: none;
+            background: transparent;
         }
         .chat-suggestions {
             padding: 0.5rem 1rem;
@@ -1366,14 +1405,17 @@
     </div>
     
     <!-- Chatbot UI -->
-    <div class="chatbot-fab" onclick="toggleChat()" id="chatFab">
-        <i class="fas fa-comment-dots"></i>
+    <div class="chatbot-fab-wrapper" id="chatFabWrapper">
+        <div class="chatbot-tooltip" onclick="toggleChat()" id="chatTooltip">Ask me a question! 🤖</div>
+        <div class="chatbot-fab" onclick="toggleChat()" id="chatFab">
+            <i class="fas fa-comment-dots"></i>
+        </div>
     </div>
     
     <div class="chatbot-window" id="chatWindow">
         <div class="chatbot-header">
             <div class="chatbot-avatar"><i class="fas fa-robot"></i></div>
-            <div class="chatbot-title">OsamaBot - Assistant</div>
+            <div class="chatbot-title">OsamaBot - AI Assistant</div>
             <button class="chatbot-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
         </div>
         <div class="chatbot-messages" id="chatMessages">
@@ -1505,6 +1547,7 @@
             
             // Reset Chatbot language
             document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('chatTooltip').innerText = currentLang === 'fr' ? 'Posez une question ! 🤖' : 'Ask me anything! 🤖';
             if(chatOpen) {
                 addChatMsg(chatKnowledge[currentLang].welcome, 'bot');
                 renderChatSuggestions();
@@ -1650,109 +1693,72 @@
             document.getElementById('projectModal').classList.remove('active');
         }
         
-        // --- Chatbot Virtual Assistant ---
+        // --- Chatbot Virtual Assistant (Google Gemini AI) ---
         let chatOpen = false;
         
+        // =========================================================================================================
+        // IMPORTANT: REMPLACEZ CETTE CHAINE PAR VOTRE CLÉ API GOOGLE GEMINI OBTENUE SUR https://aistudio.google.com/
+        // =========================================================================================================
+        const GEMINI_API_KEY = "AQ.Ab8RN6LyYLayyhnTHx3bwZVpX38hPjbhV823EtXzzm9owVojkQ"; 
+        
+        const cvContext = `
+You are OsamaBot, an AI assistant for Osama Jammi. Your primary directive is to answer questions about Osama based ONLY on the provided context.
+Identity: You MUST introduce yourself as "Je suis une IA pour répondre aux questions que vous pouvez poser sur Osama à partir des données que j'ai." (or the exact English equivalent: "I am an AI to answer questions you might have about Osama based on the data I have.") at the start of your first interaction. Be polite, concise, and professional. Do NOT invent information.
+
+Osama Jammi's Data:
+- Current Status: Engineering student in IT Governance and Information Systems Management at ENSIASD (National School of Artificial Intelligence and Data Sciences, Morocco), 2025-present. Looking for a final-year internship in SAP development starting January 2027.
+- Previous Education: DEUP in Computer Engineering (with honors) from Ibn Zohr University (2022-2024).
+- Roles: SAP Technical Developer | ABAP | RAP | CDS Views. Full Stack (Java Spring Boot, Angular, React Native).
+- SAP Skills: ABAP Cloud, CDS Views, RAP (RESTful ABAP Programming Model), OData v4, SAP Fiori Elements, Smartforms.
+- Backend Skills: Java, Spring Boot, Hibernate JPA, Microservices, REST API, Python, SQL.
+- Frontend/Mobile Skills: Angular, React.js, React Native, JavaScript.
+- Cloud/DevOps: Docker, Kubernetes, Azure, SAP BTP, CI/CD, Keycloak, RabbitMQ, Git.
+
+Certifications:
+- SAP Certified - Back-End Developer - ABAP Cloud (Jun 2026 - Jun 2027)
+- Data Analytics from ALX Africa
+- Introduction to Data Analytics from IBM
+- Certificate of completion - Data Analysis with Excel Pivot Tables from 365 Data Science
+- Professional Foundation from ALX Morocco
+- MySQL Tutorial from Great Learning
+
+Projects:
+1. RAP Travel Expense Manager (SAP BTP): Native SAP app for expense management developed end-to-end with the RAP. Includes CDS views, behavior definitions, OData V4 service, and Fiori Elements. Link: https://github.com/osama-jammi/RAP-Travel-Expense-Manager.git
+2. SAP Smartforms Library: Design and development of a library of print forms (invoices, delivery notes) with ABAP editing logic. Link: https://github.com/osama-jammi/ABAP-SmartForms-Adobe-Forms.git
+3. E-Commerce Microservices Platform: Secured via Keycloak, async communication via RabbitMQ, modern Angular interface, CI/CD on Azure. Link: https://github.com/osama-jammi/Chaghaf-mobile-app.git
+4. Transport Delivery Management Solution: Complete platform with Angular back-office, Spring Boot API, and React Native mobile app for drivers (QR scan, GPS). Link: https://github.com/osama-jammi/Transport_APP.git
+5. Inventory Management System: For construction sites with Devalto ERP integration, real-time sync, secured via Keycloak. Link: https://github.com/osama-jammi/Grand-Import.git
+
+Experience:
+- Full Stack Developer Intern at Riche Bois (Jun-Aug 2026): Built the transport solution (Spring Boot, React Native, Angular dashboards, JasperReports).
+- Freelance ERP Mobile Developer (Feb-May 2026): Built custom ERP for a coworking space (React Native 24 screens, Spring Boot, Docker, Azure).
+- Full Stack Intern at Riche Bois (Jul-Sep 2025): High-performance business apps, Keycloak migration with MFA.
+
+Contact: Email: jammiosama@gmail.com, Phone: +212 646 95 35 26, LinkedIn: in/jammi-osama, GitHub: osama-jammi.
+`;
+
         const chatKnowledge = {
             fr: {
-                welcome: "Bonjour ! Je suis OsamaBot, l'assistant virtuel d'Osama Jammi. Posez-moi une question ou cliquez sur une suggestion ci-dessous.",
-                fallback: "Je n'ai pas bien compris. Pouvez-vous reformuler ? Vous pouvez m'interroger sur ses projets, son expérience SAP ou ses certifications.",
+                welcome: "Je suis une IA pour répondre aux questions que vous pouvez poser sur Osama à partir des données que j'ai. Comment puis-je vous aider ?",
                 suggestions: [
-                    "Qui es-tu ?", "Tes projets SAP ?", "Ton expérience ?", "Contact"
-                ],
-                rules: [
-                    {
-                        keywords: ["qui", "present", "profil", "es-tu", "toi", "resume", "description"],
-                        answer: "Osama est un élève ingénieur en Gouvernance et Management des SI. C'est un développeur Full-Stack (Spring Boot, Angular, React Native) et surtout un développeur SAP passionné (ABAP Cloud, RAP, Fiori)."
-                    },
-                    {
-                        keywords: ["projet", "portfolio", "realisation", "rap", "fiori", "smartform", "abap"],
-                        answer: "Parmi ses projets clés : 1) 'RAP Travel Expense Manager', une appli SAP native sur BTP. 2) 'SAP Smartforms Library', conception de formulaires d'impression. 3) Des applications Full Stack comme un ERP Mobile et une plateforme E-Commerce."
-                    },
-                    {
-                        keywords: ["experience", "stage", "travail", "riche bois", "freelance"],
-                        answer: "Osama a effectué des stages chez Riche Bois où il a développé une solution de transport Full Stack et géré la migration Keycloak. Il a aussi travaillé en Freelance pour créer un ERP Mobile complet en React Native et Spring Boot."
-                    },
-                    {
-                        keywords: ["certification", "certif", "diplome", "certifie"],
-                        answer: "Osama est officiellement certifié 'SAP Certified - Back-End Developer - ABAP Cloud'. Il possède aussi des certifications reconnues en Data Analytics (ALX, IBM, 365 Data Science)."
-                    },
-                    {
-                        keywords: ["etude", "formation", "ecole", "universite", "ensi", "ibn zohr"],
-                        answer: "Il étudie actuellement en cycle d'ingénieur à l'ENSIASD (Gouvernance et Management des SI). Auparavant, il a obtenu un DEUP en Génie Informatique avec mention Très Bien à l'Université Ibn Zohr."
-                    },
-                    {
-                        keywords: ["recherche", "stage de fin", "pfe", "dispo", "janvier"],
-                        answer: "Osama est activement à la recherche d'un stage de fin d'études (PFE) dans le domaine du développement SAP, disponible à partir de Janvier 2027."
-                    },
-                    {
-                        keywords: ["contact", "email", "mail", "telephone", "linkedin", "joindre"],
-                        answer: "Vous pouvez contacter Osama par email à jammiosama@gmail.com, par téléphone au +212 646 95 35 26, ou via son profil LinkedIn en haut de la page."
-                    },
-                    {
-                        keywords: ["bonjour", "salut", "coucou", "hello"],
-                        answer: "Bonjour ! Comment puis-je vous aider à mieux connaître le profil d'Osama aujourd'hui ?"
-                    },
-                    {
-                        keywords: ["merci", "thanks"],
-                        answer: "De rien ! Si vous avez d'autres questions sur ses projets ou compétences, n'hésitez pas."
-                    }
+                    "Donne toutes les compétences SAP", "Donne moi tous tes projets", "Parle sur l'expérience à Riche Bois", "Contact"
                 ]
             },
             en: {
-                welcome: "Hello! I am OsamaBot, Osama Jammi's virtual assistant. Ask me a question or click a suggestion below.",
-                fallback: "I didn't quite catch that. Could you rephrase? You can ask me about his projects, SAP experience, or certifications.",
+                welcome: "I am an AI to answer questions you might have about Osama based on the data I have. How can I help you?",
                 suggestions: [
-                    "Who are you?", "SAP Projects?", "Experience?", "Contact"
-                ],
-                rules: [
-                    {
-                        keywords: ["who", "present", "profile", "about", "you", "description"],
-                        answer: "Osama is an engineering student in IT Governance. He is a Full-Stack developer (Spring Boot, Angular, React Native) and a passionate SAP Developer (ABAP Cloud, RAP, Fiori)."
-                    },
-                    {
-                        keywords: ["project", "portfolio", "rap", "fiori", "smartform", "abap"],
-                        answer: "His key projects include: 1) A native SAP 'RAP Travel Expense Manager' on BTP. 2) A Smartforms library. 3) Full Stack applications like a Mobile ERP and an E-Commerce platform."
-                    },
-                    {
-                        keywords: ["experience", "internship", "work", "freelance", "riche bois"],
-                        answer: "Osama interned at Riche Bois (building a Full Stack transport solution and Keycloak migration). He also worked freelance to build a complete Mobile ERP in React Native and Spring Boot."
-                    },
-                    {
-                        keywords: ["certif", "degree", "diploma", "certified"],
-                        answer: "Osama holds the official 'SAP Certified - Back-End Developer - ABAP Cloud' certification. He also has Data Analytics certificates from ALX, IBM, and 365 Data Science."
-                    },
-                    {
-                        keywords: ["education", "school", "university", "study"],
-                        answer: "He is currently pursuing an Engineering Degree at ENSIASD (IT Governance) after earning a DEUP in Computer Engineering (with honors) from Ibn Zohr University."
-                    },
-                    {
-                        keywords: ["looking", "internship", "available", "january", "pfe"],
-                        answer: "Osama is actively looking for a final-year internship (PFE) in SAP development starting January 2027."
-                    },
-                    {
-                        keywords: ["contact", "email", "phone", "linkedin", "reach"],
-                        answer: "You can reach Osama by email at jammiosama@gmail.com, by phone at +212 646 95 35 26, or via his LinkedIn profile at the top of the page."
-                    },
-                    {
-                        keywords: ["hello", "hi", "hey"],
-                        answer: "Hello! How can I help you learn more about Osama's profile today?"
-                    },
-                    {
-                        keywords: ["thank", "thanks"],
-                        answer: "You're welcome! If you have any other questions about his skills or projects, feel free to ask."
-                    }
+                    "Give me all SAP skills", "Give me all your projects", "Tell me about the Riche Bois experience", "Contact"
                 ]
             }
         };
 
         function toggleChat() {
             const win = document.getElementById('chatWindow');
-            const fab = document.getElementById('chatFab');
+            const tooltip = document.getElementById('chatTooltip');
             chatOpen = !chatOpen;
             if(chatOpen) {
                 win.classList.add('active');
-                fab.style.transform = 'scale(0)';
+                tooltip.style.display = 'none'; // Hide tooltip when chat is open
                 if(document.getElementById('chatMessages').innerHTML.trim() === '') {
                     addChatMsg(chatKnowledge[currentLang].welcome, 'bot');
                     renderChatSuggestions();
@@ -1760,7 +1766,7 @@
                 setTimeout(() => document.getElementById('chatInput').focus(), 300);
             } else {
                 win.classList.remove('active');
-                fab.style.transform = 'scale(1)';
+                tooltip.style.display = 'block'; // Show tooltip when chat is closed
             }
         }
 
@@ -1777,14 +1783,22 @@
                 };
                 container.appendChild(chip);
             });
-            document.getElementById('chatInput').placeholder = currentLang === 'fr' ? "Posez votre question..." : "Type your question...";
+            document.getElementById('chatInput').placeholder = currentLang === 'fr' ? "Posez votre question à l'IA..." : "Ask the AI a question...";
         }
 
-        function addChatMsg(text, sender) {
+        function addChatMsg(text, sender, id = null) {
             const container = document.getElementById('chatMessages');
             const msg = document.createElement('div');
             msg.className = 'chat-msg ' + sender;
-            msg.innerText = text;
+            if (id) msg.id = id;
+            // Use marked.parse to support markdown bolding/lists from Gemini
+            if (sender === 'bot' && id !== 'typingIndicator') {
+                msg.innerHTML = marked.parse(text);
+                // Fix margins inside chat bubbles
+                msg.querySelectorAll('p').forEach(p => p.style.marginBottom = '0');
+            } else {
+                msg.innerHTML = text;
+            }
             container.appendChild(msg);
             container.scrollTop = container.scrollHeight;
         }
@@ -1793,7 +1807,39 @@
             if(e.key === 'Enter') sendChatMessage();
         }
 
-        function sendChatMessage() {
+        async function fetchGeminiResponse(userMessage, language) {
+            if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
+                return language === 'fr' 
+                    ? "Erreur : La clé d'API Gemini n'a pas été configurée. Veuillez ouvrir le code du portfolio et remplacer 'YOUR_GEMINI_API_KEY_HERE' par votre véritable clé API Google." 
+                    : "Error: The Gemini API Key has not been configured. Please open the portfolio code and replace 'YOUR_GEMINI_API_KEY_HERE' with your actual Google API key.";
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const prompt = `${cvContext}\n\nUser Question (respond in ${language === 'fr' ? 'French' : 'English'}): ${userMessage}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.2, maxOutputTokens: 300 }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    return language === 'fr' ? "Désolé, je n'ai pas pu générer une réponse." : "Sorry, I couldn't generate a response.";
+                }
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                return language === 'fr' ? "Une erreur réseau s'est produite lors de la connexion à l'IA." : "A network error occurred while connecting to the AI.";
+            }
+        }
+
+        async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if(!text) return;
@@ -1801,23 +1847,18 @@
             addChatMsg(text, 'user');
             input.value = '';
             
-            setTimeout(() => {
-                const answer = findChatAnswer(text.toLowerCase());
-                addChatMsg(answer, 'bot');
-            }, 600);
-        }
-
-        function findChatAnswer(query) {
-            // Remove accents and special characters for better matching
-            const normalizedQuery = query.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/g, "");
-            const rules = chatKnowledge[currentLang].rules;
+            // Add typing indicator
+            const typingHtml = currentLang === 'fr' ? '<i class="fas fa-circle-notch fa-spin"></i> L\'IA réfléchit...' : '<i class="fas fa-circle-notch fa-spin"></i> AI is thinking...';
+            addChatMsg(typingHtml, 'bot typing', 'typingIndicator');
             
-            for(let rule of rules) {
-                if(rule.keywords.some(kw => normalizedQuery.includes(kw))) {
-                    return rule.answer;
-                }
-            }
-            return chatKnowledge[currentLang].fallback;
+            // Fetch response from Gemini
+            const answer = await fetchGeminiResponse(text, currentLang);
+            
+            // Remove typing indicator and show real answer
+            const indicator = document.getElementById('typingIndicator');
+            if(indicator) indicator.remove();
+            
+            addChatMsg(answer, 'bot');
         }
 
         // Init
