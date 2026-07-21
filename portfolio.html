@@ -9,34 +9,37 @@
     
     <style>
         :root {
-            --sapBrandColor: #0070F2;
-            --sapHighlightColor: #0A6ED1;
-            --sapBaseColor: #F4F7F9;
-            --sapBackgroundColor: #EDF0F5;
-            --sapTextColor: #32363A;
-            --sapTitleColor: #1D2D3E;
+            --sapBrandColor: #0064d9; /* Fiori Morning Horizon */
+            --sapHighlightColor: #005483;
+            --sapBaseColor: #F5F6F7;
+            --sapBackgroundColor: #EDEFF2;
+            --sapTextColor: #1d2d3e;
+            --sapTitleColor: #1d2d3e;
             --sapTileBackground: #FFFFFF;
             --sapTileBorder: #D9D9D9;
             --sapTileHover: #F4F4F4;
-            --sapShellBackground: #354A5F;
+            --sapShellBackground: #00144a; /* Dark shell for contrast */
             --sapShellText: #FFFFFF;
             --sapObjectHeaderBackground: #FFFFFF;
-            --sapSelectedTab: #0070F2;
+            --sapSelectedTab: #0064d9;
+            --sapBorderRadius: 0.75rem; /* Fiori 2026 rounded corners */
             --font-family: "72", "Arial", "Helvetica", sans-serif;
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            --shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
         }
 
         body.dark {
+            --sapBrandColor: #4599FF;
+            --sapHighlightColor: #7AB4FF;
             --sapBaseColor: #1C2228;
-            --sapBackgroundColor: #13171C;
+            --sapBackgroundColor: #0f172a;
             --sapTextColor: #FAFAFA;
             --sapTitleColor: #FFFFFF;
-            --sapTileBackground: #29313A;
-            --sapTileBorder: #424D58;
-            --sapTileHover: #323C47;
-            --sapShellBackground: #151A1E;
-            --sapObjectHeaderBackground: #29313A;
+            --sapTileBackground: #1e293b;
+            --sapTileBorder: #334155;
+            --sapTileHover: #334155;
+            --sapShellBackground: #0b1120;
+            --sapObjectHeaderBackground: #1e293b;
             --sapSelectedTab: #4599FF;
             --shadow-hover: 0 14px 28px rgba(0,0,0,0.5), 0 10px 10px rgba(0,0,0,0.4);
         }
@@ -86,12 +89,14 @@
         .shell-bar-title {
             font-size: 1rem;
             font-weight: bold;
+            margin-left: 1rem;
         }
 
         .shell-bar-right {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin-right: 1rem;
         }
 
         .shell-btn {
@@ -278,10 +283,10 @@
         .panel {
             background-color: var(--sapTileBackground);
             border: 1px solid var(--sapTileBorder);
-            border-radius: 0.25rem;
+            border-radius: var(--sapBorderRadius);
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
         }
 
         .panel-title {
@@ -308,13 +313,13 @@
         .project-card {
             background-color: var(--sapTileBackground);
             border: 1px solid var(--sapTileBorder);
-            border-radius: 0.5rem;
+            border-radius: var(--sapBorderRadius);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
+            box-shadow: var(--shadow);
         }
 
         .project-card:hover {
@@ -348,7 +353,7 @@
             width: 32px;
             height: 32px;
             background-color: var(--sapBackgroundColor);
-            border-radius: 0.25rem;
+            border-radius: var(--sapBorderRadius);
             display: grid;
             place-items: center;
             color: var(--sapBrandColor);
@@ -391,6 +396,78 @@
             font-size: 0.7rem;
             color: var(--sapTextColor);
             font-weight: bold;
+        }
+
+        /* --- Blogs --- */
+        .blog-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--sapTileBackground);
+            border: 1px solid var(--sapTileBorder);
+            border-radius: var(--sapBorderRadius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: #6a6d70;
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark .blog-date {
+            color: #94a3b8;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            color: var(--sapBrandColor);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .blog-excerpt {
+            font-size: 0.95rem;
+            color: var(--sapTextColor);
+            margin-bottom: 1rem;
+        }
+
+        /* --- Contact Form --- */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-width: 600px;
+        }
+
+        .contact-form label {
+            font-weight: bold;
+            color: var(--sapTitleColor);
+            font-size: 0.9rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--sapTileBorder);
+            border-radius: 0.5rem;
+            background-color: var(--sapBaseColor);
+            color: var(--sapTextColor);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--sapBrandColor);
         }
 
         /* --- Timeline --- */
@@ -983,7 +1060,7 @@
     <!-- Shell Bar -->
     <header class="shell-bar">
         <div class="shell-bar-left">
-            <div class="shell-bar-title" id="shellTitle">JAMMI Osama - Portfolio</div>
+            <div class="shell-bar-title" id="shellTitle">JAMMI Osama</div>
         </div>
         <div class="shell-bar-right">
             <button class="shell-btn" onclick="toggleTheme()" title="Toggle Theme"><i class="fas fa-moon"></i></button>
@@ -1022,6 +1099,8 @@
                 <div class="tab-item" onclick="switchTab('tab-skills', this)" data-i18n="tabSkills">Skills</div>
                 <div class="tab-item" onclick="switchTab('tab-certifications', this)" data-i18n="tabCertifications">Certifications</div>
                 <div class="tab-item" onclick="switchTab('tab-education', this)" data-i18n="tabEducation">Education</div>
+                <div class="tab-item" onclick="switchTab('tab-blogs', this)" data-i18n="tabBlogs">Blogs</div>
+                <div class="tab-item" onclick="switchTab('tab-contact', this)" data-i18n="tabContact">Contact</div>
             </div>
         </div>
 
@@ -1355,6 +1434,60 @@
             </div>
         </div>
 
+        <!-- Tab: Blogs -->
+        <div id="tab-blogs" class="tab-content">
+            <div class="blog-card">
+                <div class="blog-date">Juillet 2026</div>
+                <div class="blog-title" data-i18n="blog1Title">Transitioning to ABAP Cloud: What You Need to Know</div>
+                <div class="blog-excerpt" data-i18n="blog1Desc">Explore the fundamental shifts from classic ABAP to ABAP Cloud. Discover how restricted ABAP, standard APIs, and the clean core paradigm are reshaping modern SAP S/4HANA extensions.</div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-date">Juin 2026</div>
+                <div class="blog-title" data-i18n="blog2Title">Building Modern OData V4 Services with SAP RAP</div>
+                <div class="blog-excerpt" data-i18n="blog2Desc">A deep dive into the RESTful ABAP Programming Model (RAP). Learn how to leverage Core Data Services (CDS), Behavior Definitions, and OData V4 to build enterprise-grade transactional Fiori apps.</div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-date">Mai 2026</div>
+                <div class="blog-title" data-i18n="blog3Title">Mastering Core Data Services (CDS) Views for HANA</div>
+                <div class="blog-excerpt" data-i18n="blog3Desc">Optimize your database read performance with advanced CDS View techniques. We cover associations, path expressions, UI annotations, and virtual elements for powerful analytical reporting.</div>
+            </div>
+        </div>
+
+        <!-- Tab: Contact -->
+        <div id="tab-contact" class="tab-content">
+            <div class="panel">
+                <h2 class="panel-title" data-i18n="contactTitle">Contactez-moi</h2>
+                <p style="margin-bottom: 1.5rem;" data-i18n="contactText">Intéressé par une collaboration ou une opportunité de stage ? Envoyez-moi un message ci-dessous.</p>
+                
+                <!-- Web3Forms Integration -->
+                <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+                    <!-- Replace with your Access Key -->
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                    <input type="hidden" name="subject" value="Nouveau message depuis le Portfolio !">
+                    <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                    
+                    <div>
+                        <label for="name" data-i18n="contactName">Nom</label>
+                        <input type="text" id="name" name="name" required placeholder="Votre nom" data-i18n-ph="namePlaceholder">
+                    </div>
+                    
+                    <div>
+                        <label for="email" data-i18n="contactEmail">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Votre email" data-i18n-ph="emailPlaceholder">
+                    </div>
+                    
+                    <div>
+                        <label for="message" data-i18n="contactMessage">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Comment puis-je vous aider ?" data-i18n-ph="msgPlaceholder"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="sap-btn sap-btn-primary" style="width: fit-content; padding: 0.75rem 2rem;">
+                        <i class="fas fa-paper-plane"></i> <span data-i18n="contactSendBtn">Envoyer le message</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <!-- Tab: Education -->
         <div id="tab-education" class="tab-content">
             <div class="panel">
@@ -1478,7 +1611,15 @@
                 edu2Desc1: "Acquisition de bases solides en algorithmique, programmation orientée objet, bases de données et développement web.",
                 edu2Desc2: "Diplômé avec mention, démontrant une forte appétence pour la logique backend et la modélisation de données.",
                 
-                hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend Languages", skFrontend: "Frontend Mobile", skCloud: "Cloud DevOps Security"
+                hdrSkills: "Compétences Techniques", skSAP: "Développement SAP", skBackend: "Backend Languages", skFrontend: "Frontend Mobile", skCloud: "Cloud DevOps Security",
+                
+                tabBlogs: "Blogs", tabContact: "Contact",
+                contactTitle: "Contactez-moi", contactText: "Intéressé par une collaboration ou une opportunité de stage ? Envoyez-moi un message ci-dessous.",
+                contactName: "Nom", contactEmail: "Email", contactMessage: "Message", contactSendBtn: "Envoyer le message",
+                namePlaceholder: "Votre nom", emailPlaceholder: "Votre email", msgPlaceholder: "Comment puis-je vous aider ?",
+                blog1Title: "Transitioning to ABAP Cloud: What You Need to Know", blog1Desc: "Explorez les changements fondamentaux de l'ABAP classique vers l'ABAP Cloud. Découvrez comment l'ABAP restreint, les API standards et le paradigme 'clean core' redéfinissent les extensions modernes SAP S/4HANA.",
+                blog2Title: "Building Modern OData V4 Services with SAP RAP", blog2Desc: "Une plongée dans le modèle de programmation RESTful ABAP (RAP). Apprenez à exploiter les vues CDS, les définitions de comportement et OData V4 pour construire des applications transactionnelles Fiori d'entreprise.",
+                blog3Title: "Mastering Core Data Services (CDS) Views for HANA", blog3Desc: "Optimisez les performances de lecture de votre base de données avec des techniques avancées de vues CDS. Nous abordons les associations, les expressions de chemin, les annotations UI et les éléments virtuels pour un reporting analytique puissant."
             },
             en: {
                 tabProfile: "Profile", tabProjects: "Projects", tabExperience: "Experience", tabSkills: "Skills", tabCertifications: "Certifications", tabEducation: "Education",
@@ -1523,7 +1664,15 @@
                 edu2Desc1: "Acquired a strong foundation in algorithmics, object-oriented programming, databases, and web development fundamentals.",
                 edu2Desc2: "Graduated with honors, demonstrating a passion for backend logic and data modeling.",
                 
-                hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend Languages", skFrontend: "Frontend Mobile", skCloud: "Cloud DevOps Security"
+                hdrSkills: "Technical Skills", skSAP: "SAP Development", skBackend: "Backend Languages", skFrontend: "Frontend Mobile", skCloud: "Cloud DevOps Security",
+                
+                tabBlogs: "Blogs", tabContact: "Contact",
+                contactTitle: "Contact Me", contactText: "Interested in a collaboration or an internship opportunity? Send me a message below.",
+                contactName: "Name", contactEmail: "Email", contactMessage: "Message", contactSendBtn: "Send Message",
+                namePlaceholder: "Your name", emailPlaceholder: "Your email", msgPlaceholder: "How can I help you?",
+                blog1Title: "Transitioning to ABAP Cloud: What You Need to Know", blog1Desc: "Explore the fundamental shifts from classic ABAP to ABAP Cloud. Discover how restricted ABAP, standard APIs, and the clean core paradigm are reshaping modern SAP S/4HANA extensions.",
+                blog2Title: "Building Modern OData V4 Services with SAP RAP", blog2Desc: "A deep dive into the RESTful ABAP Programming Model (RAP). Learn how to leverage Core Data Services (CDS), Behavior Definitions, and OData V4 to build enterprise-grade transactional Fiori apps.",
+                blog3Title: "Mastering Core Data Services (CDS) Views for HANA", blog3Desc: "Optimize your database read performance with advanced CDS View techniques. We cover associations, path expressions, UI annotations, and virtual elements for powerful analytical reporting."
             }
         };
 
@@ -1543,6 +1692,14 @@
                     el.innerText = translations[currentLang][key];
                 }
             });
+
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if(translations[currentLang][key]) {
+                    el.placeholder = translations[currentLang][key];
+                }
+            });
+
             updateGhTitleLang();
             
             // Reset Chatbot language
