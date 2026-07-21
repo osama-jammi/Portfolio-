@@ -1189,7 +1189,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" onclick="openProjectModal('MAROCARTISAN', 'MAROCARTISAN Marketplace')">
+                <div class="project-card" onclick="openProjectModal('marocartisan-ensiasd-2025/marocartisan', 'MAROCARTISAN Marketplace')">
                     <img src="project_marocartisan.png" alt="Project Image" class="project-image" style="object-fit: contain; padding: 1rem; background: var(--sapBackgroundColor);" onerror="this.src='https://via.placeholder.com/400x200?text=MAROCARTISAN'">
                     <div class="project-body">
                         <div class="project-header">
@@ -1201,7 +1201,7 @@
                             <span class="chip">Oracle DB</span><span class="chip">PL/SQL</span><span class="chip">Full-Stack</span><span class="chip">Team Lead</span>
                         </div>
                         <div class="project-actions">
-                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('MAROCARTISAN', 'MAROCARTISAN Marketplace')"><i class="fas fa-book-open"></i> README</button>
+                            <button class="sap-btn sap-btn-primary" onclick="event.stopPropagation(); openProjectModal('marocartisan-ensiasd-2025/marocartisan', 'MAROCARTISAN Marketplace')"><i class="fas fa-book-open"></i> README</button>
                             <a href="https://github.com/marocartisan-ensiasd-2025/marocartisan.git" target="_blank" class="sap-btn sap-btn-secondary" onclick="event.stopPropagation()"><i class="fab fa-github"></i> Code</a>
                         </div>
                     </div>
@@ -1854,6 +1854,7 @@
 
         // --- SAP Fiori Project Modal ---
         async function openProjectModal(repoName, title) {
+            const repoPath = repoName.includes('/') ? repoName : `osama-jammi/${repoName}`;
             const modal = document.getElementById('projectModal');
             const content = document.getElementById('modalContent');
             const titleEl = document.getElementById('modalTitle');
@@ -1861,16 +1862,16 @@
             
             titleEl.innerText = title;
             content.innerHTML = '<div style="text-align:center; padding: 3rem;"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--sapBrandColor)"></i><p style="margin-top:1rem;">Loading README...</p></div>';
-            githubBtn.href = `https://github.com/osama-jammi/${repoName}`;
+            githubBtn.href = `https://github.com/${repoPath}`;
             
             modal.classList.add('active');
             
             try {
                 // Try main branch first
-                let response = await fetch(`https://raw.githubusercontent.com/osama-jammi/${repoName}/main/README.md`);
+                let response = await fetch(`https://raw.githubusercontent.com/${repoPath}/main/README.md`);
                 if (!response.ok) {
                     // Try master branch as fallback
-                    response = await fetch(`https://raw.githubusercontent.com/osama-jammi/${repoName}/master/README.md`);
+                    response = await fetch(`https://raw.githubusercontent.com/${repoPath}/master/README.md`);
                 }
                 
                 if (!response.ok) throw new Error('README not found');
