@@ -1570,16 +1570,16 @@
         async function fetchGithubData() {
             let res;
             try {
-                // Try corsproxy.io first
-                res = await fetch('https://corsproxy.io/?url=' + encodeURIComponent('https://github-contributions.vercel.app/api/v1/osama-jammi'));
-                if (!res.ok) throw new Error("corsproxy failed");
+                // Use our own Vercel serverless proxy (no CORS issues, reliable)
+                res = await fetch('/api/github?user=osama-jammi');
+                if (!res.ok) throw new Error("API proxy failed");
             } catch (e1) {
                 try {
-                    // Fallback to allorigins
-                    res = await fetch('https://api.allorigins.win/raw?url=https://github-contributions.vercel.app/api/v1/osama-jammi');
-                    if (!res.ok) throw new Error("allorigins failed");
+                    // Fallback: direct call via CORS proxy
+                    res = await fetch('https://github-contributions-api.jogruber.de/v4/osama-jammi?y=last');
+                    if (!res.ok) throw new Error("Fallback failed");
                 } catch (e2) {
-                    console.error("All proxies failed to fetch github data");
+                    console.error("All sources failed to fetch github data");
                     document.getElementById('ghTitle').innerText = "Failed to load contributions.";
                     return;
                 }
@@ -1712,10 +1712,8 @@
         // --- Chatbot Virtual Assistant (Google Gemini AI) ---
         let chatOpen = false;
         
-        // =========================================================================================================
-        // IMPORTANT: REMPLACEZ CETTE CHAINE PAR VOTRE CLÉ API GOOGLE GEMINI OBTENUE SUR https://aistudio.google.com/
-        // =========================================================================================================
-        const GEMINI_API_KEY = "AQ.Ab8RN6LlC91q3lte03gTgo4VAcIBAdsa_PPL9RVWAdXlQ5TCpw"; 
+        // La clé API est sécurisée côté serveur via /api/chat (Vercel Serverless Function)
+        // Plus besoin de clé API dans le code client !
         
         const cvContext = `You are OsamaBot, an AI assistant on Osama Jammi's portfolio website.
 
@@ -1838,12 +1836,7 @@ CONTACT: jammiosama@gmail.com | +212 646 95 35 26 | LinkedIn: in/jammi-osama | G
         }
 
         async function fetchGeminiResponseStream(userMessage, onChunk) {
-            if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-                onChunk("Erreur : La clé d'API Gemini n'a pas été configurée.");
-                return;
-            }
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse`;
+            const url = '/api/chat';
             
             // Build conversation contents with history
             const contents = [];
@@ -1863,7 +1856,7 @@ CONTACT: jammiosama@gmail.com | +212 646 95 35 26 | LinkedIn: in/jammi-osama | G
             try {
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': GEMINI_API_KEY },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: contents,
                         generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
