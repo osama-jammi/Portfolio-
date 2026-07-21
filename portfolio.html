@@ -1840,17 +1840,13 @@ CONTACT: jammiosama@gmail.com | +212 646 95 35 26 | LinkedIn: in/jammi-osama | G
             
             // Build conversation contents with history
             const contents = [];
-            // First message includes system context
             contents.push({ role: 'user', parts: [{ text: cvContext + '\n\nRemember the rules above. Now answer:' }] });
             contents.push({ role: 'model', parts: [{ text: 'Understood. I will only answer questions about Osama Jammi, be concise, match the user language, and never repeat myself.' }] });
             
-            // Add conversation history (last 10 exchanges max to save tokens)
             const recentHistory = chatHistory.slice(-10);
             for (const msg of recentHistory) {
                 contents.push(msg);
             }
-            
-            // Add current user message
             contents.push({ role: 'user', parts: [{ text: userMessage }] });
 
             try {
@@ -1870,61 +1866,20 @@ CONTACT: jammiosama@gmail.com | +212 646 95 35 26 | LinkedIn: in/jammi-osama | G
                     return;
                 }
 
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder("utf-8");
-                let done = false;
-                let fullText = "";
-                let buffer = "";
-
-                while (!done) {
-                    const { value, done: readerDone } = await reader.read();
-                    done = readerDone;
-                    if (value) {
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop();
-
-                        for (const line of lines) {
-                            if (line.startsWith('data: ')) {
-                                const dataStr = line.slice(6).trim();
-                                if (dataStr) {
-                                    try {
-                                        const dataJson = JSON.parse(dataStr);
-                                        if (dataJson.candidates && dataJson.candidates[0]?.content?.parts?.[0]?.text) {
-                                            fullText += dataJson.candidates[0].content.parts[0].text;
-                                            onChunk(fullText);
-                                        }
-                                    } catch (e) { /* ignore incomplete JSON */ }
-                                }
-                            }
-                        }
-                    }
-                }
-                // Process any remaining buffer
-                if (buffer.trim()) {
-                    if (buffer.startsWith('data: ')) {
-                        const dataStr = buffer.slice(6).trim();
-                        try {
-                            const dataJson = JSON.parse(dataStr);
-                            if (dataJson.candidates && dataJson.candidates[0]?.content?.parts?.[0]?.text) {
-                                fullText += dataJson.candidates[0].content.parts[0].text;
-                                onChunk(fullText);
-                            }
-                        } catch (e) { /* ignore */ }
-                    }
-                }
+                const data = await response.json();
+                const fullText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, je n'ai pas pu générer de réponse.";
+                onChunk(fullText);
                 
                 // Save to history for multi-turn context
-                if (fullText) {
-                    chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
-                    chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
-                }
+                chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+                chatHistory.push({ role: 'model', parts: [{ text: fullText }] });
                 
             } catch (error) {
                 console.error("Gemini API Error:", error);
                 onChunk("Une erreur réseau s'est produite. Veuillez réessayer.");
             }
         }
+
 
         async function sendChatMessage() {
             const input = document.getElementById('chatInput');

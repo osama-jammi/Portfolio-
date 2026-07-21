@@ -1,8 +1,16 @@
 // Vercel Serverless Function - Proxy pour Google Gemini API
-// La clé API est stockée dans les variables d'environnement Vercel (jamais dans le code)
+// La clé API est stockée dans les variables d'environnement Vercel
 
 export default async function handler(req, res) {
-    // Only allow POST
+    // CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
@@ -10,10 +18,12 @@ export default async function handler(req, res) {
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
     if (!GEMINI_API_KEY) {
-        return res.status(500).json({ error: 'GEMINI_API_KEY not configured in environment variables' });
+        console.error('GEMINI_API_KEY not found in environment variables');
+        return res.status(500).json({ error: 'API key not configured' });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
+    // Use non-streaming endpoint for reliability in serverless
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
     try {
         const response = await fetch(url, {
@@ -28,25 +38,11 @@ export default async function handler(req, res) {
             return res.status(response.status).json({ error: 'Gemini API error', details: errText });
         }
 
-        // Stream the SSE response back to the client
-        res.setHeader('Content-Type', 'text/event-stream');
-        res.setHeader('Cache-Control', 'no-cache');
-        res.setHeader('Connection', 'keep-alive');
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        const data = await response.json();
+        return res.status(200).json(data);
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder('utf-8');
-
-        while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            res.write(chunk);
-        }
-
-        res.end();
     } catch (error) {
-        console.error('Proxy error:', error);
-        return res.status(500).json({ error: 'Internal proxy error' });
+        console.error('Proxy error:', error.message);
+        return res.status(500).json({ error: 'Internal proxy error', message: error.message });
     }
 }
