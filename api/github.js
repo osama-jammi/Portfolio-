@@ -1,5 +1,4 @@
 // Vercel Serverless Function - Proxy pour GitHub Contributions
-// Remplace les proxys CORS tiers instables
 
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -7,27 +6,49 @@ export default async function handler(req, res) {
 
     const username = req.query.user || 'osama-jammi';
 
-    // Try multiple sources in order
-    const sources = [
-        `https://github-contributions.vercel.app/api/v1/${username}`,
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-    ];
+    // Source 1: github-contributions.vercel.app (returns ready-to-use format)
+    try {
+        const response = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.years && data.contributions) {
+                return res.status(200).json(data);
+            }
+        }
+    } catch (e) {
+        console.error('Source 1 failed:', e.message);
+    }
 
-    for (const sourceUrl of sources) {
-        try {
-            const response = await fetch(sourceUrl);
-            if (!response.ok) continue;
-
+    // Source 2: jogruber API - contributions is a FLAT array, not keyed by year
+    try {
+        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+        if (response.ok) {
             const data = await response.json();
 
-            // If jogruber format, transform it
-            if (data.contributions && !Array.isArray(data.contributions)) {
-                const contributions = [];
-                const years = [];
+            // jogruber v4 format: { total: { "2024": 123 }, contributions: [ {date, count, level}, ... ] }
+            const contributions = [];
+            const yearsMap = {};
 
-                for (const [year, yearContribs] of Object.entries(data.contributions)) {
+            if (Array.isArray(data.contributions)) {
+                // Flat array format
+                for (const day of data.contributions) {
+                    const year = day.date.substring(0, 4);
+                    contributions.push({
+                        date: day.date,
+                        count: day.count,
+                        intensity: day.level
+                    });
+                    if (!yearsMap[year]) {
+                        yearsMap[year] = { year, total: 0 };
+                    }
+                    yearsMap[year].total += day.count;
+                }
+            } else if (typeof data.contributions === 'object') {
+                // Object keyed by year: { "2024": [ {date, count, level}, ... ] }
+                for (const [year, yearData] of Object.entries(data.contributions)) {
+                    if (!Array.isArray(yearData)) continue;
                     let yearTotal = 0;
-                    for (const day of yearContribs) {
+                    for (const day of yearData) {
                         yearTotal += day.count;
                         contributions.push({
                             date: day.date,
@@ -35,26 +56,27 @@ export default async function handler(req, res) {
                             intensity: day.level
                         });
                     }
-                    years.push({
-                        year: year,
-                        total: yearTotal,
-                        range: {
-                            start: yearContribs[0]?.date,
-                            end: yearContribs[yearContribs.length - 1]?.date
-                        }
-                    });
+                    yearsMap[year] = { year, total: yearTotal };
                 }
-                years.sort((a, b) => b.year.localeCompare(a.year));
-                return res.status(200).json({ years, contributions });
             }
 
-            // Already in expected format
-            return res.status(200).json(data);
+            // Use total from API if available
+            if (data.total && typeof data.total === 'object') {
+                for (const [year, total] of Object.entries(data.total)) {
+                    if (yearsMap[year]) {
+                        yearsMap[year].total = total;
+                    } else {
+                        yearsMap[year] = { year, total };
+                    }
+                }
+            }
 
-        } catch (e) {
-            console.error(`Failed to fetch from ${sourceUrl}:`, e.message);
-            continue;
+            const years = Object.values(yearsMap).sort((a, b) => b.year.localeCompare(a.year));
+
+            return res.status(200).json({ years, contributions });
         }
+    } catch (e) {
+        console.error('Source 2 failed:', e.message);
     }
 
     return res.status(502).json({ error: 'Failed to fetch GitHub contributions from all sources' });
