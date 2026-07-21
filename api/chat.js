@@ -1,8 +1,8 @@
-// Vercel Serverless Function - Proxy pour GitHub Models API
-// Utilise un GitHub Personal Access Token stocké dans les variables d'environnement
+// Vercel Serverless Function - Proxy pour Groq API (gratuit, rapide)
+// Utilise une clé API Groq stockée dans les variables d'environnement Vercel
+// Inscription gratuite avec GitHub : https://console.groq.com
 
 export default async function handler(req, res) {
-    // CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -15,14 +15,14 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+    const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-    if (!GITHUB_TOKEN) {
-        console.error('GITHUB_TOKEN not found in environment variables');
-        return res.status(500).json({ error: 'GitHub token not configured' });
+    if (!GROQ_API_KEY) {
+        console.error('GROQ_API_KEY not found in environment variables');
+        return res.status(500).json({ error: 'GROQ_API_KEY not configured in Vercel environment variables' });
     }
 
-    // Convert Gemini format to OpenAI format
+    // Convert Gemini request format to OpenAI/Groq format
     const body = req.body;
     const messages = [];
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         for (const content of body.contents) {
             const role = content.role === 'model' ? 'assistant' : content.role;
             const text = content.parts?.map(p => p.text).join('') || '';
-            // First user message with cvContext becomes system message
+            // First user message contains system context
             if (messages.length === 0 && role === 'user') {
                 messages.push({ role: 'system', content: text });
             } else {
@@ -39,22 +39,22 @@ export default async function handler(req, res) {
         }
     }
 
+    // Models to try in order (all free on Groq)
     const models = [
-        'gpt-4o-mini',
-        'Meta-Llama-3.1-8B-Instruct',
+        'llama-3.1-8b-instant',
+        'llama3-8b-8192',
+        'gemma2-9b-it',
     ];
 
     let lastError = null;
 
     for (const model of models) {
-        const url = 'https://models.inference.ai.github.com/chat/completions';
-
         try {
-            const response = await fetch(url, {
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                    'Authorization': `Bearer ${GROQ_API_KEY}`,
                 },
                 body: JSON.stringify({
                     model: model,
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
                 const data = await response.json();
                 const text = data.choices?.[0]?.message?.content || '';
 
-                // Return in Gemini-compatible format so frontend doesn't need changes
+                // Return in Gemini-compatible format (so frontend needs no changes)
                 return res.status(200).json({
                     candidates: [{
                         content: {
@@ -80,14 +80,15 @@ export default async function handler(req, res) {
             }
 
             const errText = await response.text();
-            console.error(`GitHub Models error (${model}):`, response.status, errText);
+            console.error(`Groq API error (${model}):`, response.status, errText);
 
+            // If rate limited, try next model
             if (response.status === 429) {
-                lastError = { status: response.status, model, details: errText };
+                lastError = { status: 429, model, details: errText };
                 continue;
             }
 
-            return res.status(response.status).json({ error: `GitHub Models error (${model})`, details: errText });
+            return res.status(response.status).json({ error: `Groq API error (${model})`, details: errText });
 
         } catch (error) {
             console.error(`Proxy error (${model}):`, error.message);
