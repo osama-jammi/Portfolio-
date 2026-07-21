@@ -25,8 +25,8 @@ export default async function handler(req, res) {
     // Try multiple models in order of preference (in case quota is hit on one)
     const models = [
         'gemini-2.0-flash-lite',
+        'gemini-1.5-flash-latest',
         'gemini-2.0-flash',
-        'gemini-1.5-flash',
     ];
 
     let lastError = null;
