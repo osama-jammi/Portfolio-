@@ -1,5 +1,5 @@
-// Vercel Serverless Function - Proxy pour Google Gemini API
-// La clé API est stockée dans les variables d'environnement Vercel
+// Vercel Serverless Function - Proxy pour GitHub Models API
+// Utilise un GitHub Personal Access Token stocké dans les variables d'environnement
 
 export default async function handler(req, res) {
     // CORS headers
@@ -15,48 +15,79 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-    if (!GEMINI_API_KEY) {
-        console.error('GEMINI_API_KEY not found in environment variables');
-        return res.status(500).json({ error: 'API key not configured' });
+    if (!GITHUB_TOKEN) {
+        console.error('GITHUB_TOKEN not found in environment variables');
+        return res.status(500).json({ error: 'GitHub token not configured' });
     }
 
-    // Try multiple models in order of preference (in case quota is hit on one)
+    // Convert Gemini format to OpenAI format
+    const body = req.body;
+    const messages = [];
+
+    if (body.contents && Array.isArray(body.contents)) {
+        for (const content of body.contents) {
+            const role = content.role === 'model' ? 'assistant' : content.role;
+            const text = content.parts?.map(p => p.text).join('') || '';
+            // First user message with cvContext becomes system message
+            if (messages.length === 0 && role === 'user') {
+                messages.push({ role: 'system', content: text });
+            } else {
+                messages.push({ role, content: text });
+            }
+        }
+    }
+
     const models = [
-        'gemini-2.0-flash-lite',
-        'gemini-1.5-flash-latest',
-        'gemini-2.0-flash',
+        'gpt-4o-mini',
+        'Meta-Llama-3.1-8B-Instruct',
     ];
 
     let lastError = null;
 
     for (const model of models) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+        const url = 'https://models.inference.ai.github.com/chat/completions';
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(req.body),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: messages,
+                    temperature: body.generationConfig?.temperature || 0.3,
+                    max_tokens: body.generationConfig?.maxOutputTokens || 2048,
+                }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                return res.status(200).json(data);
+                const text = data.choices?.[0]?.message?.content || '';
+
+                // Return in Gemini-compatible format so frontend doesn't need changes
+                return res.status(200).json({
+                    candidates: [{
+                        content: {
+                            parts: [{ text }],
+                            role: 'model'
+                        }
+                    }]
+                });
             }
 
             const errText = await response.text();
-            console.error(`Gemini API error (${model}):`, response.status, errText);
+            console.error(`GitHub Models error (${model}):`, response.status, errText);
 
-            // If it's a quota error (429), try next model
             if (response.status === 429) {
                 lastError = { status: response.status, model, details: errText };
                 continue;
             }
 
-            // For other errors, return immediately
-            return res.status(response.status).json({ error: `Gemini API error (${model})`, details: errText });
+            return res.status(response.status).json({ error: `GitHub Models error (${model})`, details: errText });
 
         } catch (error) {
             console.error(`Proxy error (${model}):`, error.message);
@@ -65,10 +96,9 @@ export default async function handler(req, res) {
         }
     }
 
-    // All models exhausted
-    console.error('All Gemini models quota exhausted:', lastError);
+    console.error('All models failed:', lastError);
     return res.status(429).json({
-        error: 'Tous les modèles Gemini ont atteint leur quota. Réessayez dans quelques minutes.',
+        error: 'Tous les modèles sont indisponibles. Réessayez dans quelques minutes.',
         details: lastError
     });
 }
