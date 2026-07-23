@@ -5,6 +5,7 @@ export default async function handler(req, res) {
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=600');
 
     const username = req.query.user || 'osama-jammi';
+    const year = req.query.y || 'last';
 
     // Source 1: github-contributions.vercel.app (returns ready-to-use format)
     try {
@@ -21,7 +22,7 @@ export default async function handler(req, res) {
 
     // Source 2: jogruber API - contributions is a FLAT array, not keyed by year
     try {
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${year}`);
         if (response.ok) {
             const data = await response.json();
 

@@ -655,8 +655,15 @@
             display: grid;
             grid-template-columns: auto;
             grid-auto-columns: 10px;
-            grid-template-rows: repeat(7, 10px);
+            grid-template-rows: auto repeat(7, 10px);
             gap: 3px;
+        }
+
+        .github-month-label {
+            font-size: 9px;
+            line-height: 10px;
+            grid-row: 1;
+            white-space: nowrap;
         }
         
         .github-day-label {
@@ -717,7 +724,7 @@
         body.dark .github-year-btn { color: #8b949e; }
         body.dark .github-year-btn.active { background-color: #1f6feb; color: #ffffff; }
         body.dark .github-year-btn:hover:not(.active) { background-color: #21262d; }
-        body.dark .github-day-label { color: #8b949e; }
+        body.dark .github-day-label, body.dark .github-month-label { color: #8b949e; }
         
         body.dark .github-square { outline: 1px solid rgba(255,255,255,0.05); outline-offset: -1px; }
         body.dark .github-square.l0 { background-color: #161b22; }
@@ -733,7 +740,7 @@
         body:not(.dark) .github-year-btn { color: #57606a; }
         body:not(.dark) .github-year-btn.active { background-color: #0969da; color: #ffffff; }
         body:not(.dark) .github-year-btn:hover:not(.active) { background-color: #f3f4f6; }
-        body:not(.dark) .github-day-label { color: #57606a; }
+        body:not(.dark) .github-day-label, body:not(.dark) .github-month-label { color: #57606a; }
         
         body:not(.dark) .github-square { outline: 1px solid rgba(27,31,35,0.06); outline-offset: -1px; }
         body:not(.dark) .github-square.l0 { background-color: #ebedf0; }
@@ -1752,18 +1759,18 @@
 
         // --- Real GitHub Data Integration ---
         let githubData = null;
+        let githubYearsData = {}; // cache per-year data
         let currentGhYear = '';
         let currentGhTotal = 0;
+        let currentGhMode = 'last'; // 'last' = rolling 12 months, or a year string like '2025'
 
         async function fetchGithubData() {
             let res;
             try {
-                // Use our own Vercel serverless proxy (no CORS issues, reliable)
                 res = await fetch('/api/github?user=osama-jammi');
                 if (!res.ok) throw new Error("API proxy failed");
             } catch (e1) {
                 try {
-                    // Fallback: direct call via CORS proxy
                     res = await fetch('https://github-contributions-api.jogruber.de/v4/osama-jammi?y=last');
                     if (!res.ok) throw new Error("Fallback failed");
                 } catch (e2) {
@@ -1775,90 +1782,192 @@
 
             try {
                 githubData = await res.json();
+                githubYearsData['last'] = githubData;
                 
                 const sidebar = document.getElementById('githubSidebar');
                 sidebar.innerHTML = '';
                 
                 if (githubData.years && githubData.years.length > 0) {
-                    githubData.years.forEach((yrObj, idx) => {
+                    githubData.years.forEach((yrObj) => {
                         const btn = document.createElement('button');
                         btn.className = 'github-year-btn';
                         btn.innerText = yrObj.year;
-                        btn.onclick = () => switchYear(btn, yrObj.total, yrObj.year);
+                        btn.dataset.year = yrObj.year;
+                        btn.onclick = () => switchYear(btn, yrObj.year);
                         sidebar.appendChild(btn);
                     });
-                    
-                    const latest = githubData.years[0];
-                    switchYear(sidebar.firstChild, latest.total, latest.year);
                 }
+                
+                // Default: show last 12 months
+                switchYear(null, 'last');
             } catch (e) {
                 console.error("Error parsing github data", e);
                 document.getElementById('ghTitle').innerText = "Failed to load contributions.";
             }
         }
 
-        function switchYear(btn, total, year) {
+        async function switchYear(btn, yearOrLast) {
             document.querySelectorAll('.github-year-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             
-            currentGhYear = year;
-            currentGhTotal = total;
-            updateGhTitleLang();
+            currentGhMode = yearOrLast;
             
-            renderGithubGrid(year);
+            if (yearOrLast === 'last') {
+                // Use already-loaded 'last' data
+                const data = githubYearsData['last'] || githubData;
+                if (data && data.contributions) {
+                    const now = new Date();
+                    const oneYearAgo = new Date(now);
+                    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+                    const startStr = oneYearAgo.toISOString().slice(0, 10);
+                    const endStr = now.toISOString().slice(0, 10);
+                    
+                    const filtered = data.contributions.filter(c => c.date >= startStr && c.date <= endStr);
+                    currentGhTotal = filtered.reduce((sum, c) => sum + c.count, 0);
+                    currentGhYear = 'last';
+                    updateGhTitleLang();
+                    renderGithubGridFromData(filtered);
+                }
+            } else {
+                // Fetch year-specific data if not cached
+                if (!githubYearsData[yearOrLast]) {
+                    try {
+                        let res;
+                        try {
+                            res = await fetch(`/api/github?user=osama-jammi&y=${yearOrLast}`);
+                            if (!res.ok) throw new Error('proxy failed');
+                        } catch {
+                            res = await fetch(`https://github-contributions-api.jogruber.de/v4/osama-jammi?y=${yearOrLast}`);
+                            if (!res.ok) throw new Error('fallback failed');
+                        }
+                        const yearDataRaw = await res.json();
+                        // Normalize the data
+                        let contributions = [];
+                        if (Array.isArray(yearDataRaw.contributions)) {
+                            contributions = yearDataRaw.contributions.map(d => ({
+                                date: d.date, count: d.count, intensity: d.level !== undefined ? d.level : d.intensity
+                            }));
+                        } else if (yearDataRaw.contributions && typeof yearDataRaw.contributions === 'object') {
+                            for (const [y, days] of Object.entries(yearDataRaw.contributions)) {
+                                if (!Array.isArray(days)) continue;
+                                for (const d of days) {
+                                    contributions.push({ date: d.date, count: d.count, intensity: d.level !== undefined ? d.level : d.intensity });
+                                }
+                            }
+                        }
+                        githubYearsData[yearOrLast] = { contributions };
+                    } catch (e) {
+                        console.error('Failed to fetch year data', e);
+                        // Fallback: filter from 'last' data
+                        const fallback = githubData ? githubData.contributions.filter(c => c.date.startsWith(yearOrLast)) : [];
+                        githubYearsData[yearOrLast] = { contributions: fallback };
+                    }
+                }
+                
+                const yearData = githubYearsData[yearOrLast];
+                const now = new Date();
+                const currentYear = now.getFullYear().toString();
+                let filtered;
+                
+                if (yearOrLast === currentYear) {
+                    // Current year: show from Jan 1 to today
+                    const endStr = now.toISOString().slice(0, 10);
+                    filtered = yearData.contributions.filter(c => c.date.startsWith(yearOrLast) && c.date <= endStr);
+                } else {
+                    // Past year: show full year
+                    filtered = yearData.contributions.filter(c => c.date.startsWith(yearOrLast));
+                }
+                
+                currentGhTotal = filtered.reduce((sum, c) => sum + c.count, 0);
+                currentGhYear = yearOrLast;
+                updateGhTitleLang();
+                renderGithubGridFromData(filtered);
+            }
         }
 
         function updateGhTitleLang() {
             if(!currentGhYear) return;
             const titleEl = document.getElementById('ghTitle');
+            const yearLabel = currentGhYear === 'last' 
+                ? (currentLang === 'fr' ? "la dernière année" : "the last year")
+                : currentGhYear;
             if(currentLang === 'fr') {
-                titleEl.innerText = `${currentGhTotal} contributions en ${currentGhYear}`;
+                titleEl.innerText = `${currentGhTotal} contributions en ${yearLabel}`;
             } else {
-                titleEl.innerText = `${currentGhTotal} contributions in ${currentGhYear}`;
+                titleEl.innerText = `${currentGhTotal} contributions in ${yearLabel}`;
             }
         }
 
-        function renderGithubGrid(year) {
+        function renderGithubGridFromData(contributions) {
             const grid = document.getElementById('githubGrid');
             grid.innerHTML = '';
             
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const days = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+            
+            // Day labels (row 2-8 since row 1 is months)
             days.forEach((day, index) => {
                 const label = document.createElement('div');
                 label.className = 'github-day-label';
                 label.innerText = day;
                 label.style.gridColumn = '1';
-                label.style.gridRow = String(index + 1);
+                label.style.gridRow = String(index + 2); // +2 because row 1 is month labels
                 grid.appendChild(label);
             });
 
-            if (!githubData || !githubData.contributions) return;
+            if (!contributions || contributions.length === 0) return;
             
-            const yearData = githubData.contributions.filter(c => c.date.startsWith(year));
-            yearData.sort((a, b) => new Date(a.date) - new Date(b.date));
-            if (yearData.length === 0) return;
+            const sortedData = [...contributions].sort((a, b) => a.date.localeCompare(b.date));
+            if (sortedData.length === 0) return;
             
-            const firstDate = new Date(yearData[0].date + 'T12:00:00');
-            const startDay = firstDate.getDay();
+            const firstDate = new Date(sortedData[0].date + 'T12:00:00');
+            const startDay = firstDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
             
             let currentColumn = 2;
-            let currentRow = startDay + 1;
+            let currentRow = startDay + 2; // +2 for month label row offset
             
-            yearData.forEach(day => {
+            // Track which columns correspond to which months for month labels
+            const monthColumns = {}; // { 'YYYY-MM': firstColumn }
+            
+            sortedData.forEach(day => {
                 const square = document.createElement('div');
-                square.className = 'github-square l' + day.intensity;
+                square.className = 'github-square l' + (day.intensity !== undefined ? day.intensity : 0);
                 square.title = `${day.count} contributions on ${day.date}`;
                 
                 square.style.gridColumn = currentColumn;
                 square.style.gridRow = currentRow;
                 grid.appendChild(square);
                 
+                // Track first column of each month
+                const monthKey = day.date.substring(0, 7); // 'YYYY-MM'
+                if (!monthColumns[monthKey]) {
+                    monthColumns[monthKey] = currentColumn;
+                }
+                
                 currentRow++;
-                if (currentRow > 7) {
-                    currentRow = 1;
+                if (currentRow > 8) { // 8 because row 1 is months, rows 2-8 are days
+                    currentRow = 2;
                     currentColumn++;
                 }
             });
+            
+            // Add month labels at the top
+            Object.entries(monthColumns).forEach(([monthKey, col]) => {
+                const monthIdx = parseInt(monthKey.substring(5, 7)) - 1;
+                const label = document.createElement('div');
+                label.className = 'github-month-label';
+                label.innerText = monthNames[monthIdx];
+                label.style.gridColumn = col;
+                label.style.gridRow = '1';
+                grid.appendChild(label);
+            });
+        }
+
+        // Keep backward compatibility
+        function renderGithubGrid(year) {
+            if (!githubData || !githubData.contributions) return;
+            const yearData = githubData.contributions.filter(c => c.date.startsWith(year));
+            renderGithubGridFromData(yearData);
         }
 
         // --- SAP Fiori Project Modal ---
